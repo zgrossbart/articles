@@ -1,0 +1,12 @@
+1. A super short introduction to SEO sets up the topic and moves readers quickly along to SEO and AJAX.
+
+2. "The problem with SEO and AJAX applications" explains the difficulties of SEO with AJAX and JavaScript.  This section sets up why we need this solution.
+
+3. "Introduction to AJAX crawling" brings readers deeper into the topic with an overview of AJAX crawling and how the hash/bang mechanism works.
+
+4, "Server architecture" dives deeply into the technical details about what you need to make everything work.  This section discusses sitemaps, HTML snippets, and how to structure your application.
+
+5. "Making sure it works" shows you the tools you need to verify your AJAX crawling application is working correctly.
+
+6. "Examples" looks at real samples and shows readers where they can find more information.
+

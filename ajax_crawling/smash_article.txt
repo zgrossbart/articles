@@ -1,0 +1,160 @@
+Google Search likes simple, easy-to-crawl websites.  You like dynamic sites that show off your work and really pop and search engines can't run your JavaScript.  That cool AJAX routine loading your content hurts your SEO.
+
+Google's robots parse HTML with ease — they pull apart Word documents, PDFs, and even images from the far corners of your site — but as far as they're concerned, AJAX content is invisible.
+<h3>The problem with AJAX</h3>
+AJAX revolutionized the Web, but it also hid its content.  If you have a page on Twitter, try viewing the source of the page.  There are no tweets there — just code!  Almost everything on a Twitter page is built dynamically through JavaScript, and the crawlers can't see any of it.  That's why Google invented <a href="http://code.google.com/web/ajaxcrawling">AJAX crawling</a>.
+
+Since Google can't get dynamic content from HTML, you need to provide it another way.  But there are two big problems:  Google won't run your JavaScript, and it doesn't trust you.
+
+Google indexes the entire Web, but doesn't run JavaScript.  Modern websites are little applications which run in the browser, and running those applications while indexing is just too slow for Google and everyone else.  
+
+The trust problem is trickier.  Every website wants to come out first in the search results — your site competes with everyone else's for the top position.  Google can't just give you an API to return your content because some sites use dirty tricks like <a href="http://en.wikipedia.org/wiki/Cloaking">cloaking</a> to try to rank higher.  Search engines can't trust that you'll do the right thing.
+
+Google needs a way to let you serve AJAX content to the browsers, but give the crawlers simple HTML.  You need the same content in multiple formats.
+<h3>Two URLs for the same content</h3>
+Let's start with a simple example.  I'm part of an open source project called Spiffy UI.  It's a <a href="http://code.google.com/webtoolkit/">Google Web Toolkit</a> (GWT) framework for REST and rapid development.  We wanted to show off our framework, so we made <a href="http://www.spiffyui.org">SpiffyUI.org</a> with GWT.
+
+GWT is a dynamic framework which puts all of our content in JavaScript.  Our index.html looks like this:
+<pre class="brush: html">&lt;body&gt;
+    &lt;script type="text/javascript" language="javascript" src="org.spiffyui.spsample.index.nocache.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</pre>
+Everything is added to the page with JavaScript; we control our content with <a href="http://en.wikipedia.org/wiki/Hashtag#Hashtags">hashtags</a>.  (I'll explain why a little later.)  Every time you change pages in our application you'll get a new hashtag.  Click on the CSS link and you'll end up here:
+<pre class="brush: html">    http://www.spiffyui.org#css</pre>
+
+The URL in the address bar looks like this for most browsers:
+
+<pre class="brush: html">    http://www.spiffyui.org/?css</pre>
+
+We're fixing it up with HTML5.  I'll show you how later in this article.
+
+This simple hash works well for our application and makes it bookmarkable, but it isn't crawlable. Google doesn't know what a hashtag means or how to get the content from it, but it provides an alternate method for a website to return the content.  We let Google know that our hash is really JavaScript code instead of just an anchor within the page by adding a exclamation point (a "bang") like this:
+<pre class="brush: html">    http://www.spiffyui.org#!css</pre>
+This <em>hash-bang</em> is the secret sauce of the whole AJAX crawling scheme.  When Google sees these two characters together it knows we have more content hidden by JavaScript.  It gives us a chance to return the full content by making a second request to a special URL:
+<pre class="brush: html">    http://www.spiffyui.org?_escaped_fragment_=css</pre>
+The new URL replaces the <code>#!</code> with <code>?_escaped_fragment_=</code>.  Using an URL parameter instead of a hashtag is very important, since parameters are sent to the server and hashtags are only available to the browser.
+
+That new URL lets us return the same content in HTML format when the Google crawler requests it.  Confused?  Let's look at how it works, step by step.
+<h3>Snippets of HTML</h3>
+The whole page is rendered in JavaScript.  We needed to get that content into HTML and available to Google.  The first step was to separate SpiffyUI.org into snippets of HTML.
+
+Google still thinks of a website as a set of pages, so we needed to provide our content that way.  For our application that was pretty easy; we have a set of pages and each one is a separate logical section.  The first step was making the pages bookmarkable.
+<h4>Bookmarking</h4>
+Most of the time JavaScript just changes something within the page:  you click that button or pop up that panel, but the URL of the page doesn't change.  That's fine for simple pages, but when you're serving content through JavaScript, you want to let users bookmark certain places in your application by giving them unique URLs.
+
+JavaScript applications can change the URL of the current page, so they usually support bookmarking by adding hashtags.  Hashtags work better than any other URL mechanism since they're not sent to the server; they're the only part of the URL that can be changed without refreshing the page.
+
+The hashtag is just some value that makes sense in your application.  Choose a logical representation of that point in your application, and add it to the hashtag like this:
+<pre class="brush: html">    http://www.spiffyui.org#css</pre>
+When users access this URL again, we use JavaScript to read the hashtag and send them to our page with CSS information.
+
+You can choose anything you want for your hashtag, but try to keep it readable:  users have to look at it.  We give our hashtags names like <em>css</em>, <em>rest</em> and <em>security</em>.
+
+Since you can name your hashtag anything you want, adding the extra bang for Google is easy.  Just slide it in between the hash symbol and the ID like this:
+<pre>    http://www.spiffyui.org#!css</pre>
+You can manage all of your hashtags manually, but most JavaScript history frameworks will do it for you.  All of the plugins which support HTML4 use hashtags, and many of them have options for making URLs bookmarkable.  We use <a href="https://github.com/balupton/history.js">History.js</a> from <a href="http://balupton.com/">Ben Lupton</a>.  It's easy to use and open source, and it has excellent support for HTML5 history integration.  We'll talk more about that in a little while.
+<h4>Serving up snippets</h4>
+The hashtag makes an application bookmarkable, and the bang makes it crawlable.  Now Google can ask for special escaped-fragment URLs like this:
+
+<img class="aligncenter size-full wp-image-106318" title="Crawler Server Diagram" src="http://mcoding.smashingmagazine.com/wp-content/uploads/2011/07/CrawlerServerDiagram3.png" alt="" width="507" height="399" />
+
+When the crawler accesses our ugly URL, we need to return simple HTML.  We can't handle that in JavaScript since the crawler doesn run JavaScript in the crawler, so it all comes from the server.
+
+You can implement your server in PHP, Ruby or any other language as long as it delivers HTML.  SpiffyUI.org is a Java application so we deliver our content with a <a href="http://en.wikipedia.org/wiki/Java_Servlet">Java servlet</a>.
+
+The escaped fragment tells us what to serve and the servlet gives us a place to serve it from.  Now we need the actual content.
+
+Getting the content to serve is tricky.  Most applications mix the content in with code; we don't want to parse the readable text out of the JavaScript.  Luckily, Spiffy UI has an HTML templating mechanism.  The templates are embedded in the JavaScript, but also included on the server.  When the escaped fragment looks for the ID <code>css</code> we just have to serve <code>CSSPanel.html</code>.
+
+The template without any styling looks very plain, but Google just needs the content.  Users see our page with all of our styling and dynamic features.
+
+<img class="aligncenter size-full wp-image-105418" title="Spiffy UI CSS page" src="http://coding.smashingmagazine.com/wp-content/uploads/2011/07/css_page_normal.png" alt="" width="525" height="438" />
+
+Google just gets the unstyled version.
+
+<img class="aligncenter size-full wp-image-105428" title="Spiffy UI CSS page escaped fragment" src="http://coding.smashingmagazine.com/wp-content/uploads/2011/07/css_page_escaped1.png" alt="" width="525" height="438" />
+
+You can see all of the source code for our servlet <a href="http://spiffyui.googlecode.com/svn/trunk/spiffyui-app/src/main/java/org/spiffyui/spsample/server/SiteMapServlet.java"><code>SiteMapServlet.java</code></a>.  Mostly this servlet is just a lookup table which takes an ID and serves the associated content from somewhere on our server.  It's called <code>SiteMapServlet.java</code> because this class also handles generating our site map.
+<h3>Tying it all together with a site map</h3>
+
+<a href="http://www.spiffyui.org/sitemap.xml">Our site map</a> tells the crawler what's available in our application.  Every site should have a site map; AJAX crawling won't work without one.
+
+Site maps are simple XML documents listing the URLs of an application.  They can also include data about the priority and change frequency of the app's pages.  Normal site map entries look like this:
+<pre class="brush: html">&lt;url&gt;
+    &lt;loc&gt;http://www.spiffyui.org/&lt;/loc&gt;
+    &lt;lastmod&gt;2011-07-26&lt;/lastmod&gt;
+    &lt;changefreq&gt;daily&lt;/changefreq&gt;
+    &lt;priority&gt;1.0&lt;/priority&gt;
+&lt;/url&gt;</pre>
+Our AJAX-crawlable entries look like this:
+<pre class="brush: xml">&lt;url&gt;
+    &lt;loc&gt;http://www.spiffyui.org/#!css&lt;/loc&gt;
+    &lt;lastmod&gt;2011-07-26&lt;/lastmod&gt;
+    &lt;changefreq&gt;daily&lt;/changefreq&gt;
+    &lt;priority&gt;0.8&lt;/priority&gt;
+&lt;/url&gt;</pre>
+The hash-bang tells Google this is an escaped fragment and the rest works like any other page.  You can mix and match AJAX URLs and regular URLs and use only one site map for everything.
+
+You could write your site map by hand, but there are tools that will save you a lot of time.  The key is to format the site map well and submit it to Google Webmaster Tools.
+<h3>Google Webmaster Tools</h3>
+<a href="https://www.google.com/webmasters/tools">Google Webmaster Tools</a> gives you the chance to tell Google Search about your site.  Log in with your Google ID, or make a new one, and verify your site.
+
+<img class="aligncenter size-full wp-image-105579" title="Google Web Toolkit Verification" src="http://coding.smashingmagazine.com/wp-content/uploads/2011/07/google_wmt_verification.png" alt="" width="527" height="498" />
+
+Once you've verified, you can submit your site map and Google will start indexing your URLs.
+
+And then you wait.  This part is maddening.  It took about two weeks for SpiffyUI.org to show up properly on Google Search.  I posted to the help forums half a dozen times thinking it was broken.
+
+There's no easy way to make sure everything is working, but there are a few tools to help you see what's going on.  The best one is <a href="http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=158587">Fetch as Googlebot</a>, which shows you exactly what Google sees when it crawls your site.  You can access it in your Google Webmaster Tools dashboard under Diagnostics.
+
+<img class="aligncenter size-full wp-image-105432" title="Fetch as Googlebot" src="http://coding.smashingmagazine.com/wp-content/uploads/2011/07/googlebot_fetch.png" alt="" width="527" height="498" />
+
+Enter a hash-bang URL from your site and click Fetch.  Google will tell you if the fetch succeeded, and will show you the content it sees.
+
+<img class="aligncenter size-full wp-image-105421" title="Results of Fetch as Googlebot for an escaped fragment" src="http://coding.smashingmagazine.com/wp-content/uploads/2011/07/googlebot_results.png" alt="" width="527" height="498" />
+
+If <em>Fetch as Googlebot</em> works successfully then you're returning the escaped URLs correctly, but there are a few more things you should check:
+<ul>
+	<li><a href="http://www.validome.org/google/validate">Validate your site map</a>.</li>
+	<li>Manually try the URLs in your site map.  Make sure to try the hash-bang and escaped versions.</li>
+	<li>Check the Google result for your site by searching for <em>site:www.yoursite.com</em>.</li>
+</ul>
+
+<h3>Making pretty URLs with HTML5</h3>
+
+Twitter leaves the hash-bang visible in the URL like this:
+<pre>    http://twitter.com/#!/ZackGrossbart</pre>
+That works well for AJAX crawling, but again, it's slightly ugly.  You can make your URLs prettier by integrating <a href="http://www.w3.org/TR/html5/history.html">HTML5 history</a>.
+
+Spiffy UI uses HTML5 history integration to a hash-bang URL like this:
+<pre class="brush: html">    http://www.spiffyui.org#!css</pre>
+into a pretty URL like this:
+<pre class="brush: html">    http://www.spiffyui.org?css</pre>
+HTML5 history makes it possible to change this URL parameter since the hashtag is the only part of the URL you can change in HTML4.  Change anything else, and the entire page reloads.  HTML5 history changes the entire URL without refreshing the page and we can make the URL look any way we want.
+
+This nicer URL works in our application, but we still list the hash-bang version in our site map.  When browsers access the hash-bang URL we change it to the nicer one with a little JavaScript.
+
+<h3>Cloaking</h3>
+Earlier I briefly mentioned cloaking.  It's the practice of trying to boost a site's search ranking by showing one set of pages to Google and another to regular browsers.  Google doesn't like cloaking and may <a href="http://www.google.com/support/webmasters/bin/answer.py?answer=66355">remove cloaking sites from the search index</a>.
+
+AJAX crawling applications always show different results to Google than they do to regular browsers, but that isn't cloaking if the HTML snippets contain the same content the user would see in the browser.  The real mystery is how Google can tell whether a site is cloaking or not; crawlers can't compare content programmatically since they don't run JavaScript.  It's all part of their Googly power.
+
+However it's detected, cloaking is a bad idea.  You might not get caught, but you'll be removed from the search index if you are.
+
+<h3>Hash bang is a little ugly, but it works</h3>
+
+I'm an engineer, and my first response to this scheme is "yuck."  It just feels wrong:  we're warping the intention of URLs and relying on magic strings.  But I understand where Google is coming from; it's an extremely difficult problem.  Search engines need to get useful information from inherently untrustworthy sources:  us.
+
+Hash-bang shouldn't replace every URL on the web.  Some sites have had <a href="http://www.webmonkey.com/2011/02/gawker-learns-the-hard-way-why-hash-bang-urls-are-evil/">serious problems</a> with hash-bang URLs since they rely on JavaScript to serve content.  Simple pages don't need hash-bang, but AJAX pages do.  The URLs do look a little ugly, but you can fix that with HTML5.
+
+<h3>Further reading</h3>
+We covered a lot in this article.  Supporting AJAX crawling means you need to change your client code and your server code.  Here are some links to find out more:
+<ul>
+	<li><a href="http://code.google.com/web/ajaxcrawling/">Making AJAX Applications Crawlable</a></li>
+	<li>HTML5 <a href="http://www.w3.org/TR/html5/history.html">5.4 Session history and navigation</a></li>
+	<li><a href="http://www.sitemaps.org/">sitemaps.org</a></li>
+	<li><a href="https://www.google.com/webmasters/tools">Google Webmaster Tools</a></li>
+	<li><a href="https://code.google.com/p/spiffyui/source/checkout">Spiffy UI source code</a> with a complete example of AJAX crawling</li>
+</ul>
+Thanks to Kristen Riley for help with some of the images in this article.
+
+
