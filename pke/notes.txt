@@ -1,0 +1,10 @@
+http://help.github.com/win-set-up-git/
+
+
+
+
+
+
+You use public key encryption every time you access a website with <a href="http://en.wikipedia.org/wiki/Https">https</a> (the s is for secure).  Normal http sends everthing in the clear.  If you're reading this article at Starbucks anyone else can snoop and read it too.  That's fine for an article, but other latte drinkers could grab your Facebook password while you're updating your friends.  That's why <a href="http://mashable.com/2011/01/27/facebook-https/">Facebook supports https</a>.  
+
+SSL uses a combination of public key encryption and basic encryption.  The public key 

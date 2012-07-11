@@ -1,0 +1,311 @@
+When my WordPress plugin had only three users, it didn't matter much if I broke it.  By the time I reached 100,000 downloads, every new update made my palms sweat.  
+
+My first goal for the <a href="http://wordpress.org/extend/plugins/editorial-calendar/">WordPress Editorial Calendar</a> was making it do anything useful.  I was new to JavaScript and PHP and didn't really know what I could pull off.  In a few days I had a proof of concept.  In a few more I had a working version and I was asking friends to install it.  The calendar worked... sort of.
+
+I spent three times as much time fixing bugs as I did coding.  Once it worked, I wrote unit tests to make sure it kept working.
+
+The calendar unit tests use <a href="http://docs.jquery.com/QUnit">QUnit</a>, but they really use just three functions:  <code>test</code>, <code>expect</code>, and <code>ok</code>.  This article shows you how to integrate unit tests into your WordPress plugin, where to write unit tests, and how they can help you.
+
+<h3>QUnit Basics</h3>
+
+Unit tests follow a basic pattern:  do something; check the results.  Is this variable 4 when it should be 5, or does this line of my table show up where it's supposed to?  
+
+<pre class="brush: javascript">
+function myTest() {
+    test('My test run', function() {
+        expect(2);
+        ok(5 === 5, 'This test will always succeed');
+        ok(5 === 6, 'This test will always fail');
+    });
+}
+</pre>
+
+This structure forces you to think of your code in simple units that return <code>true</code> or <code>false</code>.  The <code>test</code> function starts a test run with two arguments:  the title for this test run and the function containing the tests.  The <code>expect</code> function tells QUnit how many tests are in the run.  If we call too few or too many it causes an error.
+
+The <code>ok</code> function performs the test of the expression.  It takes two arguments:  a boolean indicating whether the test was successful, and a message.
+
+Test runs are added to a special list section, which shows the total number of tests, whether each test passed or failed, and how long the tests took.
+
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/01/qunit_basic.png" alt="" title="Simple QUnit test results" width="542" height="306" class="aligncenter size-full wp-image-118214" />
+
+<h3>A Real Unit Test</h3>
+
+WordPress plugins complicate testing with a combination of PHP and JavaScript.  Even passing a simple value from PHP to JavaScript gets tricky.
+
+This function finds a WordPress preference with the <code><a href="http://codex.wordpress.org/Function_Reference/get_option">get_option</a></code> function and creates a JavaScript variable with resulting value.  
+
+<pre class="brush: php">function getOption($myOption, $myVariable) {
+    if (get_option($myOption) != "") {
+        ?&gt;&lt;script type="text/javascript"&gt;
+            &lt;?php echo($myVariable); ?&gt; = &lt;?php echo(get_option($myOption)); ?&gt;;
+        &lt;php
+    }
+}
+</pre>
+
+Now we'll call it to get the name of the blog and set it to a variable named <code>myBlogName</code>.
+
+<pre class="brush: php">getOption("blogname", "myBlogName");
+</pre>
+
+Little helper functions like these glue your plugin together, but they always make me worried.  Did I access the JavaScript variable with the right name or mistype it?  Did I use the same name twice?  A simple unit test makes all of my worries go away.
+
+<pre class="brush: javascript">
+function wpPrefTest() {
+    test('Get access to WordPress preferences', function() {
+        expect(1);
+        ok(myBlogName, 'The variable (myBlogName) should be available.');
+    });
+}
+</pre>
+
+This unit test checks if the variable <code>myBlogName</code> exists.  We could also look for a specific value or compare to something else from the application.  
+
+Once you have this unit test you never need to worry about getting the blog name.  It's always there and you'll find out fast if you break it in the future.
+
+<h3>Integrating QUnit With WordPress</h3>
+
+Tests in special development environments aren't accurate.  I added QUnit directly to the calendar, but I didn't want to make my page size larger.  The solution is a URL parameter and a little PHP to include QUnit only when I need it:
+
+<pre class="brush: php">
+wp_enqueue_script( "qunit", path_join(WP_PLUGIN_URL, basename( dirname( __FILE__ ) )."/lib/qunit.js"), array( 'jquery' ) );
+wp_enqueue_script( "edcal-test", path_join(WP_PLUGIN_URL, basename( dirname( __FILE__ ) )."/edcal_test.js"), array( 'jquery' ) );
+</pre>
+
+This tells WordPress to include the QUnit JavaScript and my unit tests from <a href="http://plugins.svn.wordpress.org/editorial-calendar/trunk/edcal_test.js">edcal_test.js</a>.  I could've just embedded the script reference directly in my page, but that could run into trouble if other plugins on the same page use QUnit.  
+
+See the <a href="http://plugins.svn.wordpress.org/editorial-calendar/trunk/">full source code here</a>.
+
+The next step was making sure these scripts only load when I need them.  For that I wrapped this code in a check for a URL parameter:
+
+<pre class="brush: php">
+if ($_GET['qunit']) {
+    wp_enqueue_script( "qunit", path_join(WP_PLUGIN_URL, basename( dirname( __FILE__ ) )."/lib/qunit.js"), array( 'jquery' ) );
+    wp_enqueue_script( "edcal-test", path_join(WP_PLUGIN_URL, basename( dirname( __FILE__ ) )."/edcal_test.js"), array( 'jquery' ) );
+}
+</pre>
+
+I only load the scripts if I'm running unit tests, and everything else in my plugin stays the same.  At any time you can run the unit tests just by adding <code>&qunit=true</code> to the end of the URL.  That's a good thing since my unit tests actually change what's going on in the blog.
+  
+You can <a href="http://www.zackgrossbart.com/extras/sandbox/wp-admin/edit.php?page=cal&qunit=true">run the Editorial Calendar unit tests in your browser right now</a>.  Scroll down to see the unit tests at the bottom of the page.
+
+The PHP makes sure my scripts get to the browser; the last step is to call them from my JavaScript.  Once again I only want to call them if we're in unit test mode.  I add a small function to get the parameters from the URL:
+
+<pre class="brush: javascript">
+getUrlVars: function() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+</pre>
+
+and then call my unit tests if the QUnit parameter is there:
+
+<pre class="brush: javascript">
+jQuery(document).ready(function() {
+    if (edcal.getUrlVars().qunit) {
+        edcal_test.runTests();
+    }
+});
+</pre>
+
+This makes sure we only call the unit tests if they're available.
+
+The last step is to set up a space for the unit test output.  QUnit writes its test results into specially designated tags on your HTML page.  You could embed those tags directly in your HTML output, but since they only need to be there when QUnit is active, I create the HTML in JavaScript instead.
+
+<pre class="brush: js">
+jQuery('head').append('&lt;link&gt;');
+css = jQuery('head').children(':last');
+css.attr({
+    rel: 'stylesheet',
+    type: 'text/css',
+    href: '../wp-content/plugins/edcal/lib/qunit.css'
+});
+
+jQuery('#wpbody-content .wrap').append('&lt;div id="edcal-qunit"&gt;&lt;/div&gt;');
+
+jQuery('#edcal-qunit').append(
+    '&lt;h1 id="qunit-header"&gt;WordPress Editorial Calendar Unit Tests&lt;/h1&gt;' +
+    '&lt;h2 id="qunit-banner"&gt;&lt;/h2&gt;' + 
+    '&lt;div id="qunit-testrunner-toolbar"&gt;&lt;/div&gt;' + 
+    '&lt;h2 id="qunit-userAgent"&gt;&lt;/h2&gt;' + 
+    '&lt;ol id="qunit-tests"&gt;&lt;/ol&gt;' + 
+    '&lt;div id="qunit-fixture"&gt;test markup&lt;/div&gt;');
+</pre>
+
+QUnit needs a list tag, a couple of DIVs, and a stylesheet.  
+
+<a href="http://www.zackgrossbart.com/extras/sandbox/wp-admin/edit.php?page=cal&amp;qunit=true"><img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/01/qunit_panel.png" alt="" title="QUnit test output" width="544" height="500" class="aligncenter size-full wp-image-118198" /></a>
+
+Now we're ready to write our first test.
+
+<h3>The First Unit Test</h3>
+
+The first calendar unit tests scroll the calendar up and down and make sure we're seeing the correct number of days.  
+
+<pre class="brush: javascript">
+moveTests: function() {
+    var curSunday = edcal.nextStartOfWeek(Date.today()).add(-1).weeks();
+    edcal.moveTo(Date.today());
+    
+    test('Move to today and check visible dates', function() {
+        expect(2);
+        ok(edcal_test.getFirstDate().equals(curSunday.clone()), 
+           'firstDate should match ' + curSunday);
+        ok(edcal_test.getLastDate().equals(
+           curSunday.clone().add(edcal.weeksPref).weeks().add(-1).days()),
+           'lastDate should match ' + curSunday);
+    });
+}
+</pre>
+
+Our first test moves the calendar to today and checks to see if the first and last days are what we expect.  We set up a variable, move the calendar, and start the test by calling the <code>test</code> function.  
+
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/01/qunit_panel_expanded.png" alt="" title="QUnit test run expanded" width="540" height="614" class="aligncenter size-full wp-image-118199" />
+
+In this case we want to make sure that the dates are correct, so we compare the date from the calendar to the one we expect and pass the result to the <code>ok</code> function.  The test succeeds if they match and fails if they don't.  
+
+This test may seem simple, but there's a lot going on underneath.  We're testing date handling, drawing, and the fundamental arithmetic of the calendar.
+  
+Unit tests can do anything.  The <a href="http://www.zackgrossbart.com/extras/sandbox/wp-admin/edit.php?page=cal&qunit=true">WordPress Editorial Calendar unit tests</a> automate the plugin like a robot.  They cover everything a user could do with the calendar.
+
+<h3>What To Unit-Test</h3>
+
+I write a lot more unit tests for JavaScript than I do for compiled languages.  (In Java or C++, the compiler catches many of my mistakes.)  JavaScript lets you pass a <code>string</code> when you meant to pass a <code>number</code>, or call a function with two arguments when it needed three.  
+
+Here's the basic list of areas I test in JavaScript applications:
+
+<ul>
+<li><b>Tests that make sure the program does what it was meant to do</b>.  These tests make sure my basic functionality keeps working; they do not test interactions.  (The calendar lets you drag and drop posts, but it doesn't make sense to write unit tests for dragging and dropping.  Instead we focus on what happens after the drop event.)</li>
+
+<li><b>Tests that make sure the program doesn't do what it wasn't meant to do</b>.  These tests make sure the program fails properly when it gets garbage.</li>
+
+<li><b>A unit test for every major bug I've found</b>.  These tests make sure each of these bugs doesn't creep back in.</li>
+</ul>
+
+
+APIs and other clear boundaries in the code lend themselves very well to unit tests, as do utility functions you're calling from many places in the application.  In the calendar, that means testing calendar movements and how we create and modify posts in WordPress, like this:
+
+<ol>
+<li>Move the calendar and check the dates.</li>
+<li>Create a post and make sure it was created properly.</li>
+<li>Edit the post we just created and make sure it saves properly.</li>
+<li>Move the post and make sure it shows up at the correct date.</li>
+<li>Move the post from two places at the same time and make sure we get the proper warning message.</li>
+<li>Delete the post from the server and make sure it isn't there anymore.</li>
+</ol>
+
+The penultimate test covers an error condition where two people move the same post at the same time.  Unit tests work well for this kind of error, since it's difficult to test and you're less likely to find problems with manual testing.
+
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/01/calendar_err.png" alt="" title="QUnit error test" width="549" height="423" class="aligncenter size-full wp-image-118200" />
+
+For your own application you should have at least one unit test for every data-changing operation your users can perform.  I like to add them for all the places a user can get data too.  It might sound like a lot of work, but you can cut down on it by writing single tests that cover multiple areas.
+
+<h4>Asynchronous Unit Tests</h4>
+
+Many of these combination unit tests make AJAX calls.  QUnit provides a special function for handling AJAX called <code>asyncTest</code>.  This function works just like <code>test</code>, but it pauses the test run at the end of the function.  The QUnit framework waits until your AJAX call finishes and you call the <code>start</code> function before restarting the test run.
+
+The <code>asyncTest</code> function handles all of the tests that edit posts from the calendar, including deleting the post at the end:
+
+<pre class="brush: javascript">
+asyncTest('Delete the post created for testing', function() {
+    expect(1);
+    
+    edcal.deletePost(edcal_test.post.id, function(res)
+    {
+        equals(jQuery('#post-' + res.post.id).length, 0, 
+               'The post should now be deleted from the calendar.');
+        start();
+    });
+});
+</pre>
+
+When you restart the test framework you can call more tests.  Calling the next test function at the end of the previous one chains them together and supports calling all of your tests with just a call to the first function.
+
+These tests, which call AJAX, make sure the integration between the JavaScript on the client and the PHP on the back end works properly.  
+
+<h4>That's Not a Unit Test</h4>
+
+When I first learned to write unit tests in C++ the rule was:  a single test should only call code in a single module or .cpp file.  The unit tests tested one unit of code.
+
+Changing posts from unit tests violates that rule.  Instead of just testing JavaScript, I'm really testing JavaScript, PHP, WordPress itself, and MySQL all at once.  That makes it an automated integration test. 
+
+Integration tests aren't traditional unit tests, but they work well for WordPress plugins.  When I create a post I know the AJAX code in my plugin works as well as the JavaScript code.  Covering a larger portion of the application with fewer tests makes it easier to focus on what I should be testing.
+
+<h3>What Not To Unit-Test</h3>
+
+You could write unit tests forever, but some are more useful than others.  Don't write these unit tests:
+
+<ul>
+<li><b>Don't unit-test UI</b>.  The test has to run by itself.  It can't wait for you to click a button or look at something and make sure it looks right.</li>
+
+<li><b>Don't unit-test performance</b>.  Tests take a variable amount of time on different machines and browsers.  Don't write unit tests that depend on a function returning in a specific amount of time.</li>
+
+<li><b>Don't unit-test code from other projects</b>.  It might be tempting to add unit tests for WordPress or that JQuery plugin you depend on, but it rarely pays off.  If you want to contribute unit tests to WordPress.org that's great, but your unit tests should make sure your plugin works.</li>
+</ul>
+  
+The Editorial Calendar has 26 unit tests for about 3,500 lines of code.  That may not sound like much, but they've saved many of my releases.  
+
+<h3>Unit Tests Saved My Butt</h3>
+
+I didn't add unit tests until the 13th release of my plugin.  By then the calendar had a couple of hundred users and was growing fast.  My plugin was working and I was getting close to release 1.0.  
+
+Instead of adding new features I took in a new framework, added special code to load it, wrote 381 lines of unit tests and integrated all of this into my plugin.  It seems like a lot of work, but it saved my butt.
+
+Right before a release I wrote some harmless-looking PHP code like this to get the JSON data representing a set of posts to show in the calendar:
+
+<pre class="brush: php">
+function edcal_postJSON($post) {
+    setup_postdata($post);
+    ?&gt;
+    {
+        "date" : "&lt;?php the_time('d') ?&gt;&lt;?php the_time('m') ?&gt;&lt;?php the_time('Y') ?&gt;", 
+        "title" : &lt;?php echo($this-&gt;edcal_json_encode(get_the_title())); ?&gt;,
+        "author" : &lt;?php echo($this-&gt;edcal_json_encode(get_the_author())); ?&gt;
+    },
+    &lt;?php
+}
+
+function edcal_posts() {
+    header("Content-Type: application/json");
+    
+    global $post;
+    $args = array(
+        'posts_per_page' =&gt; -1,
+        'post_status' =&gt; "publish&future&draft",
+        'post_parent' =&gt; null // any parent
+    );
+    
+    $myposts = query_posts($args);
+    
+    ?&gt;[
+        &lt;?php
+        $size = sizeof($myposts);
+        for($i = 0; $i &lt; $size; $i++) {	
+            $post = $myposts[$i];
+            edcal_postJSON($post, $i &lt; $size - 1);
+        }
+    ?&gt; ]
+    &lt;?php
+}
+</pre>
+
+I ran my code and everything worked.  I was about to release a new version, but I ran my unit tests just to make sure.  They failed.  Can you spot the bug?  I didn't.
+
+I was returning a JSON array, but the last item in the array had a trailing comma.  That's invalid JSON.  Firefox accepts it, but Safari, Chrome and IE don't.  I almost shipped a plugin that was broken for over half my users.  
+
+Now I run the unit tests on all the major browsers whenever I do a new release.  Any time WordPress releases a new version, I run the unit tests.  WordPress 3.3 broke the calendar &mdash; and I found out exactly how in 15 seconds.
+
+<h3>Popular Plugins Are Stable Plugins</h3>
+
+Most WordPress plugins are free and open source, but free doesn't always mean cheap.  The <a href="http://en.wikipedia.org/wiki/Total_cost_of_ownership">total cost of ownership</a> of unstable plugins is more than people will pay.  That's a fancy way of saying users will run from your plugin if it's a bug fest.  
+
+My plugin became popular because of its features, but stability kept it popular.  People remember one buggy release for a long time.  If the Editorial Calendar deleted or corrupted posts from just one blog, thousands of people would stop using it.  And they'd be right.
+
+Unit tests add the stability you need to support the multitude of different browsers, mobile devices and dark corners involved in any JavaScript application.  They're easy to write and they pay you back &mdash; you find the bugs, and your users don't.
+

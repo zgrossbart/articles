@@ -1,0 +1,5 @@
+A long time ago I was assigned to write an editor for a small mapping configuration file.  It was the kind of little task you give to the new guy on the team.  I got the editor working pretty quickly and was feeling pretty good about delivering ahead of schedule when some guy from the human factors team totally redesigned it.
+
+I was furious because his design was so much better than mine.  His was clear where mine was clunky and effortless where mine was confusing.  That was the moment I realized I was an accidental designer.
+
+When I was a little engineer I dreamed of growing up and writing compilers and database drivers.  I loved the backend and the only UI I worked on was system logging.  Then I needed to get other people to use my software.

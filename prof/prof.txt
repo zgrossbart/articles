@@ -1,0 +1,202 @@
+Your site works.  Now let's make it work faster.  
+
+Website performance is about two things:  how fast the page loads, and how fast the code on it runs.  There are plenty of services to make your site load faster, from <a href="http://stackoverflow.com/questions/3520285/is-there-a-good-javascript-minimizer">minimizers</a> to <a href="http://en.wikipedia.org/wiki/Content_delivery_network">CDNs</a>, but running faster is up to you.  
+
+Little changes in your code have gigantic performance impacts.  A few lines here or there make the difference between a blazingly fast site and the dreaded "Unresponsive Script" dialog.  This article shows you a few ways to find those lines of code with the <a href="http://code.google.com/chrome/devtools/docs/overview.html">Chrome Developer Tools</a>.
+
+<h3>Establish A Baseline</h3>
+
+We'll look at a simple application called a color sorter, which presents a grid of rainbow colors and lets you drag and drop to mix them up.  Each dot is a <code>DIV</code> tag with a little CSS to make it look like a circle.
+
+<a href="http://zgrossbart.github.com/jsprofarticle/index1.htm"><img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/03/color_sorter.png" alt="The Color Sorter" title="The Color Sorter" width="400" height="459" class="alignright size-full wp-image-119201" /></a>
+        
+Generating my rainbow colors was a little tricky, so I got a little help from <a href="http://krazydad.com/tutorials/makecolors.php">Tutorial: Making annoying rainbows and other color cycles in Javascript</a>.  
+
+The page loads pretty fast, but it still takes a moment and blinks a little before it paints.  Time to profile the page and make it faster.
+
+Always start performance improvement projects with a baseline understanding of how fast or slow your application already is.  The baseline lets you know if you're making improvements, and helps you make tradeoffs.  For this article I'll use the <a href="http://code.google.com/chrome/devtools/docs/overview.html">Chrome Developer Tools</a>.  
+
+The profiler is part of the Chrome Developer Tools, which are always available in Chrome.  Click the Tools menu under the little wrench to open them.  <a href="http://getfirebug.com">Firebug</a> has some profiling tools too, but the WebKit browsers (Chrome and Safari) have the best abilities to profile code and show timelines.  Chrome also offers an excellent additional tool for event tracing called <a href="https://developers.google.com/web-toolkit/speedtracer/">Speed Tracer</a>.
+
+To establish my baseline I'll start recording in the Timeline tab, load my page, and then stop the recording.  (To start recording, once the Chrome Developer Tools are open:  click the "Timeline" tab, then the small black circle icon for "Record" at the very bottom of the window.)  Chrome is smart about not really starting the recording until my page starts to load.  I run it three times and take the average, in case my computer was running slowly during the first test.
+
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/03/baseline1.png" alt="Performance baseline 1" title="Performance baseline 1" width="500" height="562" class="alignright size-full wp-image-119199" />
+        
+My average baseline &mdash; the time between the first request for my page and the final painting of the page in the browser &mdash; is 1.25 seconds.  That's not bad, but it's not great for such a small page.  
+
+I want to make my code run faster, but I'm not sure what's making it slow.  The profiler helps me find out.
+
+<h3>Create A Profile</h3>
+
+The Timeline told me how long my code took to run, but that doesn't help me know what's going on while it's running.  I could start making changes and run the Timeline again and again, but that's just a shot in the dark.  The Profiles tab gives me a better way to see what's going on.
+
+Profilers show you which functions are taking the most time.  I'll make my baseline profile by switching to the Profiles tab in the Chrome Developer Tools, where they offer three types of profiling:
+
+<ol>
+<li><b>JavaScript CPU Profile</b> shows you how much CPU time your JavaScript is taking.</li> <li><b>CSS Selector Profile</b> shows you how much CPU time is spent processing CSS selectors.</li> <li><b>Heap Snapshot</b> shows you how memory is used by your JavaScript objects.</li> </ol>
+
+I want to make my JavaScript run faster so I'll use the CPU profiling.  I start the profile, refresh my page, and then stop the profiler.
+
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/03/profile1.png" alt="The first profile" title="The first profile" width="500" height="562" class="alignright size-full wp-image-119202" />
+        
+The first thing that's clear from the profile is that there's a lot going on.  The color sorter uses jQuery and jQuery UI, and they're doing a lot of stuff like managing plugins and parsing regular expressions.  I can also see that two of my functions are at the top of the list:  <code>decimalToHex</code> and <code>makeColorSorter</code>.  These two functions take a total of 13.2% of my CPU time, so they're a good place to start making improvements.  
+
+I can expand the twisty arrow next to the function calls and see the complete function-call stack.  When I expand them I see that I call <code>decimalToHex</code> from <code>makeColorSorter</code> and <code>makeColorSorter</code> from <code>$(document).ready</code>.  
+
+Here's the code.
+
+<pre class="brush: javascript">$(document).ready(function() {
+    makeColorSorter(.05, .05, .05, 0, 2, 4, 128, 127, 121);
+    makeSortable();
+});
+</pre>
+
+Knowing where they're called from also makes it clear that making the colors sortable isn't my biggest performance problem.  <a href="http://37signals.com/svn/posts/3137-using-event-capturing-to-improve-basecamp-page-load-times">Performance issues adding a lot of sortables</a> are common, but my code is taking more time adding DOM elements than making them sortable.
+
+I want to start making those functions faster, but first I want to isolate my changes.  A lot happens when the page loads, and I want to get all of that out of my profile.  
+
+<h3>Isolate The Problem</h3>
+
+Instead of loading the color sorter when the document is ready, I'll make a <a href="http://zgrossbart.github.com/jsprofarticle/index2.htm">second version</a> which waits until you press a button to load the color sorter.  This isolates it from the document loading and helps me profile just my code.  I can change it back once I'm done performance-tuning.
+
+I'll call the new function <code>testColorSorter</code> and bind it to a clickable button:
+
+<pre class="brush: javascript">function testColorSorter() {
+    makeColorSorter(.05, .05, .05, 0, 2, 4, 128, 127, 121);
+    makeSortable();
+}
+</pre>
+
+<pre class="brush: html">&lt;button id="clickMe" onclick="testColorSorter();"&gt;Click me&lt;/button&gt; </pre>
+
+Changing the application before you profile might alter the performance of the application, but in an unexpected way.  This change looks pretty safe, but I still want to run the profiler again to see if I've accidentally changed anything else.  I'll create this new profile by starting the profiler, pressing the button in my app, and then stopping the profile.  
+
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/03/profile2.png" alt="The second profile" title="The second profile" width="500" height="562" class="alignright size-full wp-image-119203" />
+        
+The first thing to notice is that the <code>decimalToHex</code> function is now taking up 4.23% of the time; it's where the code spends the most time.  I'm going to create a new baseline so I can see how much the code improves in this scenario.
+
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/03/baseline2.png" alt="The second baseline" title="The second baseline" width="500" height="562" class="alignright size-full wp-image-119200" />
+        
+There are a few events before I press the button, but I really care how long it took between the times the mouse was clicked and the browser painted my color sorter.  The mouse button was clicked at 390 milliseconds and the paint event happened at 726 milliseconds.  726 minus 390 equals my baseline of 336 milliseconds.  Just as with the first baseline, I ran it three times and took the average time.
+
+At this point I know where I want to look and how long the code takes to run.  Now I'm ready to start fixing the problem.
+
+<h3>Make It Faster</h3>
+
+The profiler can only tell me which function is causing the problem so I need to look into it and understand what it does.
+
+<pre class="brush: javascript">function decimalToHex(d) {
+    var hex = Number(d).toString(16);
+    hex = "00".substr(0, 2 - hex.length) + hex; 
+    
+    console.log('converting ' + d + ' to ' + hex);
+    return hex;
+}</pre>
+
+Each dot in my color sorter gets a background color value in <a href="http://en.wikipedia.org/wiki/Hexadecimal">hex</a> like <code>#86F01B</code> or <code>#2456FE</code>.  These values represent the red, green and blue values of my color.  For example, <img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/03/bluedot.png" alt="Blue dot" title="Blue dot" width="14" height="14" style="margin: 0px;"/> has a background color of <code>#2456FE</code>, which means a red value of 36, a green value of 86 and a blue value of 254.  Each of these values must be between 0 and 255.
+
+The <code>decimalToHex</code> function converts these <a href="http://en.wikipedia.org/wiki/Rgb">RGB</a> colors to the hex colors I can use in my page.  
+
+The function is pretty simple, but I left a <code>console.log</code> message in there.  That's some debugging code I can just remove.  
+
+The <code>decimalToHex</code> function is also adding padding to the beginning of the number.  This is important because some base-10 numbers result in a single hex digit:  12 in base 10 is C in hex, but CSS requires two digits.  I can make that conversion faster by making it a little less generic.  I know that the numbers I want to pad each have one digit, so I can rewrite the function like this:
+
+<pre class="brush: javascript">function decimalToHex(d) {
+    var hex = Number(d).toString(16);
+    return hex.length === 1 ? '0' + hex : hex; }</pre>
+
+<a href="http://zgrossbart.github.com/jsprofarticle/index3.htm">Version three</a> of the color sorter only changes the string when it needs the padding and doesn't have to call <code>substr</code>.  With this new function my runtime is 137 milliseconds.  I can also profile my code again and see that the <code>decimalToHex</code> function is now taking only 0.04% of the total time &mdash; way down the list.
+
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/03/profile3.png" alt="The third profile" title="The third profile" width="500" height="562" class="alignright size-full wp-image-119204" />
+        
+I can also see that the function using the most CPU is <code>e.extend.merge</code> from jQuery.  I'm not really sure what that function does since the code is minimized.  I could add the development version of jQuery, but I can see it's getting called from <code>makeColorSorter</code> so I'll make that one faster next.
+
+<h3>Minimize Content Changes</h3>
+
+The rainbow colors in my color sorter are generated from a sine wave.  The code looks at a center point in the color spectrum and creates a wave through that center point over a specified width.  That makes the colors change in a rainbow pattern.  I can also change the colors on my rainbow by changing the frequency of the red, green and blue.
+
+<pre class="brush: javascript">function makeColorSorter(frequency1, frequency2, frequency3,
+                         phase1, phase2, phase3,
+                         center, width, len) {
+
+    for (var i = 0; i < len; ++i)
+    {
+       var red = Math.floor(Math.sin(frequency1 * i + phase1) * width + center);
+       var green = Math.floor(Math.sin(frequency2 * i + phase2) * width + center);
+       var blue = Math.floor(Math.sin(frequency3 * i + phase3) * width + center);
+       
+       console.log('red: ' + decimalToHex(red));
+       console.log('green: ' + decimalToHex(green));
+       console.log('blue: ' + decimalToHex(blue));
+       
+       var div = $('&lt;div class="colorBlock"&gt;&lt;/div&gt;');
+       div.css('background-color', '#' + decimalToHex(red) + decimalToHex(green) + decimalToHex(blue));
+       $('#colors').append(div);
+       
+    }
+}</pre>
+
+There are more <code>console.log</code> functions I can take out.  The calls are especially bad since each of them is also calling the <code>decimalToHex</code> function.  That means that <code>decimalToHex</code> is effectively being called twice as often as it should.
+
+This function changes the DOM a lot.  Every time the loop runs it adds a new <code>DIV</code> to my "colors" <code>DIV</code> tag.  That makes me wonder if that's what the <code>e.extend.merge</code> function was doing.  The profiler makes it easy to tell with a simple experiment.
+
+Instead of adding a new <code>DIV</code> each time the loop runs, I want to add all of the <code>DIV</code> tags at once.  I'll create a variable to hold them and then add them once at the end.
+
+<pre class="brush: javascript">function makeColorSorter(frequency1, frequency2, frequency3,
+                         phase1, phase2, phase3,
+                         center, width, len) {
+
+    var colors = "";
+    for (var i = 0; i < len; ++i)
+    {
+       var red = Math.floor(Math.sin(frequency1 * i + phase1) * width + center);
+       var green = Math.floor(Math.sin(frequency2 * i + phase2) * width + center);
+       var blue = Math.floor(Math.sin(frequency3 * i + phase3) * width + center);
+       
+       colors += '&lt;div class="colorBlock" style="background-color: #' + 
+           decimalToHex(red) + decimalToHex(green) + decimalToHex(blue) + '"&gt;&lt;/div&gt;';
+    }
+    
+    $('#colors').append(colors);
+}</pre>
+
+This small change in the code means it's only changing the DOM once when it adds all of the <code>DIV</code> tags.  I'll test that with the timeline:  now the runtime between the click and the paint events is 31 milliseconds.  This one DOM change took the time for <a href="http://zgrossbart.github.com/jsprofarticle/index4.htm">version four</a> down by about 87%.  I can also run the profiler again, and see that the <code>e.extend.merge</code> function now takes up such a small percentage of the time that it doesn't show up on the list.
+
+The code can get one step faster by removing the <code>decimalToHex</code> function entirely.  CSS <a href="http://www.w3schools.com/cssref/css_colors.asp">supports RGB colors</a> so I don't need to convert them to hex.  Now I can write my <code>makeColorSorter</code> function like this:
+
+<pre class="brush: javascript">function makeColorSorter(frequency1, frequency2, frequency3,
+                         phase1, phase2, phase3,
+                         center, width, len) {
+
+    var colors = "";
+    for (var i = 0; i < len; ++i)
+    {
+       var red = Math.floor(Math.sin(frequency1 * i + phase1) * width + center);
+       var green = Math.floor(Math.sin(frequency2 * i + phase2) * width + center);
+       var blue = Math.floor(Math.sin(frequency3 * i + phase3) * width + center);
+       
+       colors += '&lt;div class="colorBlock" style="background-color: rgb(' + 
+           red + ',' + green + ',' + blue + ')"&gt;&lt;/div&gt;';
+    }
+    
+    $('#colors').append(colors);
+}</pre>
+
+<a href="http://zgrossbart.github.com/jsprofarticle/index5.htm">Version five</a> runs in only 26 milliseconds and uses 18 lines of code for what used to take 28 lines.
+
+<h3>JavaScript Profiling In Your Application</h3>
+
+Real-world applications are much more complex than the color sorter, but profiling them follows the same basic steps.
+
+<ol>
+<li><b>Establish a baseline</b> so you know where you're starting from.</li> <li><b>Isolate the problem</b> from any other code running in your application.</li> <li><b>Make it faster</b> in a controlled environment with frequent timelines and profiles.</li> </ol>
+
+There are a few other rules to follow when performance-tuning.
+
+<ol>
+<li><b>Start with the slowest parts first</b> so you get the most improvement for the time you spend tuning.</li> <li><b>Control your environment</b>.  If you switch computers or make any other major changes, always run a new baseline.</li> <li><b>Repeat the analysis</b> so you can avoid getting inaccurate results caused by anomalies on your computer.</li> </ol>
+
+Everyone wants their site to run faster.  You have to develop new features, but new features usually make a site run slower.  So investing time in performance-tuning pays off.
+
+Profiling and tuning cut the <a href="http://zgrossbart.github.com/jsprofarticle/index6.htm">final color sorter's</a> runtime by over 92%.  How much faster could your site be?
+

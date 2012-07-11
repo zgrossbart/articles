@@ -1,0 +1,96 @@
+Love the grid
+Why good code matters
+Why JavaScript sucks and what you can do about it
+The magic of JSLint
+JavaScript's dark corners
+Why people like strongly typed languages - I love my compiler
+  
+Build secure web applications
+
+native vs. HTML5 native apps
+When you should write a native mobile app and when you shouldn't
+
+Why I love the Google Closure Compiler
+
+Common cryoptography - http://coding.smashingmagazine.com/2011/10/04/quick-look-math-animations-javascript/
+  SSL
+  Storing passwords
+  VPN
+  
+Backpack algorithms and public key cryptography made easy
+    Where you're already using public key cryptography - SSL, GitHub, SSH
+    One-time pads and basic encryption
+    Backpack algorithms and the basics of public keys
+    RSA and other public key encryption
+    Secrets in the real world
+    
+An engineer's guide to UX
+My love affair with Robert Bringhurst
+The accidental designer
+        “Don't try to be original, just try to be good.” -Paul Rand
+        Steal from two places and you'll make something original
+        
+
+Watch out for nifty
+        Why design is so hard for engineers
+        Good design makes engineering look too easy
+        The best UI for a shovel is a hole
+        Type really matters
+        
+        
+When I was a little engineer I dreamed of growing up and writing compilers and database drivers.  I'm an accidental designer.  
+
+Stateless security models
+
+
+The need for speed
+        Loading fast vs. running fast
+        Finding problems
+                Isolate
+                Create a baseline
+                Eliminate variations
+        Using timers
+        Avoiding complex selectors
+        Tools that make your page load faster
+                PageSpeed
+                YSlow
+        Tools that make your page run faster
+                SpeedTracer
+                
+        Dynamic content vs. static content
+                CDNs
+                
+http://stackoverflow.com/questions/1094760/network-tools-that-simulate-slow-network-connection
+
+From paper to prototype to code
+
+Sculpting water - Changing dev culture at build time and commit time.  
+
+Software development needs good process and fails under stupid process.  A good process disappears from your daily life (tabs vs. spaces)
+
+Good process recognizes the difference between process and culture.  Process is for things that never change like tabs vs. spaces and are easy to measure like no empty catch blocks.  Bad process tries to control things you might change your mind about like what makes good code documentation or things that are hard to measure like code reviews.
+
+Commandments of localization:
+
+1. Resource all strings
+2. Never concatenate strings
+3. Put all punctuation in the resourced string
+4. Never hard-code date, time, or currency formats
+5. Never concatenate names
+6. Use UTF-8 99.9999 percent of the time
+7. Use dynamic layouts
+8. Always use a full locale
+9. Never trust the browser to know the right locale
+
+
+JavaScript sucks, but that's not necessarily a bad thing 
+
+CoffeeScript 
+Closurescript 
+GWT 
+Dart 
+Clojure 
+OPA
+
+Javascript sucks, long live JavaScript
+
