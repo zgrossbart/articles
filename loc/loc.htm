@@ -104,7 +104,7 @@ Now the form can use <em>Username:</em> in English and <em>Nom d'utilisateur :</
 
 My name is Zack Grossbart.  Zack is my given or first name, and Grossbart is my last or family name.  Everyone in my family is named Grossbart, but I'm the only Zack.  
 
-In English-speaking countries the first name is the given name and the last name is the family name.  Most Asian countries go the other way.
+In English-speaking countries the first name is the given name and the last name is the family name.  Most Asian countries go the other way and some cultures only have one name.
 
 The cellist Yo-Yo Ma is a member of the Ma family.  In Chinese he writes his family name first:  Ma Yo-Yo (馬友友).  
 
@@ -128,6 +128,8 @@ Dates and times are also tricky when displaying calendars and date pickers.  Est
 
 The same is true for currencies and other number formats.  Some countries use commas to separate numbers and others use periods.  Always use a library with localized files for each of the locales you need to support.
 
+StackOverflow covered this topic well when discussing <a href="https://twiki.innerweb.novell.com/bin/view/IDApps/GemstoneProjectsOverview">Daylight saving time and Timezone best practices</a>.
+
 <h3>6. Use UTF-8 almost every time</h3>
 
 The history of computer character encodings is a <a href="http://coding.smashingmagazine.com/2012/06/06/all-about-unicode-utf8-character-sets/">long story</a>, but the most important thing to remember is that <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a> is the right choice 99 percent of the time.  The only time not to use UTF-8 is when you're working primarily with Asian languages and absolutely need the efficiency of <a href="http://en.wikipedia.org/wiki/Utf-16">UTF-16</a>.
@@ -140,6 +142,10 @@ Use UTF-8 at the top of all your HTML pages:
 
 <pre class="brush: html">&lt;head&gt;
     &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;</pre>
+    
+and specify UTF-8 in the HTTP <code>Content-Type</code> header like this:
+
+<pre>Content-Type: text/html; charset=utf-8</pre>
 
 The <a href="http://www.ietf.org/rfc/rfc4627.txt">JSON specification</a> requires that all JSON documents use Unicode with a default of UTF-8, so make sure to use UTF-8 whenever you're reading or writing data.
 
