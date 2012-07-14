@@ -102,6 +102,8 @@ Strongly vs. weakly typed languages and why they matter
         Java
         Ruby, PHP, JavaScript and other duck typed languages
         Which way is better?
+        
+runtime errors vs. compile time errors
 
 
 Difinitive REST guide
