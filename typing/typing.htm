@@ -2,11 +2,9 @@ Programmers turn every issue into a religious debate.  Should your curly-braces 
 
 Strongly typed languages are the best because they provide support and keep you out of trouble.  Weakly typed languages are the best because they let you get your work done faster are less complicated.  The debate rages on, but it all started with C.
 
-<h3>Weak, Strong and Duck Typing</h3>
-
 The C programming language is th emost influential programming language in the world and every language it influences tries to improve it's weak typing system.
 
-<h4>When the world was weakly typed</h4>
+<h3>When the world was weakly typed</h3>
 
 C treats everything like a number.  A character is just the number representing it and true and false are just 1 and 0.  C programmers are primarily focused on memory.  They assign values into memory, operate on them, and write them to other places in memory.  
 
@@ -20,7 +18,7 @@ Confusion over types gets worse with larger projects.  Without a strong process 
 
 The frustration over these issues gave rise to a new type of programming languages that added static typing.
 
-<h4>Static typed languages - C++ and Objective-C</h4>
+<h3>Static typed languages - C++ and Objective-C</h3>
 
 C ran everywhere and just replacing it wasn't possible so the new programing languages uses a subset of the C functionality and strict guidelines to improve the loose nature of the language.  C++ and Objective-C compile into the same bytes as C, but they use the compiler to restrict the code you can write.  
 
@@ -43,7 +41,7 @@ Static typing goes a long way to fix this problem, but it can't check anything w
   
 Static typing is stronger than weak, but it isn't strong enough.
 
-<h4>Strongly typed languages - Java</h4>
+<h3>Strongly typed languages - Java</h3>
 
 Java has obsessive compulsive disorder.  C++ offers you some stricter ways of using C, Java makes sure you use them.  Java needs everything defined so you know at all times what type of object you have, what type of functions that object has and if you're calling them properly. 
 
@@ -74,7 +72,7 @@ It's also worth noting that I had to define this test code within a class.  Java
 
 Java has a few other ways it extends the object model such as <a href="http://en.wikipedia.org/wiki/Interface_(computing)">interfaces</a> and <a href="http://en.wikipedia.org/wiki/Abstract_class">abstract types</a>, but it follows the same basic idea as static typing.  In both cases you have to know what an object is when you write the code.
 
-<h4>Duck type languages - JavaScript, Ruby and manny others</h4>
+<h3>Duck type languages - JavaScript, Ruby and manny others</h3>
 
 Weakly typed languages don't do any type checking, strongly typed languages always do, dynamic languages split the difference.  In JavaScript I define a variable with the keyword <code>var</code> instead of a type like <code>int</code>, or <code>char</code>.  I don't know what type this variable has and I don't need to until I actually want to access it.
 
@@ -129,6 +127,16 @@ They call this duck typing because it looks at the object to determine what it i
 
 C shows errors when the program runs.  C++, Objective-C and Java use the compiler to catch errors before the program runs.  JavaScript and Ruby pushed those errors back to the run time of the application.  That's why the strongly typed people hate JavaScript so much.  It looks like a step backward.
 
-<h3>Strongly type languages are better</h3>
+<h3>Each one excels where the other fails</h3>
 
+I recently needed a program to find a place in a specific XML file, make a small change and save the file.  On a team of Java coders I wrote this program in the dynamically typed language Python.  
 
+To change an XML file in Java would have to write a new class, open an input stream, call the DOM parser, traverse the tree, call the right methods on the right elements, and write the file out to an output stream.  It could easily be hundreds of lines.  I wrote the whole program in 13 lines with Python.  
+
+My code's so much shorter in Python than Java partly because of the libraries available in the different langauges, but it's common among dynamic languages.  The program would be a lot shorter in PHP than C++ or in Ruby than Objective-C.  
+
+Fewer lines of code means less bugs.  I write the program faster and debug it just as quickly.  Strongly typed languages are a terrible solution for 13 line programs.  They keep you out of trouble that you'll never have in 13 lines, but most software is a lot longer than 13 lines.
+
+Engineers that worked in C spent years tearing their hair out over type conversion errors, corrupt values, and the terrible bugs that come from small typos.  They've been burnt and learned that the compiler helps them stay out of trouble.  The more complex the software the more trouble it causes.
+
+That's the trade off between the two paradigms.  Strongly typed languages make the program more difficult to write, but easier to maintain.  Dynamic languages are easy to write, but make things more difficult to maintain.  It's all about where you want to spend your time.
