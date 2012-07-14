@@ -14,7 +14,7 @@ C does define variables with types like <code>int</code> for integeter or <code>
 
 This stype of weakly typed programming caused a lot of bugs.  It was easy to treat something like a <code>char</code> when it should have been an <code>int</code>.  These bugs lead to confounding situations where you had a value in memory and had no idea what it was.  
 
-Imagine you access an area in memory and you get the number <code>1,229,799,107</code>.  The number could be the result of a mathematical calculation (1,229,799,107), the cost of a government program ($1.2 billion) or a time stamp (Saturday, 20 Dec 2008).  When all you have is the number there's no way to know that it's really the number codes for the letters in my name: <code>zack</code>.
+Imagine you access an area in memory and you get the number <code>1229799107</code>.  The number could be the result of a mathematical calculation (1,229,799,107), the cost of a government program ($1.2 billion) or a time stamp (Saturday, 20 Dec 2008).  When all you have is the number there's no way to know that it's really the number codes for the letters in my name: <code>zack</code>.
 
 Confusion over types gets worse with larger projects.  Without a strong process to enforce documentation the code gets impossible to follow or debug.
 
@@ -28,10 +28,107 @@ The compiler makes sure that I don't use an <code>int</code> when I should have 
 
 In C++ and Objective-C our number (1229799107) has a meaning.  I can define it as a string of characters and make sure that nobody tries to use it as a currency or a date.  
 
+Static typing makes it possible to support objects with sets of functionality that always work in a well defined way.  Now I can create a <code>Person</code> object and make sure the <code>getName</code> function always returns an array of characters of someone's name.
+
+<pre class="brush: java">class Person {
+public:
+    
+    char* getName() {
+        return "zack";
+    }
+};
+</pre>
+
 Static typing goes a long way to fix this problem, but it can't check anything when the program is running since a C++ or Objective-C program is just like C code when it runs.  They also make it possible to mix and match weakly typed C code with staticly typed C++ or Objective-C to bypass all of this type checking.
   
 Static typing is stronger than weak, but it isn't strong enough.
 
 <h4>Strongly typed languages - Java</h4>
 
-Java started from the ground up and doesn't support C.  They added a strong typing system and enforce it using a compiler and a runtime virtual machine.  
+Java has obsessive compulsive disorder.  C++ offers you some stricter ways of using C, Java makes sure you use them.  Java needs everything defined so you know at all times what type of object you have, what type of functions that object has and if you're calling them properly. 
+
+Java also stopped supporting C code and doesn't give you any way to get out of the strong typing system of Java.  
+
+The <code>Person</code> object looks almost the same in Java, but I can use a <code>String</code> object instead of a character array.
+
+<pre class="brush: java">public class Person {
+    public String getName() {
+        return "zack";
+    }
+}
+</pre>
+
+I get the name by creating a new object and calling the <code>getName</code> function like this:
+
+<pre class="brush: java">public class Main {
+    public static void main (String args[]) {
+        Person person = new Person();
+        System.out.println("The name is " + person.getName());
+    }
+}
+</pre>
+
+This code creates a new <code>Person</code> object, assigns it to a variable named <code>person</code> and calls the <code>getName</code> function.  If I try to assign my <code>person</code> variable to a different type like a character or an integer the Java compiler will show an error that these are incompatible types.  
+
+It's also worth noting that I had to define this test code within a class.  Java requires every piece of code be within a well defined class.  That's a big part of the reason why people complain that Java forces you to write too much boiler plate.
+
+Java has a few other ways it extends the object model such as <a href="http://en.wikipedia.org/wiki/Interface_(computing)">interfaces</a> and <a href="http://en.wikipedia.org/wiki/Abstract_class">abstract types</a>, but it follows the same basic idea as static typing.  In both cases you have to know what an object is when you write the code.
+
+<h4>Duck type languages - JavaScript, Ruby and manny others</h4>
+
+Weakly typed languages don't do any type checking, strongly typed languages always do, dynamic languages split the difference.  In JavaScript I define a variable with the keyword <code>var</code> instead of a type like <code>int</code>, or <code>char</code>.  I don't know what type this variable has and I don't need to until I actually want to access it.
+
+For example, I could define an object in JavaScript that has a <code>getName</code> function.
+
+<pre class="brush: javascript">var person = {
+    getName: function() {
+        return 'zack';
+    }
+};
+
+alert('The name is ' + person.getName());
+</pre>
+
+Now I have an object named <code>person</code> and it has a function named <code>getName</code>.  If I call <code>person.getName()</code> it will result in <code>zack</code>.  
+
+The big difference is that I declared <code>person</code> as a <code>var</code>.  That means it's variable.  I could reassign it to anything.  
+
+This is valid in JavaScript:
+
+<pre class="brush: javascript">var person = {
+    getName: function() {
+        return 'zack';
+    }
+};
+
+person = 5;
+
+alert('The name is ' + person.getName());
+</pre>
+
+This code creates a variable name <code>person</code> and assigns it to an object with a <code>getPerson</code> function, but then it reassigns that variable to the number 5.  When this code runs the result is <code>TypeError: Object 5 has no method 'getName'</code>.  JavaScript is telling saying that the object <code>5</code> doesn't have a function named <code>getName</code>.  In Java this error would come up during compilation, but JavaScript makes you wait for runtime.  
+
+Waiting for runtime means I can change the type of the object based on the conditions of the program.  For example:
+
+<pre class="brush: javascript">var person = {
+    getName: function() {
+        return 'zack';
+    }
+};
+
+if (new Date().getMinutes() > 29) {
+    person = 5;
+}
+
+alert('The name is ' + person.getName());
+</pre>
+
+Now this code will work at 9:15, but will fail at 9:30.  
+
+They call this duck typing because it looks at the object to determine what it is.  If it walks like a duck and quacks like a duck then it must be a duck.  
+
+C shows errors when the program runs.  C++, Objective-C and Java use the compiler to catch errors before the program runs.  JavaScript and Ruby pushed those errors back to the run time of the application.  That's why the strongly typed people hate JavaScript so much.  It looks like a step backward.
+
+<h3>Strongly type languages are better</h3>
+
+
