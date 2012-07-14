@@ -1,0 +1,37 @@
+Programmers turn every issue into a religious debate.  Should your curly-braces go on the same line or the next?  Is Emacs better than VI?  These debates have raged for decades, but the number one debate in the programming world right now is what's better strongly typed languages or dynamic ones?
+
+Strongly typed languages are the best because they provide support and keep you out of trouble.  Weakly typed languages are the best because they let you get your work done faster are less complicated.  The debate rages on, but it all started with C.
+
+<h3>Weak, Strong and Duck Typing</h3>
+
+The C programming language is th emost influential programming language in the world and every language it influences tries to improve it's weak typing system.
+
+<h4>When the world was weakly typed</h4>
+
+C treats everything like a number.  A character is just the number representing it and true and false are just 1 and 0.  C programmers are primarily focused on memory.  They assign values into memory, operate on them, and write them to other places in memory.  
+
+C does define variables with types like <code>int</code> for integeter or <code>char</code> for character, but it doesn't check those types.  When I read the variable out of memory I need to know what type it is.  That makes C a weakly typed language.  
+
+This stype of weakly typed programming caused a lot of bugs.  It was easy to treat something like a <code>char</code> when it should have been an <code>int</code>.  These bugs lead to confounding situations where you had a value in memory and had no idea what it was.  
+
+Imagine you access an area in memory and you get the number <code>1,229,799,107</code>.  The number could be the result of a mathematical calculation (1,229,799,107), the cost of a government program ($1.2 billion) or a time stamp (Saturday, 20 Dec 2008).  When all you have is the number there's no way to know that it's really the number codes for the letters in my name: <code>zack</code>.
+
+Confusion over types gets worse with larger projects.  Without a strong process to enforce documentation the code gets impossible to follow or debug.
+
+The frustration over these issues gave rise to a new type of programming languages that added static typing.
+
+<h4>Static typed languages - C++ and Objective-C</h4>
+
+C ran everywhere and just replacing it wasn't possible so the new programing languages uses a subset of the C functionality and strict guidelines to improve the loose nature of the language.  C++ and Objective-C compile into the same bytes as C, but they use the compiler to restrict the code you can write.  
+
+The compiler makes sure that I don't use an <code>int</code> when I should have used a <code>char</code>, but it only checks at compile time and that limits what it can really check.  It can't check at runtime so we call it a static type check.
+
+In C++ and Objective-C our number (1229799107) has a meaning.  I can define it as a string of characters and make sure that nobody tries to use it as a currency or a date.  
+
+Static typing goes a long way to fix this problem, but it can't check anything when the program is running since a C++ or Objective-C program is just like C code when it runs.  They also make it possible to mix and match weakly typed C code with staticly typed C++ or Objective-C to bypass all of this type checking.
+  
+Static typing is stronger than weak, but it isn't strong enough.
+
+<h4>Strongly typed languages - Java</h4>
+
+Java started from the ground up and doesn't support C.  They added a strong typing system and enforce it using a compiler and a runtime virtual machine.  

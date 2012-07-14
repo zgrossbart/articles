@@ -95,3 +95,13 @@ OPA
 Javascript sucks, long live JavaScript
 
 Strongly vs. weakly typed languages and why they matter
+
+        In the beginning there was C
+        Object oriented and strongly typed languages
+        C++ and Objective C
+        Java
+        Ruby, PHP, JavaScript and other duck typed languages
+        Which way is better?
+
+
+Difinitive REST guide
