@@ -27,7 +27,7 @@ Backpack algorithms and public key cryptography made easy
 An engineer's guide to UX
 My love affair with Robert Bringhurst
 The accidental designer
-        “Don't try to be original, just try to be good.” -Paul Rand
+        ï¿½Don't try to be original, just try to be good.ï¿½ -Paul Rand
         Steal from two places and you'll make something original
         
 
@@ -94,3 +94,4 @@ OPA
 
 Javascript sucks, long live JavaScript
 
+Strongly vs. weakly typed languages and why they matter
