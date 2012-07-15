@@ -1,53 +1,63 @@
-Programmers turn every issue into a religious debate.  Should your curly-braces go on the same line or the next?  Is Emacs better than VI?  These debates have raged for decades, but the number one debate in the programming world right now is what's better strongly typed languages or dynamic ones?
+Strongly typed languages are the best because they keep you out of trouble.  Weakly typed languages are the best because they let you get your work done faster.  The debate between strongly and weakly typed languages rages on, but it all started with C.
 
-Strongly typed languages are the best because they provide support and keep you out of trouble.  Weakly typed languages are the best because they let you get your work done faster are less complicated.  The debate rages on, but it all started with C.
+C treats everything like a number.  A character is just the number representing it and true and false are just 1 and 0.  Representing everything as a number make it easier to assign values into computer memory.
 
-The C programming language is th emost influential programming language in the world and every language it influences tries to improve it's weak typing system.
+C does define variables with types like <code>int</code> for integer or <code>char</code> for character, but that just defines how much memory to use for the variable.  When I want to access the variable and print it out I need to know what type it is.
 
-<h3>When the world was weakly typed</h3>
+<pre class="brush: java"> int a = 1;
+printf("int: %i\n", a);
 
-C treats everything like a number.  A character is just the number representing it and true and false are just 1 and 0.  C programmers are primarily focused on memory.  They assign values into memory, operate on them, and write them to other places in memory.  
+char z = 'z';
+printf("char: %c\n", z);
+</pre>
 
-C does define variables with types like <code>int</code> for integeter or <code>char</code> for character, but it doesn't check those types.  When I read the variable out of memory I need to know what type it is.  That makes C a weakly typed language.  
+The <code>printf</code> function in C needs special formatting know how to display number different from characters because it doesn't know what the type of each variable is.  If I change the last line to 
 
-This stype of weakly typed programming caused a lot of bugs.  It was easy to treat something like a <code>char</code> when it should have been an <code>int</code>.  These bugs lead to confounding situations where you had a value in memory and had no idea what it was.  
+<pre class="brush: java">char z = 'z';
+printf("char: %i\n", z);
+</pre>
 
-Imagine you access an area in memory and you get the number <code>1229799107</code>.  The number could be the result of a mathematical calculation (1,229,799,107), the cost of a government program ($1.2 billion) or a time stamp (Saturday, 20 Dec 2008).  When all you have is the number there's no way to know that it's really the number codes for the letters in my name: <code>zack</code>.
+Then I get the number code <code>122</code> instead of the letter <code>z</code>.  C doesn't know if <code>z</code> is a character or an integer, it has a weak type.
 
-Confusion over types gets worse with larger projects.  Without a strong process to enforce documentation the code gets impossible to follow or debug.
+Weak typing is fast since there no overhead of remembering types, but it leads to some nasty bugs.  If you don't know what the variable <code>z</code> is then there's no way to know how to format it.  Imagine you access a variable and get the number <code>1229799107</code>.  The number could be the result of a mathematical calculation (1,229,799,107), the cost of a government program ($1.2 billion) or a time stamp (Saturday, 20 Dec 2008).  When all you have is the number there's no way to know that it's really the number codes for the letters in my name: <code>zack</code>.
 
-The frustration over these issues gave rise to a new type of programming languages that added static typing.
+Confusion over types gets worse with larger projects.  Without a strong process to enforce documentation the code's impossible to follow or debug.
+
+The frustration over these issues inspired the invention of static typing.
 
 <h3>Static typed languages - C++ and Objective-C</h3>
 
-C ran everywhere and just replacing it wasn't possible so the new programing languages uses a subset of the C functionality and strict guidelines to improve the loose nature of the language.  C++ and Objective-C compile into the same bytes as C, but they use the compiler to restrict the code you can write.  
+The next programing languages used a subset of the C functionality and strict guidelines to improve the loose nature of the language.  C++ and Objective-C compile into the same bytes as C, but they use the compiler to restrict the code you can write.  
 
-The compiler makes sure that I don't use an <code>int</code> when I should have used a <code>char</code>, but it only checks at compile time and that limits what it can really check.  It can't check at runtime so we call it a static type check.
+In C++ and Objective-C our number (1229799107) has a meaning.  I can define it as a string of characters and make sure that nobody tries to use it as a currency or a date.  The compiler enforces that it's used properly, but 
 
-In C++ and Objective-C our number (1229799107) has a meaning.  I can define it as a string of characters and make sure that nobody tries to use it as a currency or a date.  
-
-Static typing makes it possible to support objects with sets of functionality that always work in a well defined way.  Now I can create a <code>Person</code> object and make sure the <code>getName</code> function always returns an array of characters of someone's name.
+Static typing supports objects with sets of functionality that always work in a well defined way.  Now I can create a <code>Person</code> object and make sure the <code>getName</code> function always returns the string of someone's name.
 
 <pre class="brush: java">class Person {
-public:
-    
-    char* getName() {
-        return "zack";
-    }
+    public:
+        string getName() {
+            return "zack";
+        }
 };
 </pre>
 
-Static typing goes a long way to fix this problem, but it can't check anything when the program is running since a C++ or Objective-C program is just like C code when it runs.  They also make it possible to mix and match weakly typed C code with staticly typed C++ or Objective-C to bypass all of this type checking.
+Now I can call my object like this:
+
+<pre class="brush: java">Person p;
+printf("The name is %s\n", p.getName().c_str());
+</pre>
+
+Static typing goes a long way to avoid the bugs from weakly typed languages, but it can't check anything when the program is running since a C++ or Objective-C program is just like C code when it runs.  They also left the option of mixing weakly typed C code with static typed C++ or Objective-C to bypass all of the type checking.
   
-Static typing is stronger than weak, but it isn't strong enough.
+Java went a step beyond that to add type checking when the code runs.
 
 <h3>Strongly typed languages - Java</h3>
 
-Java has obsessive compulsive disorder.  C++ offers you some stricter ways of using C, Java makes sure you use them.  Java needs everything defined so you know at all times what type of object you have, what type of functions that object has and if you're calling them properly. 
+C++ offers you some stricter ways of using C, Java makes sure you use them.  Java needs everything defined so you know at all times what type of object you have, which functions that object has and if you're calling them properly. 
 
-Java also stopped supporting C code and doesn't give you any way to get out of the strong typing system of Java.  
+Java also stopped supporting C code and the other ways of getting out of strong typing.
 
-The <code>Person</code> object looks almost the same in Java, but I can use a <code>String</code> object instead of a character array.
+The <code>Person</code> object looks almost the same in Java.
 
 <pre class="brush: java">public class Person {
     public String getName() {
@@ -66,17 +76,19 @@ I get the name by creating a new object and calling the <code>getName</code> fun
 }
 </pre>
 
-This code creates a new <code>Person</code> object, assigns it to a variable named <code>person</code> and calls the <code>getName</code> function.  If I try to assign my <code>person</code> variable to a different type like a character or an integer the Java compiler will show an error that these are incompatible types.  
+This code creates a new <code>Person</code> object, assigns it to a variable named <code>person</code>, calls the <code>getName</code> function and prints out the value.  I don't need a formatter string like <code>%s</code> because Java gave everything a <code>toString</code> function.  
 
-It's also worth noting that I had to define this test code within a class.  Java requires every piece of code be within a well defined class.  That's a big part of the reason why people complain that Java forces you to write too much boiler plate.
+If I try to assign my <code>person</code> variable to a different type like a character or an integer the Java compiler will show an error that these are incompatible types.  If I was calling a separate API which had changed since I compiled the Java runtime would still find the type error.  
 
-Java has a few other ways it extends the object model such as <a href="http://en.wikipedia.org/wiki/Interface_(computing)">interfaces</a> and <a href="http://en.wikipedia.org/wiki/Abstract_class">abstract types</a>, but it follows the same basic idea as static typing.  In both cases you have to know what an object is when you write the code.
+Java also requires every piece of code be contained within a well defined class.  It's a big part of the reason why people complain Java forces you to write too much boiler plate.
 
-<h3>Duck type languages - JavaScript, Ruby and manny others</h3>
+Strong typing has a few advantages over static typing, but the philosophy is the same:  you must specify the type of an object when you write the code.
 
-Weakly typed languages don't do any type checking, strongly typed languages always do, dynamic languages split the difference.  In JavaScript I define a variable with the keyword <code>var</code> instead of a type like <code>int</code>, or <code>char</code>.  I don't know what type this variable has and I don't need to until I actually want to access it.
+<h3>Duck type languages - JavaScript, Python, Ruby, PHP and many others</h3>
 
-For example, I could define an object in JavaScript that has a <code>getName</code> function.
+Weakly typed languages don't do any type checking, strongly typed languages always do, dynamic languages split the difference.  In JavaScript I define a variable with the keyword <code>var</code> instead of a type like <code>int</code>, or <code>char</code>.  I don't know the type of this variable and I don't need to until I actually want to access it.
+
+I can define an object in JavaScript with the <code>getName</code> function.
 
 <pre class="brush: javascript">var person = {
     getName: function() {
@@ -87,11 +99,9 @@ For example, I could define an object in JavaScript that has a <code>getName</co
 alert('The name is ' + person.getName());
 </pre>
 
-Now I have an object named <code>person</code> and it has a function named <code>getName</code>.  If I call <code>person.getName()</code> it will result in <code>zack</code>.  
+Now I have an object named assigned to the variable <code>person</code> and it has a function named <code>getName</code>.  If I call <code>person.getName()</code> it will result in <code>zack</code>.  
 
-The big difference is that I declared <code>person</code> as a <code>var</code>.  That means it's variable.  I could reassign it to anything.  
-
-This is valid in JavaScript:
+I declared <code>person</code> as a <code>var</code> and I can reassign it to anything.  It's variable.
 
 <pre class="brush: javascript">var person = {
     getName: function() {
@@ -104,9 +114,9 @@ person = 5;
 alert('The name is ' + person.getName());
 </pre>
 
-This code creates a variable name <code>person</code> and assigns it to an object with a <code>getPerson</code> function, but then it reassigns that variable to the number 5.  When this code runs the result is <code>TypeError: Object 5 has no method 'getName'</code>.  JavaScript is telling saying that the object <code>5</code> doesn't have a function named <code>getName</code>.  In Java this error would come up during compilation, but JavaScript makes you wait for runtime.  
+This code creates a variable name <code>person</code> and assigns it to an object with a <code>getPerson</code> function, but then it reassigns that variable to the number 5.  When this code runs the result is <code>TypeError: Object 5 has no method 'getName'</code>.  JavaScript says that the object <code>5</code> doesn't have a function named <code>getName</code>.  In Java this error would come up during compilation, but JavaScript makes you wait for runtime.  
 
-Waiting for runtime means I can change the type of the object based on the conditions of the program.  For example:
+I can also change the type of the object based on the conditions of the program.  Java would call this a type error, but it's fine in JavaScript:
 
 <pre class="brush: javascript">var person = {
     getName: function() {
@@ -123,20 +133,40 @@ alert('The name is ' + person.getName());
 
 Now this code will work at 9:15, but will fail at 9:30.  
 
-They call this duck typing because it looks at the object to determine what it is.  If it walks like a duck and quacks like a duck then it must be a duck.  
+They call this duck typing because the code looks at the object during runtime to determine what it is and if it walks like a duck and quacks like a duck then it must be a duck.  
 
-C shows errors when the program runs.  C++, Objective-C and Java use the compiler to catch errors before the program runs.  JavaScript and Ruby pushed those errors back to the run time of the application.  That's why the strongly typed people hate JavaScript so much.  It looks like a step backward.
+C shows errors when the program runs.  C++, Objective-C and Java use the compiler to catch errors at compile time.  JavaScript pushed those errors back to the run time of the application.  That's why the strongly typed people hate JavaScript so much.  It looks like a big step backward.
 
 <h3>Each one excels where the other fails</h3>
 
-I recently needed a program to find a place in a specific XML file, make a small change and save the file.  On a team of Java coders I wrote this program in the dynamically typed language Python.  
+I recently needed a program to find a place in a specific XML file, make a small change and save the file.  On a team of Java coders I wrote the code in the dynamically typed language Python.  
 
-To change an XML file in Java would have to write a new class, open an input stream, call the DOM parser, traverse the tree, call the right methods on the right elements, and write the file out to an output stream.  It could easily be hundreds of lines.  I wrote the whole program in 13 lines with Python.  
+<pre class="brush: python">import sys
+import string
+from xml.dom.minidom import parse
 
-My code's so much shorter in Python than Java partly because of the libraries available in the different langauges, but it's common among dynamic languages.  The program would be a lot shorter in PHP than C++ or in Ruby than Objective-C.  
+dom = parse(sys.argv[1])
 
-Fewer lines of code means less bugs.  I write the program faster and debug it just as quickly.  Strongly typed languages are a terrible solution for 13 line programs.  They keep you out of trouble that you'll never have in 13 lines, but most software is a lot longer than 13 lines.
+for node in dom.getElementsByTagName('property'):
+    attr = node.attributes['name'];
+    if attr.value == 'my value':
+        node.childNodes[0] = dom.createTextNode('my new value');
+
+file = open(sys.argv[1], 'w');
+file.write(dom.toxml('UTF-8'));
+file.close();
+</pre>
+
+This program finds every property node with the name <code>my value</code> and sets the contents to <code>my new value</code>.  I define the variables <code>dom</code> for my XML document, <code>node</code> for the each node of XML I find and <code>attr</code> for the attribute.  Python doesn't even require the keyword <code>var</code>.  It doesn't know that <code>node</code> has <code>childNodes</code> or <code>attr</code> has <code>value</code> until I call it.
+
+To change an XML file in Java I would write a new class, open an input stream, call the DOM parser, traverse the tree, call the right methods on the right elements, and write the file out to an output stream.  All of the extra definition of objects and variables could easily take a hundred lines.  Python took 14.
+
+Dynamic code is generally shorter than static code.  The program would be shorter in PHP than C++ or in Ruby than Objective-C.  
+
+Fewer lines of code means less bugs.  I write the program faster and debug it just as quickly.  Strongly typed languages are a terrible solution for 14 line programs.  They keep you out of trouble that you'll never have in 14 lines of code, but it's tricky to find the tipping point.
+
+Dynamic language projects can't grow past a certain size without process to keep them in control.  Some teams require extra comments and others use additional tools to restrict the language to avoid type errors.
 
 Engineers that worked in C spent years tearing their hair out over type conversion errors, corrupt values, and the terrible bugs that come from small typos.  They've been burnt and learned that the compiler helps them stay out of trouble.  The more complex the software the more trouble it causes.
 
-That's the trade off between the two paradigms.  Strongly typed languages make the program more difficult to write, but easier to maintain.  Dynamic languages are easy to write, but make things more difficult to maintain.  It's all about where you want to spend your time.
+That's the tradeoff between the two paradigms.  Strongly typed languages make the program more difficult to write, but easier to maintain.  Dynamic languages are easy to write, but make things more difficult to maintain.  It's all about where you want to spend your time.
