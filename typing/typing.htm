@@ -4,7 +4,7 @@ C treats everything like a number.  A character is just the number representing 
 
 C does define variables with types like <code>int</code> for integer or <code>char</code> for character, but that just defines how much memory to use for the variable.  When I want to access the variable and print it out I need to know what type it is.
 
-<pre class="brush: java"> int a = 1;
+<pre class="brush: javascript"> int a = 1;
 printf("int: %i\n", a);
 
 char z = 'z';
@@ -13,7 +13,7 @@ printf("char: %c\n", z);
 
 The <code>printf</code> function in C needs special formatting know how to display number different from characters because it doesn't know what the type of each variable is.  If I change the last line to 
 
-<pre class="brush: java">char z = 'z';
+<pre class="brush: javascript">char z = 'z';
 printf("char: %i\n", z);
 </pre>
 
@@ -33,7 +33,7 @@ In C++ and Objective-C our number (1229799107) has a meaning.  I can define it a
 
 Static typing supports objects with sets of functionality that always work in a well defined way.  Now I can create a <code>Person</code> object and make sure the <code>getName</code> function always returns the string of someone's name.
 
-<pre class="brush: java">class Person {
+<pre class="brush: javascript">class Person {
     public:
         string getName() {
             return "zack";
@@ -43,7 +43,7 @@ Static typing supports objects with sets of functionality that always work in a 
 
 Now I can call my object like this:
 
-<pre class="brush: java">Person p;
+<pre class="brush: javascript">Person p;
 printf("The name is %s\n", p.getName().c_str());
 </pre>
 
@@ -59,7 +59,7 @@ Java also stopped supporting C code and the other ways of getting out of strong 
 
 The <code>Person</code> object looks almost the same in Java.
 
-<pre class="brush: java">public class Person {
+<pre class="brush: javascript">public class Person {
     public String getName() {
         return "zack";
     }
@@ -68,7 +68,7 @@ The <code>Person</code> object looks almost the same in Java.
 
 I get the name by creating a new object and calling the <code>getName</code> function like this:
 
-<pre class="brush: java">public class Main {
+<pre class="brush: javascript">public class Main {
     public static void main (String args[]) {
         Person person = new Person();
         System.out.println("The name is " + person.getName());
