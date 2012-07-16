@@ -2,13 +2,13 @@ Strongly typed languages are the best because they keep you out of trouble.  Wea
 
 C treats everything like a number.  A character is just the number representing it and true and false are just 1 and 0.  Representing everything as a number makes it easier to assign values into computer memory.
 
-C does define variables with types like <code>int</code> for integer or <code>char</code> for character, but that just defines how much memory to use for the variable.  When I want to access the variable and print it out I need to know the variable type.
+C does define variables with types like <code>int</code> for integer or <code>char</code> for character, but that just defines how much memory to use.  When I want to access the variable and print it out I need to know the type.
 
 <pre class="brush: javascript"> int a = 1;
-printf("The number is: %i\n", a);
+printf("The number is %i\n", a);
 
 char z = 'z';
-printf("The character is: %c\n", z);
+printf("The character is %c\n", z);
 </pre>
 
 When I run this program it shows:
@@ -20,7 +20,7 @@ The character is z
 The <code>printf</code> function needs a hint from us to know how to format the variable.  If I give the wrong hint 
 
 <pre class="brush: javascript">char z = 'z';
-printf("The character is: %i\n", z);
+printf("The character is %i\n", z);
 </pre>
 
 I get
@@ -93,7 +93,7 @@ Java also requires every piece of code be contained within a well defined class.
 
 Strong typing has a few advantages over static typing, but the philosophy is the same:  the code describes what it should do and not just how to do it.
 
-<h3>Duck type languages - JavaScript, Python, Ruby, PHP and many more</h3>
+<h3>Dynamically typed languages - JavaScript, Python, Ruby, PHP and many more</h3>
 
 Weakly typed languages don't do any type checking, strongly typed languages always do, dynamic languages split the difference.  In JavaScript I define a variable with the keyword <code>var</code> instead of a type like <code>int</code>, or <code>char</code>.  I don't know the type of this variable and I don't need to until I actually want to access it.
 
@@ -142,7 +142,7 @@ alert('The name is ' + person.getName());
 
 Now this code will work at 9:15, but will fail at 9:30.  
 
-They call this duck typing because the code looks at the object during runtime to determine what it is and if it walks like a duck and quacks like a duck then it must be a duck.  
+Dynamic typing is often called duck typing because the code looks at the object during runtime to determine the type and if it walks like a duck and quacks like a duck then it must be a duck.  
 
 C shows errors when the program runs.  C++, Objective-C and Java use the compiler to catch errors at compile time.  JavaScript pushed those errors back to the run time of the application.  That's why the strongly typed people hate JavaScript so much.  It looks like a big step backward.
 
