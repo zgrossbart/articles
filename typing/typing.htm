@@ -91,7 +91,7 @@ If I try to assign my <code>person</code> variable to a different type like a ch
 
 Java also requires every piece of code be contained within a well defined class.  It's a big part of the reason why people complain Java forces you to write too much boiler plate.
 
-Strong typing has a few advantages over static typing, but the philosophy is the same:  you must specify the type of an object when you write the code.
+Strong typing has a few advantages over static typing, but the philosophy is the same:  the code describes what it should do and not just how to do it.
 
 <h3>Duck type languages - JavaScript, Python, Ruby, PHP and many more</h3>
 
@@ -170,12 +170,16 @@ This program finds every property node with the name <code>my value</code> and s
 
 To change an XML file in Java I would write a new class, open an input stream, call the DOM parser, traverse the tree, call the right methods on the right elements, and write the file out to an output stream.  All of the extra definition of objects and variables could easily take a hundred lines.  Python took 14.
 
-Dynamic code is generally shorter than static code.  The program would be shorter in PHP than C++ or in Ruby than Objective-C.  
+Dynamic code is generally shorter than static code because it needs less description of what the code is going to do.  This program would be shorter in PHP than C++ or in Ruby than Objective-C.  
 
-Fewer lines of code means less bugs.  I write the program faster and debug it just as quickly.  Strongly typed languages are a terrible solution for 14 line programs.  They keep you out of trouble that you'll never have in 14 lines of code, but it's tricky to find the tipping point.
+Fewer lines of code means less bugs, but there's a trade off.  The bugs in dynamic languages come at runtime and kill my application in production.  I can test before I deploy, but I'll never find the bug that only happens at three in the morning until it happens.  
 
-Dynamic language projects can't grow past a certain size without process to keep them in control.  Some teams require extra comments and others use additional tools to restrict the language to avoid type errors.
+Coding strongly typed languages takes more time, but they find more bugs before they happen.  The compiler makes sure every variable and function call is accessed correctly.  Smaller projects don't have these issues, but every large project does.
+
+Dynamic language projects can't grow past a certain size without process to keep them in control.  Some teams require extra comments and others use additional tools to restrict the language and avoid type errors.  These processes all take on pieces of the strongly typed philosophy, but programmers debate endlessly about how much.
 
 Engineers that worked in C spent years tearing their hair out over type conversion errors, corrupt values, and the terrible bugs that come from small typos.  They've been burnt and learned that the compiler helps them stay out of trouble.  The more complex the software the more trouble it causes.
 
-That's the tradeoff between the two paradigms.  Strongly typed languages make the program more difficult to write, but easier to maintain.  Dynamic languages are easy to write, but make things more difficult to maintain.  It's all about where you want to spend your time.
+Dynamic language advocates say you can write code faster, fix the bugs and save time overall.  Dynamic languages win for smaller programs like the XML file writer.  Larger project like <a href="http://en.wikipedia.org/wiki/Photoshop">Photoshop</a>, <a href="http://en.wikipedia.org/wiki/Oracle_Database">big databases</a> and <a href="http://en.wikipedia.org/wiki/Google_Chrome">web browsers</a> overwhelmingly code with strongly typed languages.  And there's a big gray area in between.
+
+Strongly typed languages make the program more difficult to write, but easier to maintain.  Dynamic languages are easy to write, but cost more in maintenance.  It's all about where you want to spend your time.
