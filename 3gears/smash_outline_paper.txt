@@ -1,0 +1,13 @@
+1. A quick discussion of HTML5 canvas, what browsers it supports, and the trade-offs of using it.
+
+2. "Dots or shapes" is an introduction to basic drawing and vectorized vs. rasterized graphics.
+
+3. A quick introduction to PaperJS and PaperScript.
+
+4. "Let's make it real" looks at the implementation of the dandelion and how it is generally rendered.
+
+5. "Basic shapes" dives deeper into the drawing of the individual shapes of the dandelion.
+
+6. "Making it move" shows you how to animate the individual seeds.
+
+7. "Improving performance" discusses techniques to improve the performance of animations
