@@ -166,7 +166,7 @@ file.write(dom.toxml('UTF-8'));
 file.close();
 </pre>
 
-This program finds every property node with the name <code>my value</code> and sets the contents to <code>my new value</code>.  I define the variables <code>dom</code> for my XML document, <code>node</code> for the each node of XML I find and <code>attr</code> for the attribute.  Python doesn't even require the keyword <code>var</code>.  It doesn't know that <code>node</code> has <code>childNodes</code> or <code>attr</code> has <code>value</code> until I call it.
+This program finds every property node with the name <code>my value</code> and sets the contents to <code>my new value</code>.  I define the variables <code>dom</code> for my XML document, <code>node</code> for the each node of XML I find and <code>attr</code> for the attribute.  Python doesn't even require the keyword <code>var</code> ad it doesn't know that <code>node</code> has <code>childNodes</code> or <code>attr</code> has <code>value</code> until I call it.
 
 To change an XML file in Java I would write a new class, open an input stream, call the DOM parser, traverse the tree, call the right methods on the right elements, and write the file out to an output stream.  All of the extra definition of objects and variables could easily take a hundred lines.  Python took 14.
 
