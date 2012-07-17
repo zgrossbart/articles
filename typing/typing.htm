@@ -30,7 +30,7 @@ I get
 
 C doesn't know if <code>z</code> is a character or an integer, it has a weak type.
 
-Weak typing is fast since there's no overhead of remembering the different types, but it leads to some nasty bugs.  There's no way to format the <code>z</code> to if you don't know it's type ahead of time.  Imagine you access a variable and get the number <code>1229799107</code>.  The number could be the result of a mathematical calculation (1,229,799,107), the cost of a government program ($1.2 billion) or a time stamp (Saturday, 20 Dec 2008).  When all you have is the number there's no way to know that it's really the number codes for the letters in my name: <code>zack</code>.
+Weak typing is fast since there's no overhead of remembering the different types, but it leads to some nasty bugs.  There's no way to format the <code>z</code> to if you don't know it's type ahead of time.  Imagine you access a variable and get the number <code>1229799107</code>.  The number could be the result of a mathematical calculation (1,229,799,107), the cost of a government program ($1.2 billion) or a date (Saturday, 20 Dec 2008).  When all you have is the number there's no way to know that it's really the number codes for the letters in my name: <code>zack</code>.
 
 Confusion over types gets worse with larger projects.  The code's impossible to follow or debug without a lot of documentation.  The frustration over these issues inspired strong typing.
 
