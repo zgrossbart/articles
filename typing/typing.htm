@@ -34,7 +34,7 @@ Weak typing is fast since there's no overhead of remembering types, but it leads
 
 Confusion over types gets worse with larger projects.  Without a strong documentation the code's impossible to follow or debug.  The frustration over these issues inspired static typing.
 
-<h3>Static typed languages - C++ and Objective-C</h3>
+<h3>Mostly strong languages - C++ and Objective-C</h3>
 
 The next programing languages used a subset of the C functionality and strict guidelines to improve the loose nature of the language.  C++ and Objective-C compile into the same bytes as C, but they use the compiler to restrict the code you can write.  
 
@@ -60,7 +60,7 @@ Static typing goes a long way to avoid the bugs from weakly typed languages, but
   
 Java went a step beyond that to add type checking when the code runs.
 
-<h3>Strongly typed languages - Java</h3>
+<h3>Completely strong languages - Java</h3>
 
 C++ offers you some stricter ways of using C, Java makes sure you use them.  Java needs everything defined so you know at all times what type of object you have, which functions that object has and if you're calling them properly. 
 
@@ -89,9 +89,9 @@ This code creates a new <code>Person</code> object, assigns it to a variable nam
 
 If I try to assign my <code>person</code> variable to a different type like a character or an integer the Java compiler will show an error that these are incompatible types.  If I was calling a separate API which had changed since I compiled the Java runtime would still find the type error.  
 
-Java also requires every piece of code be contained within a well defined class.  It's a big part of the reason why people complain Java forces you to write too much boiler plate.
+Java also puts every piece of code in an object.  It's a big part of the reason why people complain Java forces you to write too much boiler plate.
 
-Strong typing has a few advantages over static typing, but the philosophy is the same:  the code describes what it should do and not just how to do it.
+The popularity of Java and its strong adherence to strong typing made a huge impact on the programming landscape.  Strong typing advocates lauded Java for fixing the cracks in C++, but many programmers found Java overly prescriptive and rigid.  They wanted a fast way to write code without all of the extra definition of Java.
 
 <h3>Dynamically typed languages - JavaScript, Python, Ruby, PHP and many more</h3>
 
