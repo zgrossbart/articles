@@ -156,7 +156,8 @@ person['getBirthday'] = function() {
     return 'July 18th';
 };
 
-alert('The name is ' + person.getName() + ' and the birthday is ' + person.getBirthday());
+alert('The name is ' + person.getName() + ' ' + 
+      'and the birthday is ' + person.getBirthday());
 </pre>
 
 At any point I can change the nature of my <code>person</code> object to add new the new <code>getBirthday</code> function or remove existing functionality.  Java won't allow that because you can't check object types when they're always changing.  Dynamically redefining objects gives you a lot of power for good and bad.
