@@ -1,8 +1,8 @@
-Strongly typed languages are the best because they keep you out of trouble.  Weakly typed languages are the best because they get out of your way and let you get your work done faster.  The debate between strongly and weakly typed languages rages on, but it all started with C.
+Strongly typed languages are the best because they keep you out of trouble.  Weakly typed languages are the best because they get out of your way and let you get your work done faster.  The debate between strongly and weakly typed languages rages on, but understanding the issue starts with <a href="http://en.wikipedia.org/wiki/C_(programming_language)">C</a>.
 
-C treats everything like a number.  A character is just the number representing it and true and false are just 1 and 0.  Representing everything as a number makes it easier to assign values into computer memory.
+C treats everything like a number in memory.  A character is just the number representing it and true and false are just 1 and 0.  
 
-C does define variables with types like <code>int</code> for integer or <code>char</code> for character, but that just defines how much memory to use.  When I want to access the variable and print it out I need to know the type.
+C defines variables with types like <code>int</code> for integer or <code>char</code> for character, but that just defines how much memory to use.  When I want to access the variable and print it out I need to know the type.
 
 <pre class="brush: javascript"> int a = 1;
 printf("The number is %i\n", a);
@@ -30,13 +30,13 @@ I get
 
 C doesn't know if <code>z</code> is a character or an integer, it has a weak type.
 
-Weak typing is fast since there's no overhead of remembering types, but it leads to some nasty bugs.  There's no way to format the <code>z</code> to if you don't know it's type ahead of time.  Imagine you access a variable and get the number <code>1229799107</code>.  The number could be the result of a mathematical calculation (1,229,799,107), the cost of a government program ($1.2 billion) or a time stamp (Saturday, 20 Dec 2008).  When all you have is the number there's no way to know that it's really the number codes for the letters in my name: <code>zack</code>.
+Weak typing is fast since there's no overhead of remembering the different types, but it leads to some nasty bugs.  There's no way to format the <code>z</code> to if you don't know it's type ahead of time.  Imagine you access a variable and get the number <code>1229799107</code>.  The number could be the result of a mathematical calculation (1,229,799,107), the cost of a government program ($1.2 billion) or a time stamp (Saturday, 20 Dec 2008).  When all you have is the number there's no way to know that it's really the number codes for the letters in my name: <code>zack</code>.
 
-Confusion over types gets worse with larger projects.  Without a strong documentation the code's impossible to follow or debug.  The frustration over these issues inspired static typing.
+Confusion over types gets worse with larger projects.  The code's impossible to follow or debug without a lot of documentation.  The frustration over these issues inspired strong typing.
 
 <h3>Mostly strong languages - C++ and Objective-C</h3>
 
-The next programing languages used a subset of the C functionality and strict guidelines to improve the loose nature of the language.  C++ and Objective-C compile into the same bytes as C, but they use the compiler to restrict the code you can write.  
+The next programing languages used a subset of the C functionality and strict guidelines to improve the loose nature of the language.  <a href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a> and <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a> compile into the same bytes as C, but they use the compiler to restrict the code you can write.  
 
 In C++ and Objective-C our number (1229799107) has a meaning.  I can define it as a string of characters and make sure that nobody tries to use it as a currency or a date.  The compiler enforces that it's used properly, but 
 
@@ -133,7 +133,7 @@ I can also change the type of the object based on the conditions of the program.
     }
 };
 
-if (new Date().getMinutes() > 29) {
+if (new Date().getMinutes() &gt; 29) {
     person = 5;
 }
 
@@ -143,6 +143,23 @@ alert('The name is ' + person.getName());
 Now this code will work at 9:15, but will fail at 9:30.  
 
 Dynamic typing is often called duck typing because the code looks at the object during runtime to determine the type and if it walks like a duck and quacks like a duck then it must be a duck.  
+
+Evaluating objects when you need them means you can redefine each object in the middle of the program.  
+
+<pre class="brush: javascript">var person = {
+    getName: function() {
+        return 'zack';
+    }
+};
+
+person['getBirthday'] = function() {
+    return 'July 18th';
+};
+
+alert('The name is ' + person.getName() + ' and the birthday is ' + person.getBirthday());
+</pre>
+
+At any point I can change the nature of my <code>person</code> object to add new functionality or remove existing functionality.  Java won't allow that because you can't check object types if they're always changing.  Dynamically redefining objects gives you a lot of power for good an bad.
 
 C shows errors when the program runs.  C++, Objective-C and Java use the compiler to catch errors at compile time.  JavaScript pushed those errors back to the run time of the application.  That's why the strongly typed people hate JavaScript so much.  It looks like a big step backward.
 
