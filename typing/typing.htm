@@ -144,7 +144,7 @@ Now this code will work at 9:15, but will fail at 9:30.
 
 Dynamic typing is often called duck typing because the code looks at the object during runtime to determine the type and if it walks like a duck and quacks like a duck then it must be a duck.  
 
-Evaluating objects when you need them means you can redefine each object in the middle of the program.  
+Duck typing means you can redefine any object in the middle of the program.  It can start as a duck and turn into a swan or goose.
 
 <pre class="brush: javascript">var person = {
     getName: function() {
@@ -159,7 +159,7 @@ person['getBirthday'] = function() {
 alert('The name is ' + person.getName() + ' and the birthday is ' + person.getBirthday());
 </pre>
 
-At any point I can change the nature of my <code>person</code> object to add new functionality or remove existing functionality.  Java won't allow that because you can't check object types if they're always changing.  Dynamically redefining objects gives you a lot of power for good an bad.
+At any point I can change the nature of my <code>person</code> object to add new the new <code>getBirthday</code> function or remove existing functionality.  Java won't allow that because you can't check object types when they're always changing.  Dynamically redefining objects gives you a lot of power for good and bad.
 
 C shows errors when the program runs.  C++, Objective-C and Java use the compiler to catch errors at compile time.  JavaScript pushed those errors back to the run time of the application.  That's why the strongly typed people hate JavaScript so much.  It looks like a big step backward.
 
