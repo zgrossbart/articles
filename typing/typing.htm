@@ -85,7 +85,7 @@ I get the name by creating a new object and calling the <code>getName</code> fun
 }
 </pre>
 
-This code creates a new <code>Person</code> object, assigns it to a variable named <code>person</code>, calls the <code>getName</code> function and prints out the value.  I don't need a formatter string like <code>%s</code> because Java gave everything a <code>toString</code> function.  
+This code creates a new <code>Person</code> object, assigns it to a variable named <code>person</code>, calls the <code>getName</code> function and prints out the value.  I don't need a format string like <code>%s</code> because Java gave everything a <code>toString</code> function.  
 
 If I try to assign my <code>person</code> variable to a different type like a character or an integer the Java compiler will show an error that these are incompatible types.  If I was calling a separate API which had changed since I compiled the Java runtime would still find the type error.  
 
@@ -226,25 +226,35 @@ background-color: #ECECEC;
 </tr>
 <tr>
 <td>At least I know the code compiles</td>
-<td>Just becaue the code compiles doesn't mean it runs</td>
+<td>Just because the code compiles doesn't mean it runs</td>
 </tr>
 <tr>
-<td>I can trust the static typing to make sure my team writes good code</td>
+<td>I trust the static typing to make sure my team writes good code</td>
 <td>The compiler doesn't stop you from writing bad code</td>
 </tr>
 <tr>
-<td>Compiler bugs happen mid-morning in my office, runtime bugs happen midnight for my customers</td>
+<td>Debugging an unknown object is impossible</td>
+<td>Debugging overly complex object hierarchies is unbearable</td>
+</tr>
+<tr>
+<td>Compiler bugs happen in the middle of the morning in my office and, runtime bugs happen at midnight for my customers</td>
 <td>There's no replacement for testing and unit tests find more issues than the compiler ever could</td>
 </tr>
 </tbody>
 </table>
 
-C programmers spent years tearing their hair out over type conversion errors, corrupt values, and the terrible bugs that come from small typos.  They've been burnt by weak typing and dynamic looks like weak typing.  
+Static typing made our <code>Person</code> object easier to understand.  We define a person with a name, phone number, email and other fields that we agree on ahead of time.  Establishing everything clearly makes our <code>Person</code> easy to debug, but harder to maintain.  
 
-Dynamic programmers spent years glossing over pages of boilerplate only to find the one line out of a hundred that changed everything.  
+What happens when someone in our application needs a second email address?  In a static language we need to redefine the object so everyone has two emails even if most people don't.  Add in a birthday, favorite color, and a few more and every <code>Person</code> has twice as many fields as they really need.
 
-I've seen static code get overly complex and impossible to follow.  Try understanding an <a href="http://en.wikipedia.org/wiki/Enterprise_JavaBeans">enterprise JavaBean</a> or all the details of <a href="http://en.wikipedia.org/wiki/Generics_in_Java">generics in Java</a>.
+Dynamic languages make this problem much easier.  We can add second email to one <code>Person</code> without adding it to everyone.  Now each object only has the fields it needs.  A static language could handle this with a generic map of values, but then you're fighting the static environment to write dynamic code.
 
-I've seen dynamic code turn into giant mounds of unmaintainable spaghetti.  Just look at the myriad of terrible JavaScript before jQuery.  <a href="http://en.wikipedia.org/wiki/Node.js">Node.js</a> has some amazing examples, but I can't look at it without traumatic flashbacks to horrible JavaScript code I've debugged.
+C programmers spent years tearing their hair out over type conversion errors, corrupt values, and the terrible bugs that come from small typos.  They've been burnt by weak typing and dynamic typing looks weak.  
 
-There's no clear conclusion.  Dynamically typed languages are popular now.  The pendulum will swign back and forth many times in the coming years.  The only sulution is flexability.  Learn to work well in each environment and you'll be able to work with any team.
+Dynamic programmers spent years banging their heads on the rigidity of static languages and crave the freedom to make the language do what they want.
+
+I've seen static code get overly complex and impossible to follow.  Try debugging an <a href="http://en.wikipedia.org/wiki/Enterprise_JavaBeans">enterprise JavaBean</a> or understanding all the details of <a href="http://en.wikipedia.org/wiki/Generics_in_Java">generics in Java</a>.
+
+I've seen dynamic code turn into giant mounds of unmaintainable spaghetti.  Look at the myriad of terrible JavaScript before jQuery.  <a href="http://en.wikipedia.org/wiki/Node.js">Node.js</a> does some amazing things, but I can't look at it without traumatic flashbacks of horrible JavaScript I've debugged.
+
+There's no clear conclusion.  Dynamically typed languages are popular now.  The pendulum will swing back and forth many times in the coming years.  The only solution is flexibility.  Learn to work in each environment and you'll work well with any team.
