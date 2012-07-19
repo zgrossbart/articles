@@ -40,7 +40,7 @@ Most languages support <a href="http://en.wikipedia.org/wiki/Reflection_(compute
 
 JavaScript makes it so easy to write unreadable code that it's <a href="http://blogs.adobe.com/bparadie/2012/05/07/the-pew-pew-manifesto/">impossible to write large projects in JavaScript</a>... except for Twitter, Facebook, Google, every big website you've ever heard of and hundreds of others.
 
-These shortcomings cause me problems every day, but I still love JavaScript.  It's fun to code and it's far from the Assembly language of the web.  Assembly is nearly impossible to write by hand and ever harder to read.
+These shortcomings cause me problems every day, but I still love JavaScript.  It's fun to code and it's far from the assembly language of the Web.  Assembly is nearly impossible to write by hand and even harder to read.
 
 <pre>C005 B7 80 04        STA A  ACIA
 C008 86 11           LDA A
@@ -58,7 +58,7 @@ Your grandmother can guess what this code does.  That's why JavaScript is a good
 
 These two views of JavaScript are difficult to reconcile.  Is JavaScript an ill defined loose language designed to cause premature gray hair or a fun place to work?  The answer is both.  I love my JavaScript and hate everyone else's.
 
-We face this choice with every new web project.  Should we use JavaScript or not?  This article shows you how to choose.
+We face this choice with every new Web project.  Should we use JavaScript or not?  This article shows you how to choose.
 
 <h3>I love my JavaScript and hate everyone else's</h3>
 
@@ -89,17 +89,17 @@ GWT hasn't failed (yet), but it hasn't succeeded either.  Java is a difficult la
 
 Most of Java's complexity comes from the hard problems it solves.  That's nice if you were going to have those problems, but overkill if you weren't.
 
-GWT adds the complexity of the web on top of Java.  It was also positioned as a way to write code for the web without needing to worry about browsers or HTML.  It produced interfaces that looked clunky and ran slowly.  It also lead to some bad <a href="http://www.zackgrossbart.com/hackito/antiptrn-gwt/">anti</a>-<a href="http://www.zackgrossbart.com/hackito/antiptrn-gwt2/">patterns</a>.
+GWT adds the complexity of the Web on top of Java.  It was also positioned as a way to write code for the Web without needing to worry about browsers or HTML.  It produced interfaces that looked clunky and ran slowly.  It also lead to some bad <a href="http://www.zackgrossbart.com/hackito/antiptrn-gwt/">anti</a>-<a href="http://www.zackgrossbart.com/hackito/antiptrn-gwt2/">patterns</a>.
 
 It's possible to write <a href="http://www.spiffyui.org">good applications in GWT</a>, but it takes a lot of work.  
 
-Even more distressing are the clear indications that GWT isn't the future.  Google's still maintaining it, but the community is dwindling and it's dreams of world domination are long gone.  Even Google never really used GWT.  All of their major products (search, mail, maps, calendar, docs, Google+) are written in JavaScript.  Well... sort of JavaScript, but we'll get to that a little later.
+Even more distressing are the clear indications that GWT isn't the future.  Google's still maintaining it, but the community is dwindling and its dreams of world domination are long gone.  Even Google never really used GWT.  All of their major products (search, mail, maps, calendar, docs, Google+) are written in JavaScript.  Well... sort of JavaScript, but we'll get to that a little later.
 
 I still use GWT professionally, but I question it with every new project.  GWT tried to drastically change the JavaScript ecosystem and it's tough to turn an aircraft carrier on a dime.
 
 <h3><a href="http://coffeescript.org/">CoffeeScript</a></h3>
 
-The CoffeeScript team didn't redefine JavaScript, they just gave it a face lift.  CoffeeScript added new syntax to improve some of the day to day difficulties of JavaScript programming without drastically changing the language.  
+The CoffeeScript team didn't redefine JavaScript, they just gave it a face-lift.  CoffeeScript added new syntax to improve some of the day-to-day difficulties of JavaScript programming without drastically changing the language.  
 
 Instead of writing this:
 
@@ -107,7 +107,7 @@ Instead of writing this:
     alert('Hello World!');
 });</pre>
 
-CoffeeScript let's you write this:
+CoffeeScript lets you write this:
 
 <pre class="brush: javascript">$(document).ready ->
     alert 'Hello World!';
@@ -121,7 +121,7 @@ The second major flaw of CoffeeScript is that it's basically just JavaScript wit
 
 <h3><a href="https://developers.google.com/closure/">Google Closure Tools</a></h3>
 
-Around the same that CoffeeScript came out Google made another effort to improve JavaScript with the Google Closure Tools.  Google tried to make GWT the next dominant web technology, but it let Closure slip quietly out the door.  
+Around the same that CoffeeScript came out Google made another effort to improve JavaScript with the Google Closure Tools.  Google tried to make GWT the next dominant Web technology, but it let Closure slip quietly out the door.  
 
 Closure includes a templating mechanism and a widget library, but the most interesting parts are the <a href="https://developers.google.com/closure/compiler/">Closure compiler</a> and the <a href="https://developers.google.com/closure/utilities/">Closure linter</a>.
 
@@ -157,7 +157,7 @@ The Closure tools also introduce <a href="https://developers.google.com/closure/
     MAYBE: 0
 };</pre>
 
-You know that this is an <a href="http://en.wikipedia.org/wiki/Enumerated_type">enumerated type</a> which constrains a value to one of these three options, but the compiler doesn't know.  Neither does that other developer on your team who added a fourth value dynamically.  JSDoc let's you specify how this code works:
+You know that this is an <a href="http://en.wikipedia.org/wiki/Enumerated_type">enumerated type</a> which constrains a value to one of these three options, but the compiler doesn't know.  Neither does that other developer on your team who added a fourth value dynamically.  JSDoc lets you specify how this code works:
 
 <pre class="brush: javascript">/**
  * Enum for my three states.
@@ -187,15 +187,15 @@ Closure code looks like Java with clunkier syntax.  It's strongly typed, uses a 
 
 Google isn't putting much marketing behind the Closure tools, but they're putting a lot of engineering there.  All of the major Google products use Closure.  <a href="http://highscalability.com/blog/2011/7/12/google-is-built-using-tools-you-can-use-too-closure-java-ser.html">Google+ was built on Closure</a> from the ground up.
 
-The Closure community is growing, but there still aren't many people outside of Google who know it well.  Closure also suffers from the need to maintain backward comparability with JavaScript.  The syntax looks clunky and only experts in JavaScript and object-oriented programming can write it.
+The Closure community is growing, but there still aren't many people outside of Google who know it well.  Closure also suffers from the need to maintain backward compatibility with JavaScript.  The syntax looks clunky and only experts in JavaScript and object-oriented programming can write it.
 
-Some people think the web needs a brand new language and Google continued it's frenemy relationship with JavaScript by creating Dart.
+Some people think the Web needs a brand-new language and Google continued its frenemy relationship with JavaScript by creating Dart.
 
 <h3><a href="http://www.dartlang.org/">Dart</a></h3>
 
 Dart totally replaces JavaScript with a language that's strongly typed, uses interfaces and basically looks a lot like a simplified Java.  I could argue the technical merits of Dart, but it has a larger political problem.  
 
-Dart can compile into JavaScript, but you really want to run it natively in the browser to can get better performance and debugging.  Google controls the Chrome browser and may add native support for Dart there.  They already have <a href="http://www.dartlang.org/dartium/">a special version running on Windows</a>, but it isn't all up to Google.
+Dart can compile into JavaScript, but you really want to run it natively in the browser to get better performance and debugging.  Google controls the Chrome browser and may add native support for Dart there.  They already have <a href="http://www.dartlang.org/dartium/">a special version running on Windows</a>, but it isn't all up to Google.
 
 Chrome depends on <a href="http://en.wikipedia.org/wiki/WebKit">WebKit</a> which also powers Safari from Apple and they're adamant about not including Dart.  It looks like <a href="https://news.ycombinator.com/item?id=2982949">none of the other browsers will support Dart</a> either.  
 
@@ -223,9 +223,9 @@ Google writes most of their client-side code with the Closure tools and they're 
 
 This technology choice is a hard problem without a good solution.  If your project is small then just write JavaScript.  jQuery is very well done, so are many other JavaScript libraries.  Keep your project small and the problems stay small.  
 
-But the line between small and large is blurry.  Small projects get bigger with time and you can get into big trouble writing large JavaScript applications without a lot of process to keep you out of the <a href="http://shop.oreilly.com/product/9780596517748.do">bad parts</a>.  The other options are either has-beens or aren't yets.  
+But the line between small and large is blurry.  Small projects get bigger with time and you can get into big trouble writing large JavaScript applications without a lot of process to keep you out of the <a href="http://shop.oreilly.com/product/9780596517748.do">bad parts</a>.  The other options are either has-beens or aren't-yets.  
 
-A big part of the this problem is the difficulty of finding a single language that keeps everyone happy.  Small sites want something simple that makes it easy to get started and produce and app quickly.  Large projects want the structure to keep the code base maintainable for years.  The two goals are at odds and no language has ever satisfied both parties.  That's why <a href="http://en.wikipedia.org/wiki/Visual_Basic">VB</a> and <a href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a> are both so popular.
+A big part of the this problem is the difficulty of finding a single language that keeps everyone happy.  Small sites want something simple that makes it easy to get started and produce an app quickly.  Large projects want the structure to keep the code base maintainable for years.  The two goals are at odds and no language has ever satisfied both parties.  That's why <a href="http://en.wikipedia.org/wiki/Visual_Basic">VB</a> and <a href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a> are both so popular.
 
 There's also no reason to choose just one.  GWT combines well with regular JavaScript and you can use the Closure Compiler simple optimizations with any JavaScript project.
 
