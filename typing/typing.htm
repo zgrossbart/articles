@@ -164,7 +164,7 @@ At any point I can change the nature of my <code>person</code> object to add new
 
 C shows errors when the program runs.  C++, Objective-C and Java use the compiler to catch errors at compile time.  JavaScript pushed those errors back to the run time of the application.  That's why the strongly typed people hate JavaScript so much.  It looks like a big step backward.
 
-<h3>Weakly typed is the best until it isn't</h3>
+<h3>So which is better?</h3>
 
 I recently needed a program to find a place in a specific XML file, make a small change and save the file.  On a team of Java coders I wrote the code in the dynamically typed language Python.  
 
@@ -190,14 +190,61 @@ To change an XML file in Java I would write a new class, open an input stream, c
 
 Dynamic code is generally shorter than static code because it needs less description of what the code is going to do.  This program would be shorter in PHP than C++ or in Ruby than Objective-C.  
 
-Fewer lines of code means less bugs, but there's a trade off.  The bugs in dynamic languages come at runtime and kill my application in production.  I can test before I deploy, but I'll never find the bug that only happens at three in the morning until it happens.  
+So which is better?
 
-Coding strongly typed languages takes more time, but they find more bugs before they happen.  The compiler makes sure every variable and function call is accessed correctly.  Smaller projects don't have these issues, but every large project does.
+<style>
+.toc { 
+	width: 100%;
+margin: 1em 0;
+	border: 1px solid rgba(0,0,0,0.1); }
+.toc td, .toc th {
+	padding: 4px 10px;
+	border-bottom: 1px solid #eee;
+border-right: 1px solid #eee;
+border-collapse: collapse;
+text-align: left;
+}
+.toc th {
+background-color: #ECECEC;
+}
 
-Dynamic language projects can't grow past a certain size without process to keep them in control.  Some teams require extra comments and others use additional tools to restrict the language and avoid type errors.  These processes all take on pieces of the strongly typed philosophy, but programmers debate endlessly about how much.
+</style>
 
-C programmers spent years tearing their hair out over type conversion errors, corrupt values, and the terrible bugs that come from small typos.  They've been burnt and learned that the compiler helps them stay out of trouble.  The more complex the software the more trouble it causes.
+<table class="toc">
+<tbody>
+<tr>
+<th>The static programmer says</th>
+<th>The dynamic programmer says</th>
+</tr>
+<tr>
+<td>Static typing catches bugs in the compiler and keeps you out of trouble</td>
+<td>Static typing only catches some bugs and you can't trust the compiler to do your testing</td>
+</tr>
+<tr>
+<td>Static languages are easier to read because they're more explicit about what the code does</td>
+<td>Dynamic languages are easier to read because less code means fewer bugs</td>
+</tr>
+<tr>
+<td>At least I know the code compiles</td>
+<td>Just becaue the code compiles doesn't mean it runs</td>
+</tr>
+<tr>
+<td>I can trust the static typing to make sure my team writes good code</td>
+<td>The compiler doesn't stop you from writing bad code</td>
+</tr>
+<tr>
+<td>Compiler bugs happen mid-morning in my office, runtime bugs happen midnight for my customers</td>
+<td>There's no replacement for testing and unit tests find more issues than the compiler ever could</td>
+</tr>
+</tbody>
+</table>
 
-Dynamic language advocates say you can write code faster, fix the bugs and save time overall.  Dynamic languages win for smaller programs like the XML file writer.  Larger project like <a href="http://en.wikipedia.org/wiki/Photoshop">Photoshop</a>, <a href="http://en.wikipedia.org/wiki/Oracle_Database">big databases</a> and <a href="http://en.wikipedia.org/wiki/Google_Chrome">web browsers</a> overwhelmingly code with strongly typed languages.  And there's a big gray area in between.
+C programmers spent years tearing their hair out over type conversion errors, corrupt values, and the terrible bugs that come from small typos.  They've been burnt by weak typing and dynamic looks like weak typing.  
 
-Strongly typed languages make the program more difficult to write, but easier to maintain.  Dynamic languages are easy to write, but cost more in maintenance.  It's all about where you want to spend your time.
+Dynamic programmers spent years glossing over pages of boilerplate only to find the one line out of a hundred that changed everything.  
+
+I've seen static code get overly complex and impossible to follow.  Try understanding an <a href="http://en.wikipedia.org/wiki/Enterprise_JavaBeans">enterprise JavaBean</a> or all the details of <a href="http://en.wikipedia.org/wiki/Generics_in_Java">generics in Java</a>.
+
+I've seen dynamic code turn into giant mounds of unmaintainable spaghetti.  Just look at the myriad of terrible JavaScript before jQuery.  <a href="http://en.wikipedia.org/wiki/Node.js">Node.js</a> has some amazing examples, but I can't look at it without traumatic flashbacks to horrible JavaScript code I've debugged.
+
+There's no clear conclusion.  Dynamically typed languages are popular now.  The pendulum will swign back and forth many times in the coming years.  The only sulution is flexability.  Learn to work well in each environment and you'll be able to work with any team.
