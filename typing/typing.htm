@@ -164,7 +164,7 @@ At any point I can change the nature of my <code>person</code> object to add new
 
 C shows errors when the program runs.  C++, Objective-C and Java use the compiler to catch errors at compile time.  JavaScript pushed those errors back to the run time of the application.  That's why the strongly typed people hate JavaScript so much.  It looks like a big step backward.
 
-<h3>So which is better?</h3>
+<h3>Which is better?</h3>
 
 I recently needed a program to find a place in a specific XML file, make a small change and save the file.  On a team of Java coders I wrote the code in the dynamically typed language Python.  
 
@@ -243,9 +243,9 @@ background-color: #ECECEC;
 </tbody>
 </table>
 
-Static typing made our <code>Person</code> object easier to understand.  We define a person with a name, phone number, email and other fields that we agree on ahead of time.  Establishing everything clearly makes our <code>Person</code> easy to debug, but harder to maintain.  
+Static typing made our <code>Person</code> object easier to understand.  We defined a <code>Person</code> with a name and agreed about which fields mattered ahead of time.  Establishing everything clearly makes our <code>Person</code> easy to debug, but harder to change.  
 
-What happens when someone in our application needs a second email address?  In a static language we need to redefine the object so everyone has two emails even if most people don't.  Add in a birthday, favorite color, and a few more and every <code>Person</code> has twice as many fields as they really need.
+What happens when someone in our application needs a second email address?  In a static language we need to redefine the object so everyone has two emails even if most people don't.  Add in a birthday, favorite color, and a few more items and every <code>Person</code> has twice as many fields as they really need.
 
 Dynamic languages make this problem much easier.  We can add second email to one <code>Person</code> without adding it to everyone.  Now each object only has the fields it needs.  A static language could handle this with a generic map of values, but then you're fighting the static environment to write dynamic code.
 
