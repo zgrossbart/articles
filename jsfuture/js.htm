@@ -193,23 +193,23 @@ Some people thought the Web needed a brand-new language.  So Google continued it
 
 <h3><a href="http://www.dartlang.org/">Dart</a></h3>
 
-Dart totally replaces JavaScript with a language that's strongly typed, uses interfaces and basically looks a lot like a simplified Java.
+Dart totally replaces JavaScript with a language that's strongly typed, uses interfaces and looks a lot like a simplified Java.
 
 Dart can compile into JavaScript, but running it natively in the browser gets you better performance and debugging.  Google controls the Chrome browser and may add native support for Dart there.  They already have <a href="http://www.dartlang.org/dartium/">a special version running on Windows</a>.  But it isn't all up to Google.
 
-Though I could argue the technical merits of Dart, it has a larger political problem.
-
 Chrome depends on <a href="http://en.wikipedia.org/wiki/WebKit">WebKit</a>, which also powers Safari from Apple.  Webkit is an open source project made up of about one third Google people, one third Apple people, and one third other people.  The Chrome team would like to change Webkit to support Dart; that would make their lives easier, and also make Safari support Dart.  If that happened they could claim two major browsers support it, and pressure the others to start.  The Safari team doesn't want the Web to run on a new language owned by Google, so they're adamant about not including Dart.  It looks like <a href="https://news.ycombinator.com/item?id=2982949">none of the other browsers will support Dart</a> either.
+
+Dart has many technical merits, it's eclipsed by larger political problems.
 
 Some very smart Googlers work on Dart and it has some nice features, but it's still an invention of Google and isn't standard.  It wasn't developed by a community and there are good reasons for other vendors to distrust it.
 
-The only thing certain about Dart is that its future is unknown.  A preview (version 0.1) was recently released but isn't really usable outside of Google.  Dart is a language to keep an eye on, but not a real option for projects yet.
+The only thing certain about Dart is that its future is unknown.  A preview (version 0.1) was recently released but isn't really usable outside of Google.  Dart is a language to keep an eye on, but not a real option yet.
 
 <h3><a href="http://opalang.org/">OPA</a></h3>
 
 OPA is the new kid on the block with a 1.0 release in June of this year.  It's a strongly typed language with a growing community.  You write OPA and compile into other languages like JavaScript, but it isn't just client-side.
 
-OPA supports client, server and database development with a single language.  You write the same code base and it compiles into JavaScript, native executables and SQL code.  Support was recently added for non-relational databases like <a href="http://www.mongodb.org/">MongoDB</a> as well.
+OPA supports client, server and database development with a single language.  The same code base and it compiles into JavaScript, native executables and SQL code.  They recently added support for non-relational databases like <a href="http://www.mongodb.org/">MongoDB</a> as well.
 
 Unlike Dart, OPA draws heavily on functional programming languages like <a href="http://en.wikipedia.org/wiki/Erlang_(programming_language)">Erlang</a>.  That makes it appeal to nerds, but the entry bar is pretty high.  OPA lacks the simple syntax of CoffeeScript, and you can't really teach yourself OPA without a strong background in other programming languages.
 
