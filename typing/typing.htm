@@ -1,10 +1,24 @@
-Static typing is the best because they keep you out of trouble.  Dynamic typing's the best because it gets out of your way and lets you get your work done faster.  The debate between strongly and dynamically typed languages rages on, but understanding the issue starts with <a href="http://en.wikipedia.org/wiki/C_(programming_language)">C</a>.
+<style>
+.toc { 
+	width: 100%;
+margin: 1em 0;
+	border: 1px solid rgba(0,0,0,0.1); }
+.toc td, .toc th {
+	padding: 4px 10px;
+	border-bottom: 1px solid #eee;
+border-right: 1px solid #eee;
+border-collapse: collapse;
+text-align: left;
+}
+.toc th {
+background-color: #ECECEC;
+}
+
+</style>
+
+Static typing is the best because they keep you out of trouble.  Dynamic typing's the best because it gets out of your way and lets you get your work done faster.  The debate between strongly and dynamically typed languages rages on, but understanding the issue starts with weak typing and languages like <a href="http://en.wikipedia.org/wiki/C_(programming_language)">C</a>.
 
 C treats everything like a number in memory.  A character is just the number representing it and true and false are just 1 and 0.  
-
-<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/07/jellybean.jpg" alt="" title="Jelly bean" width="500" height="208" class="aligncenter size-full wp-image-121120" />
-
-<!--This image is from http://www.flickr.com/photos/c_r_i_s/77763830/in/photostream -->
 
 C defines variables with types like <code>int</code> for integer or <code>char</code> for character, but that just defines how much memory to use.  When I want to access the variable and print it out I need to know the type.
 
@@ -36,9 +50,41 @@ C doesn't know if <code>z</code> is a character or an integer, it has a weak typ
 
 Weak typing is fast since there's no overhead of remembering the different types, but it leads to some nasty bugs.  There's no way to format the <code>z</code> to if you don't know it's type ahead of time.  Imagine you access a variable and get the number <code>1229799107</code>.  The number could be the result of a mathematical calculation (1,229,799,107), the cost of a government program ($1.2 billion) or a date (Saturday, 20 Dec 2008).  When all you have is the number there's no way to know that it's really the codes for the letters in my name: <code>zack</code>.
 
-Confusion over types gets worse with larger projects.  The code's impossible to follow or debug without a lot of documentation.  The frustration over these issues inspired strong typing.
+So far we've just coverred weak typing.  <em>weak vs. strong</em> and <em>static vs. dynamic</em> are often used synonymously, but they each describe a different phase of the same problem.  They're also politicized by using words with an implied value judgement.  Weak vs. strong makes one of them sound a lot better than the other while static vs. dynamic makes one sound stodgy and the other sound exciting.  
 
-<h3>Mostly static languages - C++ and Objective-C</h3>
+<!--This image is from http://www.flickr.com/photos/c_r_i_s/77763830/in/photostream -->
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/07/jellybean.jpg" alt="" title="Jelly bean" width="500" height="208" class="aligncenter size-full wp-image-121120" />
+
+These two terms are used interchangably, but they describe the difference between the way a language defines types and how it figures them out when the program runs.  For example:
+
+<table class="toc">
+<tbody>
+<tr>
+<td style="width: 175px;">Weak with no typing</th>
+<td><a href="http://en.wikipedia.org/wiki/Assembly_language">Assemlby languages</a> don't provide any way of specifying or checking types at all.  Everything is just a number.</th>
+</tr>
+<tr>
+<td>Weak static typing</td>
+<td>C lets you define object types, but doesn't do much to enforce or remember those types.  <a href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a> and <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a> go farther with the definitions, but still don't enforce the resulting types.</td>
+</tr>
+<tr>
+<td>Strong static typing</td>
+<td><a href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a> forces you to define all types and checks them with a virtual machine.</td>
+</tr>
+<tr>
+<td>Strong dynamic typing</td>
+<td><a href="http://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>, <a href="http://en.wikipedia.org/wiki/Javascript">JavaScript</a> and <a href="http://en.wikipedia.org/wiki/Ruby_(programming_language)">Ruby</a> dynamically infer the types of objects instead of forcing you to define them and then enforce those types when the program runs in the interpreter.</td>
+</tr>
+<tr>
+<td>Weak dynamic typing</td>
+<td>Dynamicly inferred types don't work in a weakly typed language since there aren't any types to infer about.</td>
+</tr>
+</tbody>
+</table>
+
+Most of the time when people argue about the merits of strong vs. weak languages they really mean static vs. dynamic. 
+
+<h3>Weak static languages - C++ and Objective-C</h3>
 
 The next programing languages used a subset of the C functionality and strict guidelines to improve the loose nature of the language.  <a href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a> and <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a> compile into the same bytes as C, but they use the compiler to restrict the code you can write.  
 
@@ -64,7 +110,7 @@ Static typing goes a long way to avoid the bugs from weakly typed languages, but
   
 Java went a step beyond that to add type checking when the code runs in a virtual machine.
 
-<h3>Completely static languages - Java</h3>
+<h3>Strong static languages - Java</h3>
 
 C++ offers you some stricter ways of using C, Java makes sure you use them.  Java needs everything defined so you know at all times what type of object you have, which functions that object has and if you're calling them properly. 
 
@@ -99,7 +145,7 @@ The popularity of Java and its strong adherence to strong typing made a huge imp
 
 <h3>Dynamically typed languages - JavaScript, Python, Ruby, PHP and many more</h3>
 
-Weakly typed languages don't do any type checking, strongly typed languages always do, dynamic languages split the difference.  In JavaScript I define a variable with the keyword <code>var</code> instead of a type like <code>int</code>, or <code>char</code>.  I don't know the type of this variable and I don't need to until I actually want to access it.
+In JavaScript I define a variable with the keyword <code>var</code> instead of a type like <code>int</code>, or <code>char</code>.  I don't know the type of this variable and I don't need to until I actually want to access it.
 
 I can define an object in JavaScript with the <code>getName</code> function.
 
@@ -195,24 +241,6 @@ To change an XML file in Java I would write a new class, open an input stream, c
 Dynamic code is generally shorter than static code because it needs less description of what the code is going to do.  This program would be shorter in PHP than C++ or in Ruby than Objective-C.  
 
 So which is better?
-
-<style>
-.toc { 
-	width: 100%;
-margin: 1em 0;
-	border: 1px solid rgba(0,0,0,0.1); }
-.toc td, .toc th {
-	padding: 4px 10px;
-	border-bottom: 1px solid #eee;
-border-right: 1px solid #eee;
-border-collapse: collapse;
-text-align: left;
-}
-.toc th {
-background-color: #ECECEC;
-}
-
-</style>
 
 <table class="toc">
 <tbody>
