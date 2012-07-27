@@ -111,3 +111,5 @@ Difinitive REST guide
 mobile first doesn't work
 
 What you need to know about searching and sorting
+
+Crayons and Bicycles - Why it's OK to make users think
