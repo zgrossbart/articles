@@ -112,4 +112,10 @@ mobile first doesn't work
 
 What you need to know about searching and sorting
 
-Crayons and Bicycles - Why it's OK to make users think
+Shovels and Bicycles - Why it's OK to make users think
+        When users shouldn't have to think - Don't make me think: http://www.amazon.com/Dont-Make-Me-Think-Usability/dp/0321344758
+        Best UI for a shovel
+        Shovels vs. excavators - The pen tool
+        Bicycles - Adobe Illustrator
+        
+        
