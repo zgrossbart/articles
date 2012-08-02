@@ -18,7 +18,7 @@ background-color: #ECECEC;
 
 Static typing is the best because it keeps you out of trouble.  Dynamic typing's the best because it gets out of your way and lets you get your work done faster.  The debate between strongly and dynamically typed languages rages on, but understanding the issue starts with weak typing and languages like <a href="http://en.wikipedia.org/wiki/C_(programming_language)">C</a>.
 
-C treats everything like a number in memory.  A character is just the number representing it and true and false are just 1 and 0.  
+C treats everything like a number. A character like <code>a</code> or <code>7</code> or <code>%</code> is the number of the ASCII symbol representing it; "true" and "false" are just 1 and 0.
 
 C defines variables with types like <code>int</code> for integer or <code>char</code> for character, but that just defines how much memory to use.  When I want to access the variable and print it out I need to know the type.
 
@@ -106,7 +106,7 @@ Now I can call my object like this:
 printf("The name is %s\n", p.getName().c_str());
 </pre>
 
-Static typing goes a long way to avoid the bugs from weakly typed languages, but it can't check anything when the program is running since a C++ or Objective-C program is just like C code when it runs.  Both languages also left the option of mixing weakly typed C code with static typed C++ or Objective-C to bypass all the type checking.
+Static typing goes a long way to avoid the bugs from weakly typed languages by adding more constraints in the compiler, but it can't check anything when the program is running since a C++ or Objective-C program is just like C code when it runs.  Both languages also left the option of mixing weakly typed C code with static typed C++ or Objective-C to bypass all the type checking.
 
 Java went a step beyond that, to add type checking when the code runs in a virtual machine.
 
@@ -135,11 +135,11 @@ I get the name by creating a new object and calling the <code>getName</code> fun
 }
 </pre>
 
-This code creates a new <code>Person</code> object, assigns it to a variable named <code>person</code>, calls the <code>getName</code> function and prints out the value.  I don't need a format string like <code>%s</code> because Java gave everything a <code>toString</code> function.  
+This code creates a new <code>Person</code> object, assigns it to a variable named <code>person</code>, calls the <code>getName</code> function and prints out the value.  
 
 If I try to assign my <code>person</code> variable to a different type like a character or an integer, the Java compiler will show an error that these are incompatible types.  If I was calling a separate API which had changed since I compiled, the Java run time would still find the type error.  
 
-Java also puts every piece of code in an object.  It's a major reason that people complain Java forces you to write too much boilerplate.
+Java doesn't allow code outside of a class.  It's a major reason people complain Java forces you to write too much boilerplate.
 
 The popularity of Java and its strong adherence to strong typing made a huge impact on the programming landscape.  Strong typing advocates lauded Java for fixing the cracks in C++, but many programmers found Java overly prescriptive and rigid.  They wanted a fast way to write code without all of the extra definition of Java.
 
@@ -160,7 +160,7 @@ alert('The name is ' + person.getName());
 
 Now I have an object named <code>person</code>, and it has a function named <code>getName</code>.  If I call <code>person.getName()</code> it will result in <code>zack</code>.  
 
-I declared <code>person</code> as a <code>var</code> and I can reassign it to anything.  It's variable.
+I declared <code>person</code> as a <code>var</code> and I can reassign it to anything.
 
 <pre class="brush: javascript">var person = {
     getName: function() {
@@ -175,7 +175,7 @@ alert('The name is ' + person.getName());
 
 This code creates a variable named <code>person</code> and assigns it to an object with a <code>getPerson</code> function, but then it reassigns that variable to the number 5.  When this code runs the result is <code>TypeError: Object 5 has no method 'getName'</code>.  JavaScript says that the object <code>5</code> doesn't have a function named <code>getName</code>.  In Java this error would come up during compilation, but JavaScript makes you wait for run time.  
 
-I can also change the type of the object based on the conditions of the program.  Java would call this a type error, but it's fine in JavaScript:
+I can also change the type of the object based on the conditions of the program.  
 
 <pre class="brush: javascript">var person = {
     getName: function() {
@@ -190,9 +190,9 @@ if (new Date().getMinutes() &gt; 29) {
 alert('The name is ' + person.getName());
 </pre>
 
-Now this code will work at 9:15, but will fail at 9:30.  
+Now this code will work at 9:15, but will fail at 9:30.  Java would call this a type error, but it's fine in JavaScript.
 
-Dynamic typing is often called "duck typing" because the code looks at the object during run time to determine the type &mdash; and if it walks like a duck and quacks like a duck, then it must be a duck.
+The most popular form of dynamic typing is called "duck typing" because the code looks at the object during run time to determine the type &mdash; and if it walks like a duck and quacks like a duck, then it must be a duck.
 
 Duck typing means you can redefine any object in the middle of the program.  It can start as a duck and turn into a swan or goose.
 
