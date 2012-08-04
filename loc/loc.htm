@@ -104,7 +104,7 @@ invalidUser = The username {0} is already taken. Please choose another one.
 &lt;/form&gt;
 </pre>
 
-<p>Spot the bug? This is another case of string concatenation. The colon after the labels isn't localized. This will look wrong in languages such as French and Russian, which always put spaces around colons. Punctuation is part of the string and belongs in the resource file.</p>
+<p>Spot the bug? This is another case of string concatenation. The colon after the labels isn't localized. This will look wrong in a language like French, which always puts spaces around colons. Punctuation is part of the string and belongs in the resource file.</p>
 
 <pre class="brush: php">
 &lt;form&gt;
