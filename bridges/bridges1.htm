@@ -16,9 +16,38 @@ Supporting the game screen are a start screen, a menu and a "you won" screen.
     
 This storyboard layout is very common with iOS games.  You'll see the same layout in popular games like <a href="http://en.wikipedia.org/wiki/Cut_the_Rope">Cut the Rope</a> and <a href="http://en.wikipedia.org/wiki/Where's_My_Water%3F">Where's my water</a>.  
 
+<h3>The Basics</h3>
+
+Seven Bridges is written in a combination of <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a> and <a href="http://en.wikipedia.org/wiki/Objective-C#Objective-C.2B.2B">Objective-C++</a>.  If you're used to programming in scripting languages like JavaScript then Objective-C will be a bit of a shock.
+
+<h4>Programming for iOS</h4>
+
+Many people pick up JavaScript by trial and error.  Automating a list or writing a little jQuery code behind a button is pretty easy in an HTML page.  There are many iOS programming tutorials that try to make it sound just as easy to write iPhone applications.  That's just not true.
+
+Objective-C has been around for nearly 30 years.  Programming with it means learning a complex environment and some fundamental concepts of how it all holds together.  All of the Objective-C documentation assumes you have a strong background in <a href="http://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming</a> and <a href="http://en.wikipedia.org/wiki/C_(programming_language)">the C programming language</a>.
+
+Objective-C shouldn't be your first language.  Or you second.  You should at least make sure that you've read a book about object-oriented programming like <a href="http://www.informit.com/store/product.aspx?isbn=020189551X">Object-Oriented Analysis and Design with Applications</a> by Grady Booch and <a href="http://en.wikipedia.org/wiki/The_C_Programming_Language_(book)">The C Programming Language</a> by Brian Kernighan and Dennis Ritchie.  It's also a good idea to read <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjectiveC/ObjC.pdf">The Objective-C Programming Language</a> from Apple.
+
+<h4>The Files</h4>
+
+This article will look at a little code, so let's start by knowing what we're looking at.  You can tell what each file does by looking at it's file extension.
+
+<ul>
+    <li><b>.h</b> files are class <a href="http://en.wikipedia.org/wiki/Header_file">headers</a>.  Each of these files represents the public information available about a single class in the project.</li>
+    <li><b>.m</b> files are Objective-C implementation files.</li>
+    <li><b>.mm</b> files are Objective-C++ implementation files.  Objective-C is a hybrid where you can use parts of Objective-C and <a href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a> in the same file.  Seven bridges uses Objective-C++ so it can take advantage of frameworks written in C++.</li>
+    <li><b>.xib</b> files define visual <code>views</code> in the game where you can layout buttons and other controls.</li>
+    <li><b>.png</b> files are individual images used in the game.</li>
+    <li><b>.m</b> files are Objective-C implementation files.</li>
+    <li><b>.plist</b> files are XML properties files.  They define basics of how the applications work and the positions of the images in each sprite sheet.</li>
+    <li><b>.pvr.gz</b> files contain large sets of images combined together into a single file so they load faster and take up less space.</li>
+</ul>
+
+In addition to the basics of Objective-C there's decades of patterns and other frameworks to learn.
+
 <h3>The Frameworks</h3>
 
-Seven Bridges is written in a combination of <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a> and <a href="http://en.wikipedia.org/wiki/Objective-C#Objective-C.2B.2B">Objective-C++</a>.  It also puts a few frameworks together.
+Seven Bridges uses two major frameworks in addition to the base user interface framework from Apple called UIKit.
 
 <h4>UIKit</h4>
 
@@ -40,7 +69,7 @@ Cocos2d handles interacticing with the user, but it can't handle interactions wi
 
 <h4>Box2d</h4>
 
-<a href="http://en.wikipedia.org/wiki/Box2d">Box2d</a> is a <a href="http://en.wikipedia.org/wiki/Physics_engine">physics engine</a>.  It can handle complex concepts like gravity and friction, but we're only using it for collision detection.  
+<a href="http://en.wikipedia.org/wiki/Box2d">Box2d</a> is a <a href="http://en.wikipedia.org/wiki/Physics_engine">physics engine</a> written in portable C++.  It can handle complex concepts like gravity and friction, but we're only using it for collision detection.  
 
 My game doesn't use the complex physics of swining candy from Cut the Rope or sloshing liquids from Where's My Water.  It just handles a player walking around the screen and bumping into things.  Box2d tells me when those bumps happen and I handle the rest.
 
@@ -57,6 +86,25 @@ The game is made up of a set of images called sprites.  Each item on the game sc
     <!-- diagram of scene pieces goes here -->
   
 The game positions these sprites on the screen using a set of tiles.  
+
+<h4>Pixels, Points and Tiles</h4>
+
+iOS supports five different devices:  iPhone 3.5 inch, iPhone 3.5 inch retina, iPhone 4 inch retina, iPad and iPad retina.  
+
+    <!-- diagram comparing device sizes goes here -->
+    
+Supporting every device means handling multiple layouts.  Cocos2d gives you a lot of help here by supporting points instead of pixels when specifying layout.  Pixels represent an exact screen location where points are relative to the device.  
+
+Seven Bridges goes farther by defining a tile system.  Tiles are a way of grouping pixels into larger squares for easier layout.  We make the screen 28 tiles tall and at least 42 tiles wide.  The tiles make it easy to define where the sprites go on each level.
+
+    <!-- debug drag image goes here -->
+    
+<h4>Touches and interactions</h4>
+
+
+
+<h4>Boxes and collisions</h4>
+
 
 
 <h3>Game levels</h3>
