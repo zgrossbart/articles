@@ -127,10 +127,52 @@ iPad games to steal design ideas from
         Osmos - Don't make people wait
         World of Goo - Give people an easy way to undo
         Morris Lessmore - Guide users through new interactions
-        
 
+        
+A little bit of game theory
+
+The first step is deciding what type of game you want to make.  Most games fit into one of a small set of categories:
+
+	Board games like checkers and chess
+	Arcade games like Pacman
+	Puzzle games like world of Goo
+	Interactive books like Morris Lessmore
+	Word games likes Words with Friends and SpellTower
+	
+
+What goes into a game choosing the right scope
 Designing the game
+Designing characters
+Planning for space
 Getting started with iOS
+Planning the graphics
 Learning Objective-C
 Choosing the framework
 Memory management
+Defining levels
+Planning your scenes
+Performance tuning
+	Loading fast
+	Running fast
+
+
+A simple puzzle game
+	How the game works
+	Rivers and bridges
+The frameworks
+	UIKit
+	Cocose2d
+	Box2d
+The fundamental pieces
+	Images
+	Sprites
+	Views
+	Controllers
+	Scenes
+More with less
+	Adding tolls and subways
+	Packing more complexity in the smaller screen
+Moving from the simulator to a real phone
+	Memory management
+	Static objects and bullets
+Getting through the app store
