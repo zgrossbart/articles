@@ -127,3 +127,10 @@ iPad games to steal design ideas from
         Osmos - Don't make people wait
         World of Goo - Give people an easy way to undo
         Morris Lessmore - Guide users through new interactions
+        
+
+Designing the game
+Getting started with iOS
+Learning Objective-C
+Choosing the framework
+Memory management
