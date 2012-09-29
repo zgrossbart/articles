@@ -46,4 +46,21 @@ My game doesn't use the complex physics of swining candy from Cut the Rope or sl
 
     <!-- picture of a tap and a bump should go here -->
     
+These three frameworks come together to load each level of the game.
 
+<h3>Building a scene</h3>
+
+The playable area of the game is drawn on a Cocos2d class called <code>CCLayerColor</code>.  This layer handles drawing everything in the game and responding to the player interactions.  
+
+The game is made up of a set of images called sprites.  Each item on the game scene like a bridge or a piece of a river is made up of a sprite.
+  
+    <!-- diagram of scene pieces goes here -->
+  
+The game positions these sprites on the screen using a set of tiles.  
+
+
+<h3>Game levels</h3>
+
+Each level of the game is defined in a separate JSON document.  It's important to separate the level definitions so you can update the levels or add new ones without changing the code.
+
+Each level defines a name and ID for the level and them specifies
