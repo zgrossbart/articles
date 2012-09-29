@@ -156,23 +156,38 @@ Performance tuning
 	Running fast
 
 
-A simple puzzle game
-	How the game works
-	Rivers and bridges
+Part 1
+-----------------------
+
+Introduction:  A simple puzzle game
+
+The introduction explains the rules of the game and gives an overview of the project.  It also shows the total screens of the game and how the player moves from one to another.
+
 The frameworks
-	UIKit
-	Cocose2d
-	Box2d
+
+The first step to understanding the game is a look into the frameworks it uses.  This section reviews UIKit, Cocos 2d, and Box2d and how they work together to make the game.
+	
 The fundamental pieces
-	Images
-	Sprites
-	Views
-	Controllers
-	Scenes
-More with less
-	Adding tolls and subways
-	Packing more complexity in the smaller screen
+
+After reviewing frameworks the article introduces the different pieces of the game.  It walks through the images and how they're turned into sprites and looks at some code to discuss the views, controllers, and scenes that make up the game.
+
+
+Part 2
+-----------------------
+
 Moving from the simulator to a real phone
-	Memory management
-	Static objects and bullets
+
+The second part of the series starts by moving the game out of the simulator and into a real phone.  This section discusses industrial design issues, memory management, and tuning the game to run well on a real phone.  It also review the process of signing up as an iOS developer.
+
+More with less
+
+Once game runs well we have to address some design issues.  How do you create complex levels in the small space of the phone?  Where does the game go after you've got the basics working?
+
 Getting through the app store
+
+The last section discusses applying for the Apple store and releasing the game.  I'm not really sure what this section will include since I haven't done it yet.
+
+Part 3
+-----------------------
+
+There might be a third part about responding to feedback and managing new versions.  I'm not at that stage yet.
