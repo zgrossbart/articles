@@ -1,0 +1,49 @@
+I'm not sure what inspired me to write an <a href="http://en.wikipedia.org/wiki/Ios">iOS</a> game.  I make giant business software for a living and I hadn't programmed much for Mac before.  But I love games and I'm a giant math nerd so I started with a <a href="http://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">famous math problem</a> called The Seven Bridges of Königsberg.  I also made it open source.
+
+This article is the first in a series that will walk through the game.  You'll find out how it works, what went into designing it, and what you'll need to know to write your own game for iOS.  
+
+<h3>The Seven Bridges of Königsberg</h3>
+
+Seven bridges is a simple puzzle game.  The player sits in a town of islands surrounded by rivers.  The islands connect with bridges and player must cross each bridges once and only once to with the level.  
+
+    <!-- There should be short video of the game here -->
+    
+The entire game interaction works with a single gesture:  tap where you want the player to go.  If you hit a bridge you cross it and if you hit a river you bounce off of it.  The game screen also uses buttons to restart the level, undo your last move, and go back to the menu.  There are also houses, subways, and tolls, but we'll get to those later.
+
+Supporting the game screen are a start screen, a menu and a "you won" screen.  
+
+    <!-- Pictures of the three other screens go here    -->
+    
+This storyboard layout is very common with iOS games.  You'll see the same layout in popular games like <a href="http://en.wikipedia.org/wiki/Cut_the_Rope">Cut the Rope</a> and <a href="http://en.wikipedia.org/wiki/Where's_My_Water%3F">Where's my water</a>.  
+
+<h3>The Frameworks</h3>
+
+Seven Bridges is written in a combination of <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a> and <a href="http://en.wikipedia.org/wiki/Objective-C#Objective-C.2B.2B">Objective-C++</a>.  It also puts a few frameworks together.
+
+<h4>UIKit</h4>
+
+Every iOS application starts with <a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UIKit_Framework/_index.html">UIKit</a>.  This comprehensive framework from Apple provides all of the basic controls your application uses like Windows, Buttons and TextFields.  Most of the classes in UIKit start with the prefix <code>UI</code> like UIWindow or UIButton.  
+
+The easiest way to work with UIKit is the visual view editor provided in the <a href="http://en.wikipedia.org/wiki/Xcode">Xcode</a> from Apple.  XCode makes it easy to drag and drop control into your application, but it doesn't really cover games.  Xcode doesn't know anything about a river or a bridge in my game.  For that I'll need a gaming framework and a bit of code.
+
+<h4>Cocos2d</h4>
+
+UIKit provides buttons and labels, but not the more complex controls a game uses.  You could draw on the screen directly with <a href="http://en.wikipedia.org/wiki/Opengl">OpenGL</a>, but that means doing a lot of work to manage each pixel on the screen.  Game libraries provide higher level support for placing images, moving them around, and managing your game.  There are a few for iOS.
+
+I chose <a href="http://www.cocos2d-iphone.org/">Cocos2d for iPhone</a> because it's well supported, has a simple API, and comes with a lot of examples.  It also has <a href="http://www.raywenderlich.com/">Ray Wenderlich's</a> excellent tutorials.
+
+Ray is a prolific writer about iOS games.  Every time I searched for a new topic it invariably led back to him.  His <a href="http://www.raywenderlich.com/606/how-to-use-box2d-for-just-collision-detection-with-cocos2d-iphone">tutorial about collision detection</a> provided the fundamentals for my game.
+
+Cocos 2d handles all of the <a href="http://en.wikipedia.org/wiki/Sprite_(computer_graphics)">sprites</a> in my game, the scenes where you're actually playing, and the animations.  It was origionally written in Python so make sure you search for Cocos2d iPhone when you're looking for help.
+
+Cocos2d handles interacticing with the user, but it can't handle interactions with the objects.  I need to know when my player runs into a river, bridge or any other object.  That type of collision detection requires Box2d.
+
+<h4>Box2d</h4>
+
+<a href="http://en.wikipedia.org/wiki/Box2d">Box2d</a> is a <a href="http://en.wikipedia.org/wiki/Physics_engine">physics engine</a>.  It can handle complex concepts like gravity and friction, but we're only using it for collision detection.  
+
+My game doesn't use the complex physics of swining candy from Cut the Rope or sloshing liquids from Where's My Water.  It just handles a player walking around the screen and bumping into things.  Box2d tells me when those bumps happen and I handle the rest.
+
+    <!-- picture of a tap and a bump should go here -->
+    
+
