@@ -16,7 +16,7 @@ Supporting the game screen are a start screen, a menu and a "you won" screen.
     
 This storyboard layout is very common with iOS games.  You'll see the same layout in popular games like <a href="http://en.wikipedia.org/wiki/Cut_the_Rope">Cut the Rope</a> and <a href="http://en.wikipedia.org/wiki/Where's_My_Water%3F">Where's my water</a>.  
 
-<h3>The Basics</h3>
+<h3>The Minimum</h3>
 
 Seven Bridges is written in a combination of <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a> and <a href="http://en.wikipedia.org/wiki/Objective-C#Objective-C.2B.2B">Objective-C++</a>.  If you're used to programming in scripting languages like JavaScript then Objective-C will be a bit of a shock.
 
@@ -77,11 +77,11 @@ My game doesn't use the complex physics of swining candy from Cut the Rope or sl
 
     <!-- picture of a tap and a bump should go here -->
     
-These three frameworks come together to load each level of the game.
+These three frameworks come together to build the game scene.
 
 <h3>Building a scene</h3>
 
-The playable area of the game is drawn with <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer</a> which extens a Cocos2d class called <code>CCLayerColor</code>.  This layer handles drawing everything in the game and responding to the player interactions.  
+The playable area of the game is drawn with <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer</a> which extends the Cocos2d class <code>CCLayerColor</code>.  This layer handles drawing everything in the game and responding to the player interactions.  
 
 The game is made up of a set of images called sprites.  Each item on the game scene like a bridge or a piece of a river is made up of a sprite.
   
@@ -100,14 +100,25 @@ Once we've created the sprite sheet we're ready to add the sprites to the scene.
 Cocos2d interprets our sprite sheet with the <code>CCSpriteBatchNode</code> class.  We initialize the sprite sheet once for the application and then use the individual items when we build our level.
 
 <pre class="brush: objective-c">
-_spriteSheet = [[CCSpriteBatchNode batchNodeWithFile:@"bridgesprites.pvr.gz"
-               capacity:150] retain];
+CCSpriteBatchNode *spriteSheet = [[CCSpriteBatchNode batchNodeWithFile:@"bridgesprites.pvr.gz"
+                                 capacity:150] retain];
 [[CCSpriteFrameCache sharedSpriteFrameCache]
 addSpriteFramesWithFile:@"bridgesprites.plist"];
 [self addChild:_spriteSheet];
 </pre>
 
 This code creates a new sprite sheet with our sprites file, initializes it with the properties file defining the images in the sheet, and adds the sheet as a child to our current scene.
+
+Now that we have the sheet we can use it to load individual sprites like this:
+
+<pre class="brush: objective-c">CCSprite *bridge = [CCSprite spriteWithSpriteFrameName:[self @"bridge_v.png"]];
+[spriteSheet addChild:bridge];
+bridge.position = ccp(100, 100);
+</pre>
+
+This code snippet creates a new sprite from the sprite sheet, adds that sprite as a child of the sheet, and positions it 100 points from the left side of the screen and 100 points up from the bottom.  
+
+UIKit puts the point 0,0 at the top left of the screen.  Cocos2d puts 0,0 in the bottom left.  
   
 The game positions these sprites on the screen using a set of tiles.  
 
