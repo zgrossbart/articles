@@ -33,11 +33,13 @@ This storyboard layout is very common with iOS games.  You'll see the same layou
 
 <h3>The Minimum</h3>
 
-Seven Bridges is written in a combination of <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a> and <a href="http://en.wikipedia.org/wiki/Objective-C#Objective-C.2B.2B">Objective-C++</a>.  If you're used to programming in scripting languages like JavaScript then Objective-C will be a bit of a shock.
+Seven Bridges is a simple game.  It doesn't handle complex physics like <a href="http://en.wikipedia.org/wiki/Angry_birds">Angry Birds</a> or complex textures like <a href="http://en.wikipedia.org/wiki/Infinity_Blade">Infinity Blade</a>.  Seven Bridges just has a single player who walks over bridges and bumps into rivers.  It sounds easy, but a lot goes into even a simple game like this.
+
+Seven Bridges is written in a combination of <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a> and <a href="http://en.wikipedia.org/wiki/Objective-C#Objective-C.2B.2B">Objective-C++</a>.  If you're used to programming in scripting languages like JavaScript then Objective-C will come as a shock.
 
 <h4>Programming for iOS</h4>
 
-Many people pick up JavaScript by trial and error.  Automating a list or writing a little jQuery code behind a button is pretty easy in an HTML page.  There are many iOS programming tutorials that try to make it sound just as easy to write iPhone applications.  That's just not true.
+Many people pick up JavaScript by trial and error.  Writing a little jQuery code behind a button is pretty easy in an HTML page.  There are many iOS programming tutorials that make it sound just as easy to write iPhone applications.  That's just not true.
 
 Objective-C has been around for nearly 30 years.  Programming with it means learning a complex environment and some fundamental concepts of how it all holds together.  All of the Objective-C documentation assumes you have a strong background in <a href="http://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming</a> and <a href="http://en.wikipedia.org/wiki/C_(programming_language)">the C programming language</a>.
 
@@ -53,18 +55,17 @@ This article will look at a little code, so let's start by knowing what we're lo
     <li><code>.mm</code> files are Objective-C++ implementation files.  Objective-C is a hybrid where you can use parts of Objective-C and <a href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a> in the same file.  Seven bridges uses Objective-C++ so it can take advantage of frameworks written in C++.</li>
     <li><code>.xib</code> files define visual <code>views</code> in the game where you can layout buttons and other controls.</li>
     <li><code>.png</code> files are individual images used in the game.</li>
-    <li><code>.m</code> files are Objective-C implementation files.</li>
     <li><code>.plist</code> files are XML properties files.  They define basics of how the applications work and the positions of the images in each sprite sheet.</li>
     <li><code>.pvr.gz</code> files contain large sets of images combined together into a single file so they load faster and take up less space.</li>
 </ul>
 
-Xcode projects also include a folder called <code>.xcodeproj</code> containing all of the project configuration files.  Mine is called bridges2 because I messed up the first project so badly that I had to start over again.
+Xcode projects also include a folder called <code>your project.xcodeproj</code> containing all of the project configuration files.  Mine is called bridges2 because I messed up the first project so badly I had to start over again.
 
 In addition to the basics of Objective-C there's decades of patterns and other frameworks to learn.
 
 <h3>The Frameworks</h3>
 
-Seven Bridges uses two major frameworks in addition to the base user interface framework from Apple called UIKit.
+Seven Bridges uses two major frameworks in addition to the basic user interface framework from Apple called UIKit.
 
 <h4>UIKit</h4>
 
@@ -111,6 +112,8 @@ Managing sprite sheets manually is a real pain, so I used <a href="http://www.co
 Once we've created the sprite sheet we're ready to add the sprites to the scene.
 
 <h4>Adding the sprites</h4>
+
+Xcode makes it easy to drag and drop images into a View, but that doesn't work for dynamic scenes like our game levels.  We'll need to write some code.
 
 Cocos2d interprets our sprite sheet with the <code>CCSpriteBatchNode</code> class.  We initialize the sprite sheet once for the application and then use the individual items when we build our level.
 
@@ -184,44 +187,20 @@ The <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr
 
 Boxes are the fundamental concept of Box2d.  They outline the position of an object on the screen and detect when it interacts with other objects.  Box2d supports complex box shapes, but all the boxes in this game are rectangles.
 
-Whenever we add an image to the scene we draw a box around it with a helper method called <code>addBoxBodyForSprite</code>.
+Whenever we add an image to the scene we draw a box around it with Box2d.  The box works with a helper class called a <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/MyContactListener.h">contact listener</a>.  This listener sits in a timer and asks the Box2d model if any of the objects have run into each other after each frame of the game.  
 
-<pre class="brush: objective-c">-(b2Body*)addBoxBodyForSprite:(CCSprite *)sprite: (bool) bullet {
-    
-    b2BodyDef spriteBodyDef;
-    spriteBodyDef.bullet = bullet;
-    if (bullet) {
-        spriteBodyDef.type = b2_dynamicBody;
-        spriteBodyDef.allowSleep = NO;
-    } else {
-        spriteBodyDef.type = b2_staticBody;
-    }
-    spriteBodyDef.position.Set(sprite.position.x/PTM_RATIO,
-                               sprite.position.y/PTM_RATIO);
-    spriteBodyDef.userData = sprite;
-    spriteBodyDef.fixedRotation = YES;
-    b2Body *spriteBody = _world->CreateBody(&spriteBodyDef);
-    
-    b2PolygonShape spriteShape;
-    spriteShape.SetAsBox(sprite.contentSize.width/PTM_RATIO/2,
-                         sprite.contentSize.height/PTM_RATIO/2);
-    b2FixtureDef spriteShapeDef;
-    spriteShapeDef.shape = &spriteShape;
-    spriteShapeDef.density = 1;
-    spriteShapeDef.restitution = 1;
-    spriteShapeDef.friction = 1;
-    spriteShapeDef.isSensor = true;
-    spriteBody->CreateFixture(&spriteShapeDef);
+When two boxes run into each other we have contact and need to react to it.  The logic for contacts is also simple:
 
-    return spriteBody;   
-}
+<pre>
+    If the player contacts a river then bounce back.
+    If the player contacts a bridge then check if the bridge has been crossed.
+        If the bridge is crossed then bounce back.
+        If the bridge isn't crossed them cross it and move the player to the other side.
 </pre>
 
-It looks like a lot of code, but the basic idea is that we create a Box2d object called a <code>b2Body</code> for each sprite and set a few properties on it to let Box2d know how it works.  
+Separating the player movement from the collision makes it easy to move the player around the screen.  We don't have to define islands or work with any higher level concepts.  Instead we just define the position of each piece in a level file.
 
-If you're familiar with Objective-C some of this syntax will look a little strange.  That's because Box2d is written in C++ and we have to call it's functions with that syntax.
-
-<h3>Game levels</h3>
+<h3>Defining levels</h3>
 
 Each level of the game is defined in a separate JSON document.  It's important to separate the level definitions from the code so you can update the levels or add new ones without changing the code.
 
