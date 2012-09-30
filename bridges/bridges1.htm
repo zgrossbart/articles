@@ -1,4 +1,4 @@
-I'm not sure what inspired me to write an <a href="http://en.wikipedia.org/wiki/Ios">iOS</a> game.  I make giant business software for a living and I hadn't programmed much for Mac before.  But I love games and I'm a giant math nerd so I started with a <a href="http://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">famous math problem</a> called The Seven Bridges of Königsberg.  I also made it open source.
+I'm not sure what inspired me to write an <a href="http://en.wikipedia.org/wiki/Ios">iOS</a> game.  I make giant business software for a living and I hadn't programmed much for Mac before.  But I love games and I'm a giant math nerd so I started with a <a href="http://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">famous math problem</a> called The Seven Bridges of Königsberg.  I also made it <a href="https://github.com/zgrossbart/bridges">open source</a>.
 
 This article is the first in a series that will walk through the game.  You'll find out how it works, what went into designing it, and what you'll need to know to write your own game for iOS.  
 
@@ -33,15 +33,17 @@ Objective-C shouldn't be your first language.  Or you second.  You should at lea
 This article will look at a little code, so let's start by knowing what we're looking at.  You can tell what each file does by looking at it's file extension.
 
 <ul>
-    <li><b>.h</b> files are class <a href="http://en.wikipedia.org/wiki/Header_file">headers</a>.  Each of these files represents the public information available about a single class in the project.</li>
-    <li><b>.m</b> files are Objective-C implementation files.</li>
-    <li><b>.mm</b> files are Objective-C++ implementation files.  Objective-C is a hybrid where you can use parts of Objective-C and <a href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a> in the same file.  Seven bridges uses Objective-C++ so it can take advantage of frameworks written in C++.</li>
-    <li><b>.xib</b> files define visual <code>views</code> in the game where you can layout buttons and other controls.</li>
-    <li><b>.png</b> files are individual images used in the game.</li>
-    <li><b>.m</b> files are Objective-C implementation files.</li>
-    <li><b>.plist</b> files are XML properties files.  They define basics of how the applications work and the positions of the images in each sprite sheet.</li>
-    <li><b>.pvr.gz</b> files contain large sets of images combined together into a single file so they load faster and take up less space.</li>
+    <li><code>.h</code> files are class <a href="http://en.wikipedia.org/wiki/Header_file">headers</a>.  Each of these files represents the public information available about a single class in the project.</li>
+    <li><code>.m</code> files are Objective-C implementation files.</li>
+    <li><code>.mm</code> files are Objective-C++ implementation files.  Objective-C is a hybrid where you can use parts of Objective-C and <a href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a> in the same file.  Seven bridges uses Objective-C++ so it can take advantage of frameworks written in C++.</li>
+    <li><code>.xib</code> files define visual <code>views</code> in the game where you can layout buttons and other controls.</li>
+    <li><code>.png</code> files are individual images used in the game.</li>
+    <li><code>.m</code> files are Objective-C implementation files.</li>
+    <li><code>.plist</code> files are XML properties files.  They define basics of how the applications work and the positions of the images in each sprite sheet.</li>
+    <li><code>.pvr.gz</code> files contain large sets of images combined together into a single file so they load faster and take up less space.</li>
 </ul>
+
+Xcode projects also include a folder called <code>.xcodeproj</code> containing all of the project configuration files.  Mine is called bridges2 because I messed up the first project so badly that I had to start over again.
 
 In addition to the basics of Objective-C there's decades of patterns and other frameworks to learn.
 
@@ -63,13 +65,13 @@ I chose <a href="http://www.cocos2d-iphone.org/">Cocos2d for iPhone</a> because 
 
 Ray is a prolific writer about iOS games.  Every time I searched for a new topic it invariably led back to him.  His <a href="http://www.raywenderlich.com/606/how-to-use-box2d-for-just-collision-detection-with-cocos2d-iphone">tutorial about collision detection</a> provided the fundamentals for my game.
 
-Cocos 2d handles all of the <a href="http://en.wikipedia.org/wiki/Sprite_(computer_graphics)">sprites</a> in my game, the scenes where you're actually playing, and the animations.  It was origionally written in Python so make sure you search for Cocos2d iPhone when you're looking for help.
+Cocos2d handles all of the <a href="http://en.wikipedia.org/wiki/Sprite_(computer_graphics)">sprites</a> in my game, the scenes where you're actually playing, and the animations.  Cocos2d files start with the prefix <pre>CC</pre> It was origionally written in Python so make sure you search for Cocos2d iPhone when you're looking for help.
 
 Cocos2d handles interacticing with the user, but it can't handle interactions with the objects.  I need to know when my player runs into a river, bridge or any other object.  That type of collision detection requires Box2d.
 
 <h4>Box2d</h4>
 
-<a href="http://en.wikipedia.org/wiki/Box2d">Box2d</a> is a <a href="http://en.wikipedia.org/wiki/Physics_engine">physics engine</a> written in portable C++.  It can handle complex concepts like gravity and friction, but we're only using it for collision detection.  
+<a href="http://en.wikipedia.org/wiki/Box2d">Box2d</a> is a <a href="http://en.wikipedia.org/wiki/Physics_engine">physics engine</a> written in portable C++.  It can handle complex concepts like gravity and friction, but we're only using it for collision detection.  Box2d files start with the prefix <pre>b2</pre>.
 
 My game doesn't use the complex physics of swining candy from Cut the Rope or sloshing liquids from Where's My Water.  It just handles a player walking around the screen and bumping into things.  Box2d tells me when those bumps happen and I handle the rest.
 
@@ -79,11 +81,33 @@ These three frameworks come together to load each level of the game.
 
 <h3>Building a scene</h3>
 
-The playable area of the game is drawn on a Cocos2d class called <code>CCLayerColor</code>.  This layer handles drawing everything in the game and responding to the player interactions.  
+The playable area of the game is drawn with <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer</a> which extens a Cocos2d class called <code>CCLayerColor</code>.  This layer handles drawing everything in the game and responding to the player interactions.  
 
 The game is made up of a set of images called sprites.  Each item on the game scene like a bridge or a piece of a river is made up of a sprite.
   
     <!-- diagram of scene pieces goes here -->
+    
+The sprites all fit together into a single image called a sprite sheet.  Cocos2d can take that image and a proerties file of coordinates and create the individual images from it.  
+
+The real reason to use a sprite sheet is performance.  Ray Wenderlich wrote a good <a href="http://www.raywenderlich.com/2361/how-to-create-and-optimize-sprite-sheets-in-cocos2d-with-texture-packer-and-pixel-formats">article comparing sprite sheet performance with individual images</a>, but the short answer is that sprite sheets are a lot faster.
+
+Managing sprite sheets manually is a real pain, so I used <a href="http://www.codeandweb.com/texturepacker">TexturePacker</a>.  It's paid software, but $25 is well worth the hours of adjusting pixel coordinates it saved me.  TexturePacker can also convert the sprite sheet to PVR (the internal image format for iOS) and compress it with GZIP.
+
+Once we've created the sprite sheet we're ready to add the sprites to the scene.
+
+<h4>Adding the sprites</h4>
+
+Cocos2d interprets our sprite sheet with the <code>CCSpriteBatchNode</code> class.  We initialize the sprite sheet once for the application and then use the individual items when we build our level.
+
+<pre class="brush: objective-c">
+_spriteSheet = [[CCSpriteBatchNode batchNodeWithFile:@"bridgesprites.pvr.gz"
+               capacity:150] retain];
+[[CCSpriteFrameCache sharedSpriteFrameCache]
+addSpriteFramesWithFile:@"bridgesprites.plist"];
+[self addChild:_spriteSheet];
+</pre>
+
+This code creates a new sprite sheet with our sprites file, initializes it with the properties file defining the images in the sheet, and adds the sheet as a child to our current scene.
   
 The game positions these sprites on the screen using a set of tiles.  
 
@@ -101,14 +125,106 @@ Seven Bridges goes farther by defining a tile system.  Tiles are a way of groupi
     
 <h4>Touches and interactions</h4>
 
+UIKit handles touches on controls like buttons, but for the game scene we need a generic touch handler.  Cocos2d provides that with the <code>touchesEnd</code> method.  First we have to tell Cocos2d that we want touch events like this:
 
+<pre class="brush: objective-c">self.isTouchEnabled = YES;
+</pre>
+
+The we implement the <code>touchesEnded</code> method to get called whenever the user taps the screen.
+
+<pre class="brush: objective-c">-(void)ccTouchesEnded:(NSSet*) touches withEvent:(UIEvent*) event {
+   UITouch *touch = [touches anyObject];
+   CGPoint location = [touch locationInView:[touch view]];
+   location = [[CCDirector sharedDirector] convertToGL:location];
+   
+   // Do some stuff with the point the user touched...
+}
+</pre>
+
+The logic for handling the touch is simple:
+
+<pre>
+    If the player isn't on the screen yet then place the player sprite where the user touched and return.
+    If the player is on the screen then move the player from the current location to the place where the user touched.
+</pre>
+
+That's all we need to do for the touch.  The real logic of the game happens when we handle the collisions.
 
 <h4>Boxes and collisions</h4>
 
+Each object on the screen is a sprite; just a little image file that sits at a specific screen coordinate.  Cocos2d can handle positioning and animating those images, but it doesn't know if they run into each other.  This is where Box2d shines.    
 
+The <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerMgr</a> class manages adding and removing all of the images from the layers in the game.  When it adds an image it also draws a box around it.  
+
+Boxes are the fundamental concept of Box2d.  They outline the position of an object on the screen and detect when it interacts with other objects.  Box2d supports complex box shapes, but all the boxes in this game are rectangles.
+
+Whenever we add an image to the scene we draw a box around it with a helper method called <code>addBoxBodyForSprite</code>.
+
+<pre class="brush: objective-c">-(b2Body*)addBoxBodyForSprite:(CCSprite *)sprite: (bool) bullet {
+    
+    b2BodyDef spriteBodyDef;
+    spriteBodyDef.bullet = bullet;
+    if (bullet) {
+        spriteBodyDef.type = b2_dynamicBody;
+        spriteBodyDef.allowSleep = NO;
+    } else {
+        spriteBodyDef.type = b2_staticBody;
+    }
+    spriteBodyDef.position.Set(sprite.position.x/PTM_RATIO,
+                               sprite.position.y/PTM_RATIO);
+    spriteBodyDef.userData = sprite;
+    spriteBodyDef.fixedRotation = YES;
+    b2Body *spriteBody = _world->CreateBody(&spriteBodyDef);
+    
+    b2PolygonShape spriteShape;
+    spriteShape.SetAsBox(sprite.contentSize.width/PTM_RATIO/2,
+                         sprite.contentSize.height/PTM_RATIO/2);
+    b2FixtureDef spriteShapeDef;
+    spriteShapeDef.shape = &spriteShape;
+    spriteShapeDef.density = 1;
+    spriteShapeDef.restitution = 1;
+    spriteShapeDef.friction = 1;
+    spriteShapeDef.isSensor = true;
+    spriteBody->CreateFixture(&spriteShapeDef);
+
+    return spriteBody;   
+}
+</pre>
+
+It looks like a lot of code, but the basic idea is that we create a Box2d object called a <code>b2Body</code> for each sprite and set a few properties on it to let Box2d know how it works.  
+
+If you're familiar with Objective-C some of this syntax will look a little strange.  That's because Box2d is written in C++ and we have to call it's functions with that syntax.
 
 <h3>Game levels</h3>
 
-Each level of the game is defined in a separate JSON document.  It's important to separate the level definitions so you can update the levels or add new ones without changing the code.
+Each level of the game is defined in a separate JSON document.  It's important to separate the level definitions from the code so you can update the levels or add new ones without changing the code.
 
-Each level defines a name and ID for the level and them specifies
+Each level defines a name, an ID and a set of objects that go in the level.
+
+<pre class="brush: javascript">{
+    "level": {
+        "id": "1",
+        "name": "Hello Bridges!",
+        "rivers": [
+            {
+                "x": "14",
+                "y": "b-t",
+                "orient": "v"
+            }
+        ],
+        "bridges": [
+            {
+                "x": "14",
+                "y": "m",
+                "orient": "h"
+            }
+        ]
+    }
+}
+</pre>
+
+Each object has a coordinate in the tile system and a set of properties defining how the object works.  For example, a bridge specified an <code>orient</code> property to know if it's a horizontal or vertical bridge and a <code>color</code> property to know if the bridge has a specific color.  
+
+Many games define levels as XML, but I chose JSON because it's faster to parse and works better with the web.  One day I'd like to create a mode where you can load new levels from a website without updating the game.
+
+Loading each level takes a <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/Level.h">Level</a> class and they're controlled by a <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelMgr.h">LevelMgr</a>.  
