@@ -11,7 +11,7 @@ This article uses the real game as the example and there's a couple of things yo
     <li>Xcode.  Get it <a href="https://developer.apple.com/xcode/">free from Apple</a>
 </ol>
 
-After you set up your computer go ahead and <a href="https://github.com/zgrossbart/bridges">download the project from GitHub</a>, open it, and run it.
+After you set up your computer go ahead and <a href="https://github.com/zgrossbart/bridges">download the project from GitHub</a>, open it, and run it by pressing the big run button in the upper left corner of Xcode.
 
     <!-- picture of running the app goes here -->
     
@@ -152,13 +152,13 @@ Instead of using points directly the game uses a tile system for position the sp
 
 iOS supports five different devices:  iPhone 3.5 inch, iPhone 3.5 inch retina, iPhone 4 inch retina, iPad and iPad retina.  
 
-    <!-- diagram comparing device sizes goes here -->
+    <!-- device_sizes.png -->
     
 Supporting every device means handling multiple layouts.  Cocos2d gives you a lot of help here by supporting points instead of pixels when specifying layout.  Pixels represent an exact screen location and points are relative to the device.  
 
 Seven Bridges goes farther by defining a tile system.  Tiles are a way of grouping pixels into larger squares for easier layout.  We make the screen 28 tiles tall and at least 42 tiles wide.  The tiles make it easy to define where the sprites go on each level.  Switch the <code>DEBUG_DRAW</code> constant in <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/BridgeColors.h">Bridgecolors.h</a></code> to <code>true</code> and you can see the tile grid in the background of each level.
 
-    <!-- debug drag image goes here -->
+    <!-- debug draw image goes here -->
     
 <h4>Touches and interactions</h4>
 
