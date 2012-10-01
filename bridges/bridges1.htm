@@ -1,31 +1,29 @@
-I resisted writing an iPhone application for a long time.  The platform isn't open.  I'm not a big fan of Apple.  I don't even own a cell phone.  They won me over.
-
-I make giant business software for a living and I hadn't programmed much for Mac before.  But I love games and I'm a huge math nerd so I created a game based on a <a href="http://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">famous math problem</a> called <a href="https://github.com/zgrossbart/bridges">The Seven Bridges of Königsberg</a>.  I'm planning to sell it on the App store, but I also wanted to share it with everyone so I made it <a href="https://github.com/zgrossbart/bridges">open source</a>.
+I make giant business software for a living and I hadn't programmed much for Mac before.  But I love games and I'm a huge math nerd so I made a new game based on a <a href="http://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">famous math problem</a> called <a href="https://github.com/zgrossbart/bridges">The Seven Bridges of Königsberg</a>.  I'm planning to sell it on the App store, but I also want to share it with everyone so I made it <a href="https://github.com/zgrossbart/bridges">open source</a>.
 
 This article is the first in a series that will walk through the game.  You'll find out how it works, what went into designing it, and what you'll need to know to write your own game for <a href="http://en.wikipedia.org/wiki/Ios">iOS</a>.  
 
 <h3>First steps</h3>
 
-This article uses the real game as the example and there's a few things you'll need to start using the code.  
+This article uses the real game as the example and there's a couple of things you'll need to start using the code.  
 
 <ol>
     <li>A mac.</li>
     <li>Xcode.  Get it <a href="https://developer.apple.com/xcode/">free from Apple</a>
 </ol>
 
-After you have your computer set up go ahead and <a href="https://github.com/zgrossbart/bridges">download the project from GitHub</a>, open it, and run it.
+After you set up your computer go ahead and <a href="https://github.com/zgrossbart/bridges">download the project from GitHub</a>, open it, and run it.
 
     <!-- picture of running the app goes here -->
     
-That will open the game in the simulator so you can try it out for free.
+That will open the game in the simulator so you can play for free.
 
 <h3>The rules of the game</h3>
 
-Seven Bridges is a simple puzzle game.  The player visits a town of islands surrounded by rivers.  The islands connect with bridges and player must cross each bridges once and only once to with the level.  
+Seven Bridges is a simple puzzle game.  The player visits a town of islands surrounded by rivers.  The islands connect with bridges and player must cross each bridges once and only once to win the level.  
 
     <!-- There should be short video of the game here -->
     
-The entire game interaction works with a single gesture:  tap where you want the player to go.  If you hit a bridge you cross it and if you hit a river you bounce off of it.  The game also lets you restart the level, undo your last move, and go back to the menu.  
+The game interaction works with a single gesture:  tap where you want the player to go.  If you hit a bridge you cross it and if you hit a river you bounce off of it.  The game also lets you restart the level, undo your last move, and go back to the menu.  
 
 As the levels progress we add new concepts like houses, subways, and tolls, but we'll get to those later.
 
@@ -33,13 +31,11 @@ Supporting the game screen are a start screen, a menu and a "you won" screen.
 
     <!-- Pictures of the three other screens go here    -->
     
-This storyboard layout is very common with iOS games.  You'll see the same layout in popular games like <a href="http://en.wikipedia.org/wiki/Cut_the_Rope">Cut the Rope</a> and <a href="http://en.wikipedia.org/wiki/Where's_My_Water%3F">Where's my water</a>.  
-
-This article provides an overview of how the game works and looks at a little bit of the code.  
+You'll see similar layouts in popular games like <a href="http://en.wikipedia.org/wiki/Cut_the_Rope">Cut the Rope</a> and <a href="http://en.wikipedia.org/wiki/Where's_My_Water%3F">Where's my water</a>.  
 
 <h3>Before we start</h3>
 
-Seven Bridges is a simple game.  It doesn't handle complex physics like <a href="http://en.wikipedia.org/wiki/Angry_birds">Angry Birds</a> or dynamic textures like <a href="http://en.wikipedia.org/wiki/Infinity_Blade">Infinity Blade</a>.  Seven Bridges just has a single player who walks over bridges and bumps into rivers.  It sounds easy, but a lot goes into even a simple game like this.
+Seven Bridges is a simple game.  It doesn't handle complex physics like <a href="http://en.wikipedia.org/wiki/Angry_birds">Angry Birds</a> or rich textures like <a href="http://en.wikipedia.org/wiki/Infinity_Blade">Infinity Blade</a>.  Seven Bridges just has a single player who walks over bridges and bumps into rivers.  It sounds easy, but a lot goes into even a simple game like this.
 
 Seven Bridges is written in a combination of <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a> and <a href="http://en.wikipedia.org/wiki/Objective-C#Objective-C.2B.2B">Objective-C++</a>.  If you're used to programming in scripting languages like JavaScript then Objective-C will come as a shock.
 
@@ -47,17 +43,17 @@ Seven Bridges is written in a combination of <a href="http://en.wikipedia.org/wi
 
 Many people pick up JavaScript by trial and error.  Start with a little jQuery behind a button and go from there.
   
-Many iOS programming tutorials make it sound just as easy to write iPhone applications.  It's not.
+Many iPhone programming tutorials make it sound just as easy to write iPhone applications.  It's not.
 
 Objective-C has been around for nearly 30 years.  Programming with it means learning a large environment and some fundamental concepts of how it all holds together.  All of the Objective-C documentation assumes you have a strong background in <a href="http://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming</a> and <a href="http://en.wikipedia.org/wiki/C_(programming_language)">the C programming language</a>.
 
 Objective-C shouldn't be your first language or you second.  At least make sure that you've read a book about object-oriented programming like <a href="http://www.informit.com/store/product.aspx?isbn=020189551X">Object-Oriented Analysis and Design with Applications</a> by Grady Booch and <a href="http://en.wikipedia.org/wiki/The_C_Programming_Language_(book)">The C Programming Language</a> by Brian Kernighan and Dennis Ritchie.  It's also a good idea to read <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjectiveC/ObjC.pdf">The Objective-C Programming Language</a> from Apple.
 
-But the news isn't all bad.  Objective-C shows it's age in some areas, but the tools are well written and the run time environment is amazing.
+The news isn't all bad.  Objective-C shows it's age in some areas, but the tools are well written and the runtime environment is amazing.
 
 <h4>The Files</h4>
 
-You should already have the code on your computer, so let's start by knowing what we're looking at.  You can tell what each file does by looking at it's file extension.
+You already have the code on your computer, so let's start by knowing what we're looking at.  You can tell what each file does by looking at it's extension.
 
 <ul>
     <li><code>.h</code> files are class <a href="http://en.wikipedia.org/wiki/Header_file">headers</a>.  Each of these files represents the public information available about a single class or object in the project.</li>
@@ -75,7 +71,7 @@ In addition to the basics of Objective-C the game uses three major frameworks.
 
 <h3>The Frameworks</h3>
 
-There's a dozen different solutions for every problem you want to solve on iOS.  Seven Bridges uses three frameworks in addition to the standard Objective-C libraries.
+Seven Bridges uses three frameworks in addition to the standard Objective-C libraries.
 
 <h4>UIKit</h4>
 
