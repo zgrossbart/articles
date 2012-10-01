@@ -75,15 +75,13 @@ Seven Bridges uses three frameworks in addition to the standard Objective-C libr
 
 <h4>UIKit</h4>
 
-Every iOS application starts with <a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UIKit_Framework/_index.html">UIKit</a>.  This comprehensive framework from Apple provides all of the basic controls your application uses like Windows, Buttons and TextFields.  Most of the classes in UIKit start with the prefix <code>UI</code> like <code>UIWindow</code> or <code>UIButton</code>.  
+Every iOS application starts with <a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UIKit_Framework/_index.html">UIKit</a>.  This comprehensive framework from Apple provides all of the basic controls your application uses like windows, buttons and text fields.  Most of the classes in UIKit start with the prefix <code>UI</code> like <code>UIWindow</code> or <code>UIButton</code>.  
 
-The easiest way to work with UIKit is the visual editor provided with Xcode.  XCode makes it easy to drag and drop controls into your application.  It works well for business applications, but it doesn't really cover games.
-  
-Xcode doesn't know anything about the rivers or a bridges in my game.  For that I'll need a gaming framework and a bit of code.
+The easiest way to work with UIKit is the visual editor provided with Xcode.  XCode makes it easy to drag and drop controls into your application.  It works well for business applications, but it doesn't know anything about the rivers or a bridges in my game.  For that I'll need a gaming framework and a bit of code.
 
 <h4>Cocos2d</h4>
 
-You could draw on the screen directly with <a href="http://en.wikipedia.org/wiki/Opengl">OpenGL</a>, but that signs you up for a lot of work managing each pixel on the screen.  Game libraries provide higher level support for placing images, creating animations, and managing your game.  There are a few for iOS.
+You could draw on the screen directly with <a href="http://en.wikipedia.org/wiki/Opengl">OpenGL</a>, but that signs you up for a lot of work managing each pixel on the screen.  Game libraries provide higher level support for placing images, creating animations and managing your game.  There are a few for iOS.
 
 I chose <a href="http://www.cocos2d-iphone.org/">Cocos2d for iPhone</a> because it's well supported, has a simple API, and comes with a lot of examples.  It also has <a href="http://www.raywenderlich.com/">Ray Wenderlich's</a> excellent tutorials.
 
@@ -97,7 +95,7 @@ Cocos2d handles user interactions, but it can't handle interactions with the obj
 
 <a href="http://en.wikipedia.org/wiki/Box2d">Box2d</a> is a <a href="http://en.wikipedia.org/wiki/Physics_engine">physics engine</a> written in portable C++.  It can handle complex concepts like gravity and friction, but we're only using it for collision detection.  Box2d files start with the prefix <pre>b2</pre>.
 
-My game doesn't use the complex physics of swinging candy from Cut the Rope or sloshing liquids from Where's My Water.  It just handles a player walking around the screen and bumping into things.  Box2d tells me when those bumps happen and I handle the rest.
+My game doesn't use the complex physics of swinging candy from Cut the Rope or sloshing liquids from Where's My Water.  It just handles a player walking around the screen and bumping into things.  Box2d tells me when those bumps happen and my code handles the rest.
 
     <!-- picture of a tap and a bump should go here -->
     
