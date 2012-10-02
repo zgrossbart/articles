@@ -13,7 +13,7 @@ This article uses the real game as the example and there's a couple of things yo
 
 After you set up your computer go ahead and <a href="https://github.com/zgrossbart/bridges">download the project from GitHub</a>, open it, and run it by pressing the big run button in the upper left corner of Xcode.
 
-    <!-- picture of running the app goes here -->
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/10/xcode_run.png" alt="Running Seven Bridges in Xcode" title="Running Seven Bridges in Xcode" width="525" height="525" class="aligncenter size-full wp-image-122540" />
     
 That will open the game in the simulator so you can play for free.
 
@@ -93,7 +93,7 @@ Cocos2d handles user interactions, but it can't handle interactions with the obj
 
 <h4>Box2d</h4>
 
-<a href="http://en.wikipedia.org/wiki/Box2d">Box2d</a> is a <a href="http://en.wikipedia.org/wiki/Physics_engine">physics engine</a> written in portable C++.  It can handle complex concepts like gravity and friction, but we're only using it for collision detection.  Box2d files start with the prefix <pre>b2</pre>.
+<a href="http://en.wikipedia.org/wiki/Box2d">Box2d</a> is a <a href="http://en.wikipedia.org/wiki/Physics_engine">physics engine</a> written in portable C++.  It can handle complex concepts like gravity and friction, but we're only using it for collision detection.  Box2d files start with the prefix <code>b2</code>.
 
 My game doesn't use the complex physics of swinging candy from Cut the Rope or sloshing liquids from Where's My Water.  It just handles a player walking around the screen and bumping into things.  Box2d tells me when those bumps happen and my code handles the rest.
 
@@ -125,7 +125,7 @@ Xcode makes it easy to drag and drop images into a View, but that doesn't work f
 
 Cocos2d interprets our sprite sheet with the <code>CCSpriteBatchNode</code> class.  We initialize the sprite sheet once for the application and then use the individual items when we build our level.
 
-<pre class="brush: objective-c">
+<pre class="brush: javascript">
 CCSpriteBatchNode *spriteSheet = [[CCSpriteBatchNode batchNodeWithFile:@"bridgesprites.pvr.gz"
                                  capacity:150] retain];
 [[CCSpriteFrameCache sharedSpriteFrameCache]
@@ -137,7 +137,7 @@ This code creates a new sprite sheet with our sprites file, initializes it with 
 
 Now that we have the sheet we can use it to load individual sprites like this:
 
-<pre class="brush: objective-c">CCSprite *bridge = [CCSprite spriteWithSpriteFrameName:[self @"bridge_v.png"]];
+<pre class="brush: javascript">CCSprite *bridge = [CCSprite spriteWithSpriteFrameName:[self @"bridge_v.png"]];
 [spriteSheet addChild:bridge];
 bridge.position = ccp(100, 100);
 </pre>
@@ -152,7 +152,7 @@ Instead of using points directly the game uses a tile system for position the sp
 
 iOS supports five different devices:  iPhone 3.5 inch, iPhone 3.5 inch retina, iPhone 4 inch retina, iPad and iPad retina.  
 
-    <!-- device_sizes.png -->
+<img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/10/device_sizes.png" alt="Different iOS device sizes" title="Different iOS device sizes" width="512" height="384" class="aligncenter size-full wp-image-122539" />
     
 Supporting every device means handling multiple layouts.  Cocos2d gives you a lot of help here by supporting points instead of pixels when specifying layout.  Pixels represent an exact screen location and points are relative to the device.  
 
@@ -164,12 +164,12 @@ Seven Bridges goes farther by defining a tile system.  Tiles are a way of groupi
 
 UIKit handles touches on controls like buttons and tables, but for the game scene we need a generic touch handler.  Cocos2d provides that with the <code>touchesEnd</code> method.  First we have to tell Cocos2d that we want touch events like this:
 
-<pre class="brush: objective-c">self.isTouchEnabled = YES;
+<pre class="brush: javascript">self.isTouchEnabled = YES;
 </pre>
 
 The we implement the <code>touchesEnded</code> method to get called whenever the user taps the screen.
 
-<pre class="brush: objective-c">-(void)ccTouchesEnded:(NSSet*) touches withEvent:(UIEvent*) event {
+<pre class="brush: javascript">-(void)ccTouchesEnded:(NSSet*) touches withEvent:(UIEvent*) event {
    UITouch *touch = [touches anyObject];
    CGPoint location = [touch locationInView:[touch view]];
    location = [[CCDirector sharedDirector] convertToGL:location];
