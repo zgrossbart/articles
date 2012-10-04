@@ -1,6 +1,6 @@
-I make giant business software for a living and I hadn't programmed much for Mac before.  But I love games and I'm a huge math nerd so I made a new game based on a <a href="http://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">famous math problem</a> called <a href="https://github.com/zgrossbart/bridges">The Seven Bridges of Königsberg</a>.  I'm planning to sell it on the App store, but I also want to share it with everyone so I made it <a href="https://github.com/zgrossbart/bridges">open source</a>.
+I make giant business software for a living and I've never programmed for Mac before, but I love games and I'm a huge math nerd so I made a new iPhone game based on a <a href="http://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">famous math problem</a> called <a href="https://github.com/zgrossbart/bridges">The Seven Bridges of Königsberg</a>.  I'm planning to sell it on the App store, but I also want to share it with everyone so I made it <a href="https://github.com/zgrossbart/bridges">open source</a>.
 
-This article is the first in a series that will walk through the game.  You'll find out how it works, what went into designing it, and what you'll need to know to write your own game for <a href="http://en.wikipedia.org/wiki/Ios">iOS</a>.  
+This article is the first in a series that will walk through the game.  You'll find out how it works, what went into designing it and what you'll need to know to write your own game for <a href="http://en.wikipedia.org/wiki/Ios">iOS</a>.  
 
 <h3>First steps</h3>
 
@@ -11,7 +11,7 @@ This article uses the real game as the example and there's a couple of things yo
     <li>Xcode.  Get it <a href="https://developer.apple.com/xcode/">free from Apple</a>
 </ol>
 
-After you set up your computer go ahead and <a href="https://github.com/zgrossbart/bridges">download the project from GitHub</a>, open it, and run it by pressing the big run button in the upper left corner of Xcode.
+After you set up your computer go ahead and <a href="https://github.com/zgrossbart/bridges">download the project from GitHub</a>, open it and run it by pressing the big run button in the upper left corner of Xcode.
 
 <img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/10/xcode_run.png" alt="Running Seven Bridges in Xcode" title="Running Seven Bridges in Xcode" width="525" height="525" class="aligncenter size-full wp-image-122540" />
     
@@ -23,11 +23,11 @@ Seven Bridges is a simple puzzle game.  The player visits a town of islands surr
 
     <!-- There should be short video of the game here -->
     
-The game interaction works with a single gesture:  tap where you want the player to go.  If you hit a bridge you cross it and if you hit a river you bounce off of it.  The game also lets you restart the level, undo your last move, and go back to the menu.  
+The game interaction works with a single gesture:  tap where you want the player to go.  If you hit a bridge you cross it and if you hit a river you bounce off of it.  The game also lets you restart the level, undo your last move and go back to the menu.  
 
-As the levels progress we add new concepts like houses, subways, and tolls, but we'll get to those later.
+The game adds new concepts like houses, subways and tolls as the levels progress, but we'll get to those later.
 
-Supporting the game screen are a start screen, a menu and a "you won" screen.  
+The main game screen is also supported by a start screen, a menu and a "you won" screen.  
 
     <!-- Pictures of the three other screens go here    -->
     
@@ -41,19 +41,19 @@ Seven Bridges is written in a combination of <a href="http://en.wikipedia.org/wi
 
 <h4>Programming for iOS</h4>
 
-Many people pick up JavaScript by trial and error.  Start with a little jQuery behind a button and go from there.
+Most people pick up JavaScript by trial and error.  They start with a little jQuery behind a button and go from there.
   
 Many iPhone programming tutorials make it sound just as easy to write iPhone applications.  It's not.
 
 Objective-C has been around for nearly 30 years.  Programming with it means learning a large environment and some fundamental concepts of how it all holds together.  All of the Objective-C documentation assumes you have a strong background in <a href="http://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming</a> and <a href="http://en.wikipedia.org/wiki/C_(programming_language)">the C programming language</a>.
 
-Objective-C shouldn't be your first language or you second.  At least make sure that you've read a book about object-oriented programming like <a href="http://www.informit.com/store/product.aspx?isbn=020189551X">Object-Oriented Analysis and Design with Applications</a> by Grady Booch and <a href="http://en.wikipedia.org/wiki/The_C_Programming_Language_(book)">The C Programming Language</a> by Brian Kernighan and Dennis Ritchie.  It's also a good idea to read <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjectiveC/ObjC.pdf">The Objective-C Programming Language</a> from Apple.
+Objective-C shouldn't be your first language or you second.  Make sure you've read a book about object-oriented programming like <a href="http://www.informit.com/store/product.aspx?isbn=020189551X">Object-Oriented Analysis and Design with Applications</a> by Grady Booch and <a href="http://en.wikipedia.org/wiki/The_C_Programming_Language_(book)">The C Programming Language</a> by Brian Kernighan and Dennis Ritchie.  It's also a good idea to read <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjectiveC/ObjC.pdf">The Objective-C Programming Language</a> from Apple.
 
 The news isn't all bad.  Objective-C shows it's age in some areas, but the tools are well written and the runtime environment is amazing.
 
 <h4>The Files</h4>
 
-You already have the code on your computer, so let's start by knowing what we're looking at.  You can tell what each file does by looking at it's extension.
+You already have the code on your computer, so let's get a better idea of what we're looking at.  You can tell what each file does by looking at it's extension.
 
 <ul>
     <li><code>.h</code> files are class <a href="http://en.wikipedia.org/wiki/Header_file">headers</a>.  Each of these files represents the public information available about a single class or object in the project.</li>
@@ -83,7 +83,7 @@ The easiest way to work with UIKit is the visual editor provided with Xcode.  XC
 
 You could draw on the screen directly with <a href="http://en.wikipedia.org/wiki/Opengl">OpenGL</a>, but that signs you up for a lot of work managing each pixel on the screen.  Game libraries provide higher level support for placing images, creating animations and managing your game.  There are a few for iOS.
 
-I chose <a href="http://www.cocos2d-iphone.org/">Cocos2d for iPhone</a> because it's well supported, has a simple API, and comes with a lot of examples.  It also has <a href="http://www.raywenderlich.com/">Ray Wenderlich's</a> excellent tutorials.
+I chose <a href="http://www.cocos2d-iphone.org/">Cocos2d for iPhone</a> because it's well supported, has a simple API and comes with a lot of examples.  It also has <a href="http://www.raywenderlich.com/">Ray Wenderlich's</a> excellent tutorials.
 
 Ray is a prolific writer about iOS games.  Every time I searched for a new topic it led back to him.  His <a href="http://www.raywenderlich.com/606/how-to-use-box2d-for-just-collision-detection-with-cocos2d-iphone">tutorial about collision detection</a> provided the fundamentals for my game and his <a href="http://www.raywenderlich.com/352/how-to-make-a-simple-iphone-game-with-cocos2d-tutorial">Simple iPhone Game with Cocos2D Tutorial</a> is a perfect little sample game.
 
@@ -133,7 +133,7 @@ addSpriteFramesWithFile:@"bridgesprites.plist"];
 [self addChild:_spriteSheet];
 </pre>
 
-This code creates a new sprite sheet with our sprites file, initializes it with the properties file defining the images in the sheet, and adds the sheet as a child to our current scene.  You can see the full code for this in the <code>init</code> method of <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer.mm</a></code>/
+This code creates a new sprite sheet with our sprites file, initializes it with the properties file defining the images in the sheet and adds the sheet as a child to our current scene.  You can see the full code for this in the <code>init</code> method of <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer.mm</a></code>/
 
 Now that we have the sheet we can use it to load individual sprites like this:
 
@@ -142,7 +142,7 @@ Now that we have the sheet we can use it to load individual sprites like this:
 bridge.position = ccp(100, 100);
 </pre>
 
-This code snippet creates a new sprite from the sprite sheet, adds that sprite as a child of the sheet, and positions it 100 points from the left side of the screen and 100 points up from the bottom.  
+This code snippet creates a new sprite from the sprite sheet, adds that sprite as a child of the sheet and positions it 100 points from the left side of the screen and 100 points up from the bottom.  
 
 All positions in Cocos2d are based on a coordinate system where point 0,0 is in the bottom left corner.  UIKit puts the point 0,0 at the top left of the screen.  There are a few places where we need to convert back and forth further in the code.
   
@@ -240,7 +240,7 @@ Each object has a coordinate in the tile system and a set of properties defining
 
 Many games define levels in XML, but I chose JSON because it's faster to parse and works better with the web.  One day I'd like to create a mode where you can load new levels from a website without downloading a new version of the game.
 
-The <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/Level.h">Level</a> class defines each level and they're controlled by a <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelMgr.h">LevelMgr</a>.  The level manager loads the levels, sorts them for the menu, and creates the thumbnails of each level on the menu screen.
+The <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/Level.h">Level</a> class defines each level and they're controlled by a <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelMgr.h">LevelMgr</a>.  The level manager loads the levels, sorts them for the menu and creates the thumbnails of each level on the menu screen.
 
 Seven Bridges does a lot more, but this is a good place to stop for the first article.
 
