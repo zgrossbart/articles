@@ -36,7 +36,7 @@ alert(obj1.func3());
 alert(obj1.func4());
 </pre>
 
-Most languages support <a href="http://en.wikipedia.org/wiki/Reflection_(computer_programming)">dynamic code loading</a>, but JavaScript encourages it.  JavaScript has a lot of dark corners.  Did you know that adding two arrays in JavaScript results in an empty string or that <code>[] + {}</code> results in an object but <code>{} + []</code> is 0?  <a href="https://www.destroyallsoftware.com/talks/wat">Wat</a>?!?
+Most languages support <a href="http://en.wikipedia.org/wiki/Reflection_(computer_programming)">dynamic code loading</a>, but JavaScript encourages it.  JavaScript has a lot of dark corners.  Did you know that adding two arrays in JavaScript results in an empty string or that <code>[] + {}</code> results in the string <code>[object Object]</code> but <code>{} + []</code> is 0?  <a href="https://www.destroyallsoftware.com/talks/wat">Wat</a>?!?
 
 JavaScript makes it so easy to write unreadable code that it's <a href="http://blogs.adobe.com/bparadie/2012/05/07/the-pew-pew-manifesto/">impossible to write large projects in JavaScript</a>... except for Twitter, Facebook, Google, every big website you've ever heard of, and hundreds of others.
 
@@ -222,6 +222,8 @@ The JavaScript problem is everyone's problem; there are no good answers.  It's p
 There are a few other options for generating JavaScript (for example, <a href="http://clojure.org/">Clojure</a> compiles into JavaScript), but they're still small projects without much real-world use.
 
 Google writes most of their client-side code with the Closure tools and they're starting to adopt more Dart.  Other large sites like Twitter use JavaScript combined with other technologies like Ruby On Rails.  Big open source projects like WordPress mostly stick with straight JavaScript and jQuery.  Facebook uses a combination of all of them.  Microsoft combines jQuery with ASP.Net and some other custom technologies.  They're also working on a new static typed JavaScript variant called <a href="http://www.typescriptlang.org/">TypeScript</a>.
+
+That just scratches the surface.  The CoffeeScript project maintains a comprehensive list of <a href="https://github.com/jashkenas/coffee-script/wiki/List-of-languages-that-compile-to-JS">languages that compile into JavaScript</a>.
 
 If your project is small, then just write JavaScript.  jQuery is very well done; so are many other JavaScript libraries.  Keep your project small and the problems stay small.  
 
