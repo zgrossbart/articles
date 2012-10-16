@@ -8,7 +8,7 @@ This article uses the real game as the example.  There are a couple of things yo
 
 <ol>
     <li>A Mac.</li>
-    <li>Xcode.  Get it <a href="https://developer.apple.com/xcode/">free from Apple</a>.
+    <li>The Xcode development environment from Apple.  Get it <a href="https://developer.apple.com/xcode/">free from Apple</a>.
 </ol>
 
 After you set up your computer go ahead and <a href="https://github.com/zgrossbart/bridges">download the project from GitHub</a>, open it and run it by pressing the big Run button in the upper left corner of Xcode.
@@ -61,7 +61,7 @@ You already have the code on your computer, so let's get a better idea of what w
     <li><code>.h</code> files are class <a href="http://en.wikipedia.org/wiki/Header_file">headers</a>.  Each of these files represents the public information available about a single class or object in the project.</li>
     <li><code>.m</code> files are Objective-C implementation files.</li> 
     <li><code>.mm</code> files are Objective-C++ implementation files.  Objective-C++ is a hybrid where you can use parts of Objective-C and <a href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a> in the same file.  Seven Bridges uses Objective-C++ so it can take advantage of frameworks written in C++.</li>
-    <li><code>.xib</code> files define visual <code>views</code> in the game where you can lay out buttons and other controls.</li> 
+    <li><code>.xib</code> files define visual <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaViewsGuide/WhatAreViews/WhatAreViews.html#//apple_ref/doc/uid/TP40002978-CH5-SW1">views</a> in the game where you can lay out buttons and other controls.</li> 
     <li><code>.png</code> files are individual images used in the game.</li>
     <li><code>.pvr.gz</code> files contain large sets of images called sprite sheets.  The images are combined into a single file so they load faster and take up less space.</li>
     <li><code>.plist</code> files are XML properties files.  They define basics of how the application works and the positions of the images in each sprite sheet.</li>
@@ -144,6 +144,8 @@ bridge.position = ccp(100, 100);
 
 This code snippet creates a new sprite from the sprite sheet, adds that sprite as a child of the sheet, and positions it 100 points from the left side of the screen and 100 points up from the bottom.  (We'll get to what "points" are in the next section.)
 
+Cocos2d manages the sprite sheets with a caching mechanism they call the sprite frame cache.  We loaded the frame cache in the previous code snippet when we loaded the <code>bridgesprites.pvr.gz</code> sprite sheet file and the <code>bridgesprites.plist</code> file describing it.  Cocos2d loaded all of those images into the cache and we can now get them by name.  
+
 All positions in Cocos2d are based on a coordinate system where point 0,0 is in the bottom left corner.  UIKit puts the point 0,0 at the top left of the screen.  There are a few places where we need to convert back and forth further in the code.
   
 Instead of using points directly the game uses a tile system to position the sprites.
@@ -154,7 +156,7 @@ iOS supports five different devices:  iPhone 3.5-inch, iPhone 3.5-inch Retina, i
 
 <img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/10/device_sizes.png" alt="Different iOS device sizes" title="Different iOS device sizes" width="512" height="384" class="aligncenter size-full wp-image-122539" />
     
-Supporting every device means handling multiple layouts.  Cocos2d gives you a lot of help here by supporting points instead of pixels when specifying layout.  Pixels represent an exact screen location and points are relative to the device.
+Supporting every device means handling multiple layouts.  Cocos2d gives you a lot of help here by supporting points instead of pixels when specifying layout.  Pixels represent an exact screen location and points are relative to the device.  This makes it easy to support retina devices which are the same screen size, but pack in twice as many pixels.
 
 Seven Bridges goes farther by defining a tile system.  Tiles are a way of grouping pixels into larger squares for easier layout.  We make the screen 28 tiles tall and at least 42 tiles wide.  The tiles make it easy to define where the sprites go on each level.  Switch the <code>DEBUG_DRAW</code> constant in <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/BridgeColors.h">Bridgecolors.h</a></code> to <code>true</code> and you can see the tile grid in the background of each level.
 
@@ -162,12 +164,12 @@ Seven Bridges goes farther by defining a tile system.  Tiles are a way of groupi
     
 <h4>Touches and Interactions</h4>
 
-UIKit handles touches on controls like buttons and tables, but for the game scene we need a generic touch handler.  Cocos2d provides that with the <code>touchesEnd</code> method.  First we have to tell Cocos2d that we want touch events like this: 
+UIKit handles touches on controls like buttons and tables, but for the game scene we need a generic touch handler.  Cocos2d provides that with the <code>ccTouchesEnded</code> method.  First we have to tell Cocos2d that we want touch events like this: 
 
 <pre class="brush: javascript">self.isTouchEnabled = YES;
 </pre>
 
-Then we implement the <code>touchesEnded</code> method to get called whenever the user taps the screen. 
+Then we implement the <code>ccTouchesEnded</code> method to get called whenever the user taps the screen. 
 
 <pre class="brush: javascript">-(void)ccTouchesEnded:(NSSet*) touches withEvent:(UIEvent*) event { 
    UITouch *touch = [touches anyObject];
