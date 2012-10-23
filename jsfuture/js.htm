@@ -56,15 +56,15 @@ JavaScript is easy to write.  If I have a button and want to know when someone c
 
 Your grandmother can guess what this code does.  That's why JavaScript is a good <a href="http://www.stanford.edu/class/cs101/">first programming language</a> and a great prototyping language.  JavaScript programs go from a blank page to a working app ridiculously fast.  They're quick to write, don't require a compiler, and allow you to do anything you need.  
 
-These two views of JavaScript are difficult to reconcile.  Is JavaScript an ill-defined loose language designed to cause premature gray hair or a fun place to work?  The answer is both.  I love my JavaScript and hate everyone else's.
+These two views of JavaScript are difficult to reconcile.  Is JavaScript an ill-defined loose language designed to cause premature gray hair or a fun place to work?  The answer is both.
 
-We face this choice with every new Web project.  Should we use JavaScript or not?  This article shows you how to choose.
+We face this choice with every new Web project.  Should we write JavaScript or another language that generates it?  This article shows you how to choose.
 
 <h3>I Love My JavaScript And Hate Everyone Else's</h3>
 
 JavaScript is the most popular client-side programming language in the world.  It's tough to find a website that doesn't run it.  It's also come a long way with the introduction of excellent libraries like <a href="http://jquery.com/">jQuery</a>, <a href="http://backbonejs.org/">Backbone</a>, and countless others.  JavaScript wins easily for small projects, but it falters when the projects and teams get larger.
 
-Every large JavaScript project adopts patterns to compensate for the lack of language features.  They're simple patterns like using an underscore to mark some functions as private, or adding comments before arguments to indicate the expected type.
+Every large JavaScript project adopts conventions to compensate for the lack of language features.  They're simple patterns like using an underscore to mark some functions as private, or adding comments before arguments to indicate the expected type.
 
 <pre class="brush: javascript">function formatDate(/* Date */ d) {
     var day = d.getDate();
@@ -187,13 +187,25 @@ Closure code looks like Java with clunkier syntax.  It's strongly typed, uses a 
 
 Google isn't putting much marketing behind the Closure tools, but they're putting a lot of engineering there.  All of the major Google products use Closure.  <a href="http://highscalability.com/blog/2011/7/12/google-is-built-using-tools-you-can-use-too-closure-java-ser.html">Google+ was built on Closure</a> from the ground up.
 
-The Closure community is growing, but there still aren't many people outside of Google who know it well.  Closure also suffers from the need to maintain backward compatibility with JavaScript.  The syntax looks clunky and only experts in JavaScript and object-oriented programming can write it.
+The Closure community is growing, but there still aren't many people outside of Google who know it well.  Closure also suffers from the need to maintain backward compatibility with JavaScript.  The syntax looks clunky and only more advanced JavaScript and object-oriented programmers can write it.
 
 Some people thought the Web needed a brand-new language.  So Google continued its frenemy relationship with JavaScript by creating Dart.
 
 <h3><a href="http://www.dartlang.org/">Dart</a></h3>
 
 Dart totally replaces JavaScript with a language that's strongly typed, uses interfaces and looks a lot like a simplified Java.
+
+<pre class="brush: javascript">
+library hi;
+
+import 'dart:html';
+
+main() {
+  query('#status').text = 'Hi, Dart';
+}
+</pre>
+
+This simple Hello World! example shows packages, imports, and methods similar to Java syntax.
 
 Dart can compile into JavaScript, but running it natively in the browser gets you better performance and debugging.  Google controls the Chrome browser and may add native support for Dart there.  They already have <a href="http://www.dartlang.org/dartium/">a special version running on Windows</a>.  But it isn't all up to Google.
 
@@ -207,7 +219,7 @@ The only thing certain about Dart is that its future is unknown.  A preview (ver
 
 <h3><a href="http://opalang.org/">OPA</a></h3>
 
-OPA is the new kid on the block with a 1.0 release in June of this year.  It's a strongly typed language with a growing community.  You write OPA and compile into other languages like JavaScript, but it isn't just client-side.
+OPA is the new kid on the block with a 1.0 release last August.  It's a strongly typed language with a growing community.  You write OPA and compile into other languages like JavaScript, but it isn't just client-side.  OPA mixes client-side and server-side programming into a single file.
 
 OPA supports client, server and database development with a single language.  The same code base and it compiles into JavaScript, native executables and SQL code.  They recently added support for non-relational databases like <a href="http://www.mongodb.org/">MongoDB</a> as well.
 
@@ -234,3 +246,4 @@ A big part of this problem is the difficulty of finding a single language that k
 There's also no reason to choose just one.  GWT combines well with regular JavaScript, and you can use the Closure Compiler simple optimizations with any JavaScript project.
 
 JavaScript will never be the best language for all applications, but browsers won't support another one anytime soon.  The key to using JavaScript well is to understand its limitations and know when not to use it.  JavaScript is easy for small projects; you need planning, care and help from other libraries to work on larger ones.
+
