@@ -60,7 +60,7 @@ These two views of JavaScript are difficult to reconcile.  Is JavaScript an ill-
 
 We face this choice with every new Web project.  Should we write JavaScript or another language that generates it?  This article shows you how to choose.
 
-<h3>I Love My JavaScript And Hate Everyone Else's</h3>
+<h3>JavaScript is constantly improving</h3>
 
 JavaScript is the most popular client-side programming language in the world.  It's tough to find a website that doesn't run it.  It's also come a long way with the introduction of excellent libraries like <a href="http://jquery.com/">jQuery</a>, <a href="http://backbonejs.org/">Backbone</a>, and countless others.  JavaScript wins easily for small projects, but it falters when the projects and teams get larger.
 
@@ -113,9 +113,11 @@ CoffeeScript lets you write this:
     alert 'Hello World!';
 </pre>
 
-The general philosophy is that writing less code means you have fewer bugs.  CoffeeScript is growing fast, <a href="http://www.rubyinside.com/rails-3-1-adopts-coffeescript-jquery-sass-and-controversy-4669.html">loved by Ruby programmers</a>, and hated by anyone with a secret crush on curly brackets.  CoffeeScript compiles into JavaScript either when the page is run, or ahead of time during a build step.  
+The general philosophy is that writing less code means you have fewer bugs.  CoffeeScript simplifies the JavaScript syntax by removing the need to declare <code>var</code> and using white-space indenting instead of curly-braces.  
 
-CoffeeScript makes a lot of syntactic improvements over JavaScript, but it has two main flaws.  The first is that you can't debug directly in CoffeeScript.  Browsers don't run CoffeeScript natively so you get all errors in compiled JavaScript and have to translate them back to your source code.  That means you can't write a CoffeeScript application without a pretty deep understanding of the JavaScript it will produce.
+CoffeeScript is growing fast, <a href="http://www.rubyinside.com/rails-3-1-adopts-coffeescript-jquery-sass-and-controversy-4669.html">loved by Ruby programmers</a>, and hated by anyone with a secret crush on curly brackets.  CoffeeScript compiles into JavaScript either when the page is run, or ahead of time during a build step.  
+
+CoffeeScript makes many syntactic improvements over JavaScript, but it has two main flaws.  The first is that you can't debug directly in CoffeeScript.  Browsers don't run CoffeeScript natively so you get all errors in compiled JavaScript and have to translate them back to your source code.  That means you can't write a CoffeeScript application without a pretty deep understanding of the JavaScript it will produce.
 
 The second major flaw of CoffeeScript is that it's basically just JavaScript with a different syntax.  CoffeeScript means writing less code, but it doesn't fix the real problems of JavaScript as a language.  It's still the case that I love my CoffeeScript and hate everyone else's.
 
@@ -209,7 +211,9 @@ This simple Hello World! example shows packages, imports, and methods similar to
 
 Dart can compile into JavaScript, but running it natively in the browser gets you better performance and debugging.  Google controls the Chrome browser and may add native support for Dart there.  They already have <a href="http://www.dartlang.org/dartium/">a special version running on Windows</a>.  But it isn't all up to Google.
 
-Chrome depends on <a href="http://en.wikipedia.org/wiki/WebKit">WebKit</a>, which also powers Safari from Apple.  Webkit is an open source project made up of about one third Google people, one third Apple people, and one third other people.  The Chrome team would like to change Webkit to support Dart; that would make their lives easier, and also make Safari support Dart.  If that happened they could claim two major browsers support it, and pressure the others to start.  The Safari team doesn't want the Web to run on a new language owned by Google, so they're adamant about not including Dart.  It looks like <a href="https://news.ycombinator.com/item?id=2982949">none of the other browsers will support Dart</a> either.
+Chrome depends on <a href="http://en.wikipedia.org/wiki/WebKit">WebKit</a>, which also powers Safari from Apple.  Webkit is an open source project made up of about one third Google people, one third Apple people, and one third other people.  The Chrome team would like to change Webkit to support Dart; that would make their lives easier, and also make Safari support Dart.  If that happened they could claim two major browsers support it, and pressure the others to start.  The Safari team doesn't want the Web to run on a new language owned by Google, so they're adamant about not including Dart.  
+
+It looks like <a href="https://news.ycombinator.com/item?id=2982949">none of the other browsers will support Dart</a> either.  That leaves you compiling Dart into JavaScript and losing some of the nicer features like integrated debuggers.
 
 Dart has many technical merits, it's eclipsed by larger political problems.
 
@@ -233,7 +237,7 @@ The JavaScript problem is everyone's problem; there are no good answers.  It's p
 
 There are a few other options for generating JavaScript (for example, <a href="http://clojure.org/">Clojure</a> compiles into JavaScript), but they're still small projects without much real-world use.
 
-Google writes most of their client-side code with the Closure tools and they're starting to adopt more Dart.  Other large sites like Twitter use JavaScript combined with other technologies like Ruby On Rails.  Big open source projects like WordPress mostly stick with straight JavaScript and jQuery.  Facebook uses a combination of all of them.  Microsoft combines jQuery with .Net and some other server-side technologies which interact with JavaScript.  They're also working on a new static typed JavaScript variant called <a href="http://www.typescriptlang.org/">TypeScript</a>.
+Google writes most of their client-side code with the Closure tools and they're starting to adopt more Dart.  Other large sites like Twitter use JavaScript combined with other technologies like Ruby On Rails.  Big open source projects like WordPress mostly stick with straight JavaScript and jQuery.  Facebook uses a combination of all of them.  Microsoft combines jQuery with .Net and some other server-side technologies which interact with JavaScript.  They've also released a new static typed JavaScript variant called <a href="http://www.typescriptlang.org/">TypeScript</a>.
 
 That just scratches the surface.  The CoffeeScript project maintains a comprehensive list of <a href="https://github.com/jashkenas/coffee-script/wiki/List-of-languages-that-compile-to-JS">languages that compile into JavaScript</a>.
 
