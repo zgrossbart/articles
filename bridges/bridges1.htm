@@ -23,17 +23,11 @@ Seven Bridges is a simple puzzle game.  The player visits a town of islands surr
 
     <!-- There should be short video of the game here -->
     
-The game interaction works with a single gesture:  tap where you want the player to go.  If you hit a bridge you cross it, and if you hit a river you bounce off it.  The game also lets you restart the level, undo your last move or go back to the menu.  
-
-The game adds new concepts like houses, subways and tolls as the levels progress, but we'll get to those later.
-
-The main game screen is also supported by a start screen, a menu and a "you won" screen.  
+The game interaction works with a single gesture:  tap where you want the player to go.  If you hit a bridge you cross it, and if you hit a river you bounce off it.  The game also lets you restart the level, undo your last move or go back to the menu.  There's also a few other screens to support the game.
 
     <!-- Pictures of the three other screens go here    -->
     
 You'll see similar layouts in popular games like <a href="http://en.wikipedia.org/wiki/Cut_the_Rope">Cut the Rope</a> and <a href="http://en.wikipedia.org/wiki/Where's_My_Water%3F">Where's My Water?</a>
-
-There's also an About screen with information about the game.  It's just an HTML file displayed in a <a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UIWebView_Class/Reference/Reference.html">UIWebView</a>.
 
 <h3>Before We Start</h3>
 
@@ -49,7 +43,7 @@ Many iPhone programming tutorials make it sound just as easy to write iPhone app
 
 Objective-C has been around for nearly 30 years.  Programming with it means learning a large environment and some fundamental concepts of how it all holds together.  All of the Objective-C documentation assumes you have a strong background in both <a href="http://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming</a> and <a href="http://en.wikipedia.org/wiki/C_(programming_language)">the C programming language</a>.
 
-Objective-C shouldn't be your first language or your second.  Make sure you've read a book about object-oriented programming like <em><a href="http://www.informit.com/store/product.aspx?isbn=020189551X">Object-Oriented Analysis and Design with Applications</a></em> by Grady Booch, as well as <em><a href="http://en.wikipedia.org/wiki/The_C_Programming_Language_(book)">The C Programming Language</a></em> by Brian Kernighan and Dennis Ritchie.  It's also a good idea to read "<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjectiveC/ObjC.pdf">The Objective-C Programming Language</a>" guide from Apple.
+Objective-C is very from JavaScript and programming with it requires an understanding of some of the old school programming fundamentals.  Make sure you've read a book about object-oriented programming like <em><a href="http://www.informit.com/store/product.aspx?isbn=020189551X">Object-Oriented Analysis and Design with Applications</a></em> by Grady Booch, as well as <em><a href="http://en.wikipedia.org/wiki/The_C_Programming_Language_(book)">The C Programming Language</a></em> by Brian Kernighan and Dennis Ritchie.  It's also a good idea to read "<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjectiveC/ObjC.pdf">The Objective-C Programming Language</a>" guide from Apple.
 
 The news isn't all bad.  Objective-C shows its age in some areas, but the tools are well written and the runtime environment is amazing.
 
@@ -99,7 +93,7 @@ My game doesn't use the complex physics of swinging candy from Cut the Rope or s
 
     <!-- picture of a tap and a bump should go here -->
     
-These three frameworks come together to build the game scene.
+In this article we'll see how to theses three frameworks together to build a scene, integrate sprites, respond to user gestures and detect collisions.  
 
 <h3>Building A Scene</h3>
 
