@@ -105,7 +105,7 @@ The playable area of the game is drawn with <code><a href="https://github.com/zg
 
 The game is made up of a set of images called sprites.  Each item in the game scene, like a bridge or a piece of a river, is made up of a separate image file.
   
-    <!-- diagram of scene pieces goes here -->
+<img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2012/11/sprite_sheet.png" alt="The 7 Bridges sprite sheet" title="The 7 Bridges sprite sheet" width="521" height="311" class="alignnone size-full wp-image-132884" />
     
 Using images this way performs much faster than drawing every pixel on the game field programmatically (and images can include subtleties like shading and textures without writing a lot of code).  It also makes it easier to delegate artwork to an artist who doesn't need to know anything about Objective-C.
 
@@ -158,7 +158,7 @@ Supporting every device means handling multiple layouts.  Cocos2d gives you a lo
 
 Seven Bridges goes farther by defining a tile system.  Tiles are a way of grouping pixels into larger squares for easier layout.  We make the screen 28 tiles tall and at least 42 tiles wide.  The tiles make it easy to define where the sprites go on each level.  Switch the <code>DEBUG_DRAW</code> constant in <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/BridgeColors.h">Bridgecolors.h</a></code> to <code>true</code> and you can see the tile grid in the background of each level.
 
-    <!-- debug draw image goes here -->
+<img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2012/11/two_bridges_debug.png" alt="7 bridges debug drawing" title="7 bridges debug drawing" width="550" height="384" class="alignnone size-full wp-image-132885" />
     
 <h4>Touches and Interactions</h4>
 
