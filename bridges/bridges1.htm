@@ -1,6 +1,6 @@
-I make giant business software for a living and I've never programmed for Mac before.  But I love games and I'm a huge math nerd, so I made a new iPhone game based on a <a href="http://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">famous math problem</a> called <a href="https://github.com/zgrossbart/bridges">The Seven Bridges of Königsberg</a>.  I'm planning to sell it on the App Store, but I also want to share it with everyone, so I made it <a href="https://github.com/zgrossbart/bridges">open source</a>.
+I love games and I'm a huge math nerd, so I made a new iPhone game based on a <a href="http://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">famous math problem</a> called <a href="https://github.com/zgrossbart/bridges">The Seven Bridges of Königsberg</a>.  I'm selling it on the App Store, but I also want to share it with everyone, so I made it <a href="https://github.com/zgrossbart/bridges">open source</a>.
 
-This article is the first in a series that will walk through the game.  You'll find out how it works, what went into designing it and what you'll need to know to write your own game for <a href="http://en.wikipedia.org/wiki/Ios">iOS</a>.  
+This article is the first in a series that will walk through the game.  You'll find out how it works, what went into designing it and what you'll need to know to write your own game for iPhone and iPad.  
 
 <h3>First Steps</h3>
 
@@ -11,11 +11,11 @@ This article uses the real game as the example.  There are a couple of things yo
     <li>The Xcode development environment from Apple.  Get it <a href="https://developer.apple.com/xcode/">free from Apple</a>.
 </ol>
 
-After you set up your computer go ahead and <a href="https://github.com/zgrossbart/bridges">download the project from GitHub</a>, open it and run it by pressing the big Run button in the upper left corner of Xcode.
+After you set up your Xcode go ahead and <a href="https://github.com/zgrossbart/bridges">download the project from GitHub</a>, open it and then run it by pressing the big Run button in the upper left corner of Xcode.
 
 <img src="http://mcoding.smashingmagazine.com/wp-content/uploads/2012/10/xcode_run.png" alt="Running Seven Bridges in Xcode" title="Running Seven Bridges in Xcode" width="525" height="525" class="aligncenter size-full wp-image-122540" />
     
-That will open the game in the simulator so you can play for free.
+That will open the game in the simulator so you can play for free and follow along with the article.
 
 <h3>The Rules Of The Game</h3>
 
@@ -51,9 +51,9 @@ Most people pick up JavaScript by trial and error.  They start with a little jQu
   
 Many iPhone programming tutorials make it sound just as easy to write iPhone applications.  It's not.
 
-Objective-C has been around for nearly 30 years.  Programming with it means learning a large environment and some fundamental concepts of how it all holds together.  All of the Objective-C documentation assumes you have a strong background in both <a href="http://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming</a> and <a href="http://en.wikipedia.org/wiki/C_(programming_language)">the C programming language</a>.
+Objective-C has been around for nearly 30 years.  Programming with it means learning a large ecosystem and some fundamental concepts of how it all holds together.  All of the Objective-C documentation assumes you have a strong background in both <a href="http://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming</a> and <a href="http://en.wikipedia.org/wiki/C_(programming_language)">the C programming language</a>.
 
-Objective-C is very from JavaScript and programming with it requires an understanding of some of the old school programming fundamentals.  Make sure you've read a book about object-oriented programming like <em><a href="http://www.informit.com/store/product.aspx?isbn=020189551X">Object-Oriented Analysis and Design with Applications</a></em> by Grady Booch, as well as <em><a href="http://en.wikipedia.org/wiki/The_C_Programming_Language_(book)">The C Programming Language</a></em> by Brian Kernighan and Dennis Ritchie.  It's also a good idea to read "<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjectiveC/ObjC.pdf">The Objective-C Programming Language</a>" guide from Apple.
+Objective-C is very different from JavaScript and programming with it requires an understanding of some of the old school programming fundamentals.  Make sure you've read a book about object-oriented programming like <em><a href="http://www.informit.com/store/product.aspx?isbn=020189551X">Object-Oriented Analysis and Design with Applications</a></em> by Grady Booch, as well as <em><a href="http://en.wikipedia.org/wiki/The_C_Programming_Language_(book)">The C Programming Language</a></em> by Brian Kernighan and Dennis Ritchie.  It's also a good idea to read "<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjectiveC/ObjC.pdf">The Objective-C Programming Language</a>" guide from Apple.
 
 The news isn't all bad.  Objective-C shows its age in some areas, but the tools are well written and the runtime environment is amazing.
 
@@ -69,6 +69,7 @@ You already have the code on your computer, so let's get a better idea of what w
     <li><code>.png</code> files are individual images used in the game.</li>
     <li><code>.pvr.gz</code> files contain large sets of images called sprite sheets.  The images are combined into a single file so they load faster and take up less space.</li>
     <li><code>.plist</code> files are XML properties files.  They define basics of how the application works and the positions of the images in each sprite sheet.</li>
+    <li><code>.m4a</code> files are audio files which provide the sounds for the game.</li>
 </ul>
 
 Xcode projects also include a folder called <code>your project.xcodeproj</code> containing all of the project configuration files.  Mine is named <code>bridges2</code> because I messed up my first project so badly I had to start over again.
@@ -81,7 +82,7 @@ In addition to the standard Objective-C libraries, Seven Bridges uses three majo
 
 Every iOS application starts with <a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UIKit_Framework/_index.html">UIKit</a>.  This comprehensive framework from Apple provides all the basic controls your application uses like windows, buttons and text fields.  Most of the classes in UIKit start with the prefix <code>UI</code>, like <code>UIWindow</code> or <code>UIButton</code>.  
 
-The easiest way to work with UIKit is the visual editor provided with Xcode.  XCode makes it easy to drag and drop controls into your application.  It works well for business applications, but it doesn't know anything about the rivers or bridges in my game.  For that I'll need a gaming framework and a bit of code.
+The easiest way to work with UIKit is the visual editor provided with Xcode.  Xcode makes it easy to drag and drop controls into your application.  It works well for business applications, but doesn't know anything about the rivers or bridges in my game.  For that I'll need a gaming framework and a bit of code.
 
 <h4>Cocos2d</h4>
 
@@ -113,7 +114,7 @@ The game is made up of a set of images called sprites.  Each item in the game sc
   
 <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2012/11/sprite_sheet.png" alt="The 7 Bridges sprite sheet" title="The 7 Bridges sprite sheet" width="521" height="311" class="alignnone size-full wp-image-132884" />
     
-Using images this way performs much faster than drawing every pixel on the game field programmatically (and images can include subtleties like shading and textures without writing a lot of code).  It also makes it easier to delegate artwork to an artist who doesn't need to know anything about Objective-C.
+Using images this way instead of creating them programmatically performs much faster and images can include subtleties like shading and textures without writing a lot of code.  It also makes it easier to delegate artwork to an artist who doesn't need to know anything about Objective-C.
 
 The sprites all fit together into a single file called a sprite sheet.  Cocos2d takes that image and a properties file of coordinates and creates the individual images from it when the application runs.  
 
