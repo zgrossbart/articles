@@ -1,6 +1,6 @@
 I love games and I'm a huge math nerd, so I made a new iPhone game based on a <a href="http://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">famous math problem</a> called <a href="http://zgrossbart.github.com/bridges/">The Seven Bridges of Königsberg</a>.  I'm <a href="https://itunes.apple.com/us/app/seven-bridges/id586598714?ls=1&mt=8">selling it on the App Store</a>, but I also want to share it with everyone, so I made it <a href="https://github.com/zgrossbart/bridges">open source</a>.
 
-This article is the first in a series that will walk through the game.  You'll find out how it works, what went into designing it and what you'll need to know to write your own game for iPhone and iPad.  
+This article is the first in a series that will walk through iOS programming using this game as an example.  This first article will give you an overview of the game and iOS programming in general.  We'll look at a few specific pieces and see how the whole project fits together.
 
 <h3>First Steps</h3>
 
@@ -47,7 +47,7 @@ Seven Bridges is written in a combination of <a href="http://en.wikipedia.org/wi
 
 <h4>Programming for iOS</h4>
 
-Most people pick up JavaScript by trial and error.  They start with a little jQuery behind a button and go from there.
+Getting started is easy with JavaScript.  You start with a little jQuery behind a button and go from there.
   
 Many iPhone programming tutorials make it sound just as easy to write iPhone applications.  It's not.
 
@@ -94,7 +94,7 @@ Ray is a prolific writer about iOS games; every time I searched for a new topic 
 
 Cocos2d handles all of the animations in my game, and the scenes where you're actually playing; it also handles <a href="http://en.wikipedia.org/wiki/Sprite_(computer_graphics)">sprites</a>, which we'll get to a little later.  It was originally written in Python for desktop applications, so make sure you search for Cocos2d iPhone when you're looking for help on the Web.  Cocos2d files start with the prefix <code>CC</code>.
 
-Cocos2d handles user interactions, but it can't handle interactions with the objects.  I need to know when my player runs into a river, bridge or any other object.  That type of collision detection requires Box2d.
+Cocos2d handles user interactions, but it can't handle interactions with the objects.  I need to know when my player runs into a river, bridge or any other object.  That type of collision detection is much easier with a physics library like Box2d.
 
 <h4>Box2d</h4>
 
@@ -204,7 +204,40 @@ Boxes are the fundamental concept of Box2d.  They outline the position of an obj
 
 Whenever we add an image to the scene we draw a box around it with Box2d.  The box works with a helper class called a <a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/MyContactListener.h">contact listener</a>.  This listener sits in a timer and asks the Box2d model if any of the objects have run into each other after each frame of the game.
 
-When two boxes run into each other we have contact and need to react.  The logic for contacts is also simple:
+The contact listener implements two important functions: <code>BeginContact</code> and <code>EndContact</code>.  These functions are called when two objects come into contact and when that contact stops.  When that happens we save the data so we can use it in the layer that renders the level.
+
+<pre class="brush: javascript">void MyContactListener::BeginContact(b2Contact* contact) {
+    MyContact myContact = { contact->GetFixtureA(), contact->GetFixtureB() };
+    CCSprite *spriteA = (CCSprite *) contact->GetFixtureA()->GetBody()->GetUserData();
+    CCSprite *spriteB = (CCSprite *) contact->GetFixtureB()->GetBody()->GetUserData();
+    if (spriteA.tag == PLAYER || spriteB.tag == PLAYER) {
+        _contacts.push_back(myContact);
+    }
+}
+
+void MyContactListener::EndContact(b2Contact* contact) {
+    MyContact myContact = { contact->GetFixtureA(), contact->GetFixtureB() };
+    
+    std::vector<MyContact>::iterator pos;
+    pos = std::find(_contacts.begin(), _contacts.end(), myContact);
+    if (pos != _contacts.end()) {
+        _contacts.erase(pos);
+    }
+}
+</pre>
+
+Once we've stored the data about the collisions we use it each time we draw the level.
+
+<pre class="brush: javascript">CCSprite *spriteA = (CCSprite *) bodyA->GetUserData();
+    CCSprite *spriteB = (CCSprite *) bodyB->GetUserData();
+            
+    if (spriteA.tag == RIVER && spriteB.tag == PLAYER) {
+        [self bumpObject:spriteB:spriteA];
+    } else if (spriteA.tag == BRIDGE && spriteB.tag == PLAYER) {
+        [self crossBridge:spriteB:spriteA];
+</pre>
+
+The contact listener gives us the two sprites that collided and we use the tag of each sprite to determine how to handle it.  When two sprites run into each other we react with some simple logic:
 
 <pre>
     If the player contacts a river, then bounce back.
@@ -255,4 +288,5 @@ Seven Bridges does a lot more, but this is a good place to stop for the first ar
 This article walked us through some of the core parts of games for iOS, but there's a lot more.  You can <a href="http://zgrossbart.github.com/bridges/">buy Seven Bridges</a> for $0.99 or <a href="https://github.com/zgrossbart/bridges">download the source code</a> and run it for free in the simulator. 
 
 We saw the major frameworks, looked at the anatomy of a game, and saw the basic of user interactions.  In the next article we'll delve more deeply into the pieces and see how they all fit together.
+
 
