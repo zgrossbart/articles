@@ -191,3 +191,11 @@ Part 3
 -----------------------
 
 There might be a third part about responding to feedback and managing new versions.  I'm not at that stage yet.
+
+
+
+-----------------------
+
+Understanding open source licenses
+
+This article would compare different open source licenses.  You could contact Kerry to get help.
