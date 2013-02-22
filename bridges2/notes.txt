@@ -1,0 +1,13 @@
+Handling animations and movements with Cocos2d
+
+Introduction
+
+Simple Sequences
+
+Combining sequences
+
+Movement and velocity
+
+Animations with frames
+
+
