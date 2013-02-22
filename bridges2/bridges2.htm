@@ -1,10 +1,10 @@
-Game characters feel real because they move.  Movement adds excitement to games and lends verisamilitude to the characters.  In this article we'll take a look at the <a href="http://www.cocos2d-iphone.org/">Cocos2d</a> library and how it supports programmatic animations in iPhone games.
+Games feel real because the characters move.  Movement adds excitement to the game and lends verisimilitude to the characters.  In this article we'll take a look at the <a href="http://www.cocos2d-iphone.org/">Cocos2d</a> library and how it supports programmatic animations in iPhone games.
 
-This article is part of a series teaching you how to create iPhone games based on the open source game <a href="http://zgrossbart.github.com/bridges/">Seven Bridges</a>.  Make sure to check out the first article in the series <a href="http://mobile.smashingmagazine.com/2013/02/13/designing-open-source-iphone-game">Designing An Open-Source iPhone Game</a>.  You'll be pretty lose without it.
+This article is part of a series teaching you how to create iPhone games based on the open source game <a href="http://zgrossbart.github.com/bridges/">Seven Bridges</a>.  Make sure to check out the first article in the series <a href="http://mobile.smashingmagazine.com/2013/02/13/designing-open-source-iphone-game">Designing An Open-Source iPhone Game</a>.  You'll be lost without it.
 
 <h3>Simple actions</h3>
 
-Cocos2d works with nodes and just about everything in a Cocos2d game derives from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html">CCNode</a></code>.  Nodes interact with actions to create movement on the screen.  You can create your own class extending <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action.html">CCAction</a></code>, but Cocos2d provides almost every action you'd need.  
+Cocos2d works with nodes.  Just about everything in a Cocos2d game derives from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html">CCNode</a></code>.  Nodes interact with actions that extend <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action.html">CCAction</a></code> to create movement on the screen.  
 
 The basic Cocos2d actions can:
 
@@ -17,11 +17,11 @@ The basic Cocos2d actions can:
 
 We'll start by looking at the simple action <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_blink.html">CCBlink</a></code>.
 
-<code>CCBlink</code> does just what it says and makes a node blink between visible and invisible.  Before we can start using an action we'll need a node.  We'll start with the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> from the game.
+<code>CCBlink</code> makes a single node blink between visible and invisible.  Before we can start using any action we'll need a node.  We'll start with the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> from Seven Bridges.
 
-The player node is a simple one.  It shows the player <!-- player icon goes here --> and handles moving and animating the player around the screen.  <code>PlayerNode</code> isn't actually a <code>CCNode</code>, but it contains a <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sprite.html">CCSprite</a></code> which represents a single image.  
+The player node is a simple one.  It shows the player <!-- player icon goes here --> and handles moving and animating the player around the screen.  <code>PlayerNode</code> isn't actually a <code>CCNode</code>, but it contains a <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sprite.html">CCSprite</a></code> which represents a single image and extends <code>CCNode</code>.  
 
-Creating our player node is easy.  It just needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  The <code>LayerManager</code> is a helper object which lets the player interact with the world around it.  You don't need a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
+Creating our player node is easy.  It just needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  The <code>LayerManager</code> is a helper object in Seven Bridges which lets the player interact with the world around it.  You don't need a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
 
 Let's create a new player and place him on the screen.
 
@@ -30,20 +30,20 @@ PlayerNode* player = [[PlayerNode alloc] initWithColor:cBlack layerMgr:_layerMgr
 player.player.position = ccp(100, 100);
 </pre>
 
-The <code>PlayerNode</code> is a helper object which contains the sprite.  It makes it available as a property named <code>player</code> which has a property named <code>position</code>.  
+The <code>PlayerNode</code> is a helper object which contains the sprite and uses the layer manager to add the sprite to the scene.  It makes the sprite available as a property named <code>player</code> which has a property named <code>position</code>.  
 
-The blink action can run directly on the player sprite since it's also a <code>CCNode</code> which implements the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html#a5d6d868cc1a0ba72820a055b05661aa5">runAction</a></code> method.  It works like this:
+The blink action can run directly on the player sprite since sprites are also <code>CCNode</code> objects which implement the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html#a5d6d868cc1a0ba72820a055b05661aa5">runAction</a></code> method.  It works like this:
 
 <pre class="brush: javascript">
 CCBlink* blink = [CCBlink actionWithDuration:10 blinks:5];
 [player.player runAction:blink];
 </pre>
 
-Most actions define a static <code>actionWithDuration</code> method which creates a new object.  <code>CCBlink</code> takes a duration and the number of times it should blink.  We can apply whatever actions we want to the node just by passing them to the <code>runAction</code> method.
+Most actions define a static <code>actionWithDuration</code> method which creates a new action object.  <code>CCBlink</code> takes a duration and the number of times it should blink.  We can apply whatever actions we want to the node just by passing them to the <code>runAction</code> method.
 
 <h3>Running multiple actions</h3>
 
-When the player runs into a teleporter <!-- insert image of teleporter here --> they should look like they're jumping into it.  To create that effect we'll combine three actions: <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_rotate_by.html">rotation</a>, <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_fade_to.html">fading</a>, and <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_scale_to.html">scaling</a>.  Each of these actions takes a little time to run and we can make them all run simultaneously.  Put them together and it looks like the player is spinning and fading out while he shrinks.
+When the player runs into a teleporter <!-- insert image of teleporter here --> they should look like they're jumping into it.  To create that effect we'll combine three actions: <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_rotate_by.html">rotating</a>, <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_fade_to.html">fading</a>, and <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_scale_to.html">scaling</a>.  Each of these actions takes a little time to run and we can make them all run simultaneously.  Put them together and it looks like the player is spinning and disappearing while he shrinks.
 
 <pre class="brush: javascript">
 [player.player runAction:[CCRotateBy actionWithDuration:0.5 angle:360]];
@@ -63,7 +63,7 @@ These actions take a duration just like <code>CCBlink</code>.  By specifying the
 
 <h3>Combining actions in sequences</h3>
 
-Rotating and fading is cool, but let's take it up a notch by actually changing the dimensions of the object instead of just the size.  The Houses and Colors level introduecs houses <!-- house image goes here --> to visit.  You have to visit each house to beat the level.  Seven Bridges provides a visual indication that the house is visited by turning it gray, but we want to all a little animation to draw your eye to it and make the game a little more interactive.
+Rotating and fading is cool, but let's take it up a notch by actually changing the dimensions of the object instead of just the size.  The Houses and Colors level introduces houses <!-- house image goes here --> you have to visit.  Seven Bridges provides a visual indication that the house is visited by turning it gray, but we want to all a little animation to draw your eye to it and make the game a little more interactive.
 
 Houses work with <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode</a></code> which is an object similar to <code>PlayerNode</code>.  They're both helper objects which contain a sprite that draws the object and handle the interactions.  <code>PlayerNode</code> exposes the player sprite in a property called <code>player</code> and <code>HouseNode</code> expose the house sprite in a property called <code>house</code>.
 
@@ -84,11 +84,11 @@ CCEaseExponentialOut* flipRemainingHalf = [CCEaseExponentialOut
 
 Cocos2d provides a series of special actions which provide easing.  They all derive from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_ease.html">CCEase</a></code>.  These actions provide simple access to some of the basic movement animations which make objects bounce and slide into each other with a more natural movement.  These same techniques are used on the web for <a href="http://coding.smashingmagazine.com/2011/10/04/quick-look-math-animations-javascript/">JavaScript animations</a>.
 
-<code>CCEaseExponentialIn</code> and <code>CCEaseExponentialOut</code> provide natural movement in and out of various positions using and exponential curve.  This animation combines that with <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_tween.html">CCTween</a></code> which can apply changes to any property of a node.  We change the <code>scaleX</code> property to start the rotation.
+<code>CCEaseExponentialIn</code> and <code>CCEaseExponentialOut</code> provide natural movement in and out of various positions using an exponential curve.  This animation combines that with <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_tween.html">CCTween</a></code> which can apply changes to any property of a node.  We change the <code>scaleX</code> property to start the rotation.
 
 Confused yet?
 
-There's a lot of math here, but the basic concepts are pretty simple.  The first animation causes the house to get smaller horizontally along the X axis.  This squishes the house together until it disappears.  The second animation cause the house to get larger along the X axis which pulls the house apart from zero to the full width.  When you put them together the house looks like it's rotating.  
+There's a lot of math here, but the basic concepts are pretty simple.  The first animation causes the house to get smaller horizontally along the X axis.  This squishes the house together until it disappears.  The second animation causes the house to get larger along the X axis which pulls the house apart from zero to the full width.  When you put them together the house looks like it's rotating.  
 
 Let's create our house and run the animations together with a sequence like this:
 
@@ -99,13 +99,13 @@ CCSequence* seq = [CCSequence actions:flipHalf, flipRemainingHalf, nil];
 [house runAction:seq];
 </pre>
 
-The <code>CCSequence</code> takes a series of actions and runs them on after the other.  The last argument is the optional selector to a method to run when all the actions are complete.  We don't need any notification so we just pass it <code>nil</code>.
+The <code>CCSequence</code> takes a series of actions and runs them one after the other.  The last argument is the optional selector to a method to call when all the actions are complete.  We don't need any notification so we just pass it <code>nil</code>.
 
 <h3>Combining actions with custom code</h3>
 
-This sequence will flip the house, but we also want to turn it gray <!-- gray house picture goes here -->.  Cocos2d provides special actions for tinting, but we want a high quailty image for the gray house so we'll use a PNG file.  There isn't any action to replace a sprite's image with another so we need a little custom code.  Cocos2d provides ultimate flexibility with the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_func.html">CCCallFunc</a></code> action which sits inside a sequence and calls any code you want.  
+This sequence will flip the house, but we also want to turn it gray <!-- gray house picture goes here -->.  Cocos2d provides special actions for tinting, but we want a high quality image for the gray house so we'll use a PNG file.  There isn't any action to replace a sprite's image so we need a little custom code.  Cocos2d provides ultimate flexibility with the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_func.html">CCCallFunc</a></code> action which sits inside a sequence and calls any code you want.  
 
-The first step to using <code>CCCallFunc</code> is to write the function you want to call.  The house turns gray when the visit is over so we'll call our function <code>visitEnded</code> and define it on <code>HouseNode</code> like this:
+The first step to using <code>CCCallFunc</code> is writing the function you want to call.  The house turns gray when the visit ends so we'll call our function <code>visitEnded</code> and define it on <code>HouseNode</code> like this:
 
 <pre class="brush: javascript">
 -(void)visitEnded {
@@ -116,7 +116,7 @@ The first step to using <code>CCCallFunc</code> is to write the function you wan
 }
 </pre>
 
-We already have a gray house icon so the <code>visitEnded</code> function gets that icon from the sprite cache and sets into into our <code>house</code> sprite.  Now we just need to tweak our sequence to call <code>visitEnded</code> in the middle of the animation.  We want to combine all of this together to we'll create a new method on the <code>HouseNode</code> called <code>visit</code>.
+We already have a gray house icon so the <code>visitEnded</code> function gets that icon from the sprite cache and sets into into our <code>house</code> sprite.  Now we just need to tweak our sequence to call <code>visitEnded</code> in the middle of the animation.  We want to combine all of this together so we'll create a new method on <code>HouseNode</code> called <code>visit</code>.
 
 <pre class="brush: javascript">
 -(void) visit {
@@ -139,13 +139,13 @@ This new sequence will squish the house down, call the <code>visitEnded</code> f
 
 <!-- video of house animation goes here -->
 
-Cocos2d provides a series of actions for calling custom code which can pass arguments and call methods on other objects.  Combing out of the box animations with custom code creates and ideal environment for complex animations.
+Cocos2d provides a series of actions for calling custom code which can pass arguments and call methods on other objects.  Combining out of the box animations with custom code creates and ideal environment for complex animations.
 
-<h3>Combining multiple animations into particles</h3>
+<h3>Combining multiple animations into particle systems</h3>
 
-We've looked at simple animations and some more complex interactions, now let's get really fancy with particles.  Cocos2d provides a set of more complex animations which all start with  <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_particle_system.html">CCParticleSystem</a></code>.
+We've looked at simple animations and some more complex interactions, now let's get really fancy with particles.  Cocos2d provides a set of more complex animations which all start with <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_particle_system.html">CCParticleSystem</a></code>.
 
-Particle systems provide very flexible precanned animations which combine nodes.  They're awesome, complex, and poorly documented.
+Particle systems aren't actions.  They use actions to create flexible precanned animations.  They're awesome, complex, and poorly documented.
 
 When you beat a level of Seven Bridges we give you a little reward with a group of star shaped confetti that spin and float across the screen.  We add whimsy to those stars with some randomness and pull it all together with a particle system called <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_particle_rain.html">CCParticleRain</a></code>.  
 
@@ -231,11 +231,11 @@ So... um... There's no way to ease into this one.  Here's a really big chunk of 
 
 This code comes from the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer</a></code> which controls the players interactions with the play screen.  When the player wins the level we call the <code>showConfetti</code> method and pass in the current player location.
 
-The particle sysem starts with a single image <!-- star image goes here -->, creates hundreds of instances of that image, and moves those instances across the screen while changing their size, color, rotation, and speed.  
+The particle system starts with a single image <!-- star image goes here -->, creates hundreds of instances of that image, and moves those instances across the screen while changing their size, color, rotation, and speed.  
 
-Most of this code just sets up the <code>CCParticleRain</code> and tells it how to behave.  Particle system are very flexible and that means they support many different configuration properties.  These properties aren't vary well documented and I found most of them by looking in the Cocos2d source code.  
+Most of this code just sets up the <code>CCParticleRain</code> and tells it how to behave.  Particle system are very flexible and support a dizzying array of configuration properties.  These properties aren't well documented and I found most of them by looking in the Cocos2d source code.  
 
-Particle systems acheive a natural look by adding random variability.  You control the range of the randomness with <code>var</code> properties.  For example, we want the stars to start out between 20 and 50 times their regular size so we specify a <code>startSize</code> property of <code>50.0f</code> and a <code>startSizeVar</code> property of <code>20.0f</code>.  This means each of the stars will start somewhere between these two values.
+Particle systems achieve a natural look by adding random variability.  You control the range of the randomness with <code>var</code> properties.  For example, we want the stars to start out between 20 and 50 times their regular size so we specify a <code>startSize</code> property of <code>50.0f</code> and a <code>startSizeVar</code> property of <code>20.0f</code>.  This means each of the stars will start somewhere between these two values.
 
 <h3>Create your own animations</h3>
 
@@ -243,8 +243,8 @@ Now that you've seen some of the basic concepts in Cocos2d animations you can cr
 
 Add a blink animation to make the player character blink while he moves.  Take a look at the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> to see the sequence for moving the player across the screen.  Play with the particle emitter to change the way the stars work.
 
-This article reviewed programmatic animations in games, but Cocos2d also supports sprite based animations.  These animations play a series of images to create an animation.  Kind of like a <a href="http://en.wikipedia.org/wiki/Flip_book">flip book</a>.  Seven Bridges uses that style of animation when moving the player around the screen.  
+This article reviewed programmatic animations in games, but Cocos2d also supports sprite based animations.  These animations play a series of images to create the illusion of movement.  Kind of like a <a href="http://en.wikipedia.org/wiki/Flip_book">flip book</a>.  Seven Bridges uses that style of animation when moving the player around the screen.  
 
-Ray Wenderlich has an awesome tutorial sprite based animation called <a href="http://www.raywenderlich.com/1271/how-to-use-animations-and-sprite-sheets-in-cocos2d">How To Use Animations and Sprite Sheets in Cocos2D</a>.  The article is excellent, but it mentions a product called Zwoptex and I strongly recomment <a href="http://www.codeandweb.com/texturepacker">TexturePacker</a> instead.
+Ray Wenderlich has an awesome tutorial sprite based animation called <a href="http://www.raywenderlich.com/1271/how-to-use-animations-and-sprite-sheets-in-cocos2d">How To Use Animations and Sprite Sheets in Cocos2D</a>.  The article is excellent, but it mentions a product called Zwoptex and I strongly recommend <a href="http://www.codeandweb.com/texturepacker">TexturePacker</a> instead.
 
-And make sure to check out <a href="http://zgrossbart.github.com/bridges/">Seven Bridges</a> and buy a copy for yourself.
+And make sure to check out <a href="http://zgrossbart.github.com/bridges/">Seven Bridges</a> and buy a copy for iPhone or iPad.
