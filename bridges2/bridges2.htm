@@ -4,7 +4,7 @@ This article is part of a series teaching you how to create iPhone games based o
 
 <h3>Simple actions</h3>
 
-Cocos2d works with nodes.  Just about everything in a Cocos2d game derives from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html">CCNode</a></code>.  Nodes interact with actions that extend <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action.html">CCAction</a></code> to create movement on the screen.  
+Cocos2d works with nodes and just about everything in a Cocos2d game derives from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html">CCNode</a></code>.  Nodes interact with actions that extend <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action.html">CCAction</a></code> to create movement on the screen.  
 
 The basic Cocos2d actions can:
 
@@ -145,7 +145,7 @@ Cocos2d provides a series of actions for calling custom code which can pass argu
 
 We've looked at simple animations and some more complex interactions, now let's get really fancy with particles.  Cocos2d provides a set of more complex animations which all start with <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_particle_system.html">CCParticleSystem</a></code>.
 
-Particle systems aren't actions.  They use actions to create flexible precanned animations.  They're awesome, complex, and poorly documented.
+Particle systems aren't actions.  They use actions to create flexible precanned animations.  They're awesome, complex, and poorly documented.  Particle systems work well for mimicking natural phenomina like rain or smoke.
 
 When you beat a level of Seven Bridges we give you a little reward with a group of star shaped confetti that spin and float across the screen.  We add whimsy to those stars with some randomness and pull it all together with a particle system called <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_particle_rain.html">CCParticleRain</a></code>.  
 
