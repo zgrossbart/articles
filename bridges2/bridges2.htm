@@ -19,7 +19,7 @@ We'll start by looking at the simple action <code><a href="http://www.cocos2d-ip
 
 <code>CCBlink</code> makes a single node blink between visible and invisible.  Before we can start using any action we'll need a node.  We'll start with the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> from Seven Bridges.
 
-The player node is a simple one.  It shows the player <!-- player icon goes here --> and handles moving and animating the player around the screen.  <code>PlayerNode</code> isn't actually a <code>CCNode</code>, but it contains a <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sprite.html">CCSprite</a></code> which represents a single image and extends <code>CCNode</code>.  
+The player node is a simple one.  It shows the player <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/player.png" alt="The player icon" width="20" height="20" class="alignnone size-full wp-image-134527" style="margin:0;" /> and handles moving and animating the player around the screen.  <code>PlayerNode</code> isn't actually a <code>CCNode</code>, but it contains a <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sprite.html">CCSprite</a></code> which represents a single image and extends <code>CCNode</code>.  
 
 Creating our player node is easy.  It just needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  The <code>LayerManager</code> is a helper object in Seven Bridges which lets the player interact with the world around it.  You don't need a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
 
@@ -43,7 +43,7 @@ Most actions define a static <code>actionWithDuration</code> method which create
 
 <h3>Running multiple actions</h3>
 
-When the player runs into a teleporter <!-- insert image of teleporter here --> they should look like they're jumping into it.  To create that effect we'll combine three actions: <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_rotate_by.html">rotating</a>, <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_fade_to.html">fading</a>, and <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_scale_to.html">scaling</a>.  Each of these actions takes a little time to run and we can make them all run simultaneously.  Put them together and it looks like the player is spinning and disappearing while he shrinks.
+When the player runs into a teleporter <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/teleport.png" alt="Teleporter icon" width="20" height="26" class="alignnone size-full wp-image-134528" style="margin: 0;" /> they should look like they're jumping into it.  To create that effect we'll combine three actions: <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_rotate_by.html">rotating</a>, <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_fade_to.html">fading</a>, and <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_scale_to.html">scaling</a>.  Each of these actions takes a little time to run and we can make them all run simultaneously.  Put them together and it looks like the player is spinning and disappearing while he shrinks.
 
 <pre class="brush: javascript">
 [player.player runAction:[CCRotateBy actionWithDuration:0.5 angle:360]];
@@ -63,7 +63,7 @@ These actions take a duration just like <code>CCBlink</code>.  By specifying the
 
 <h3>Combining actions in sequences</h3>
 
-Rotating and fading is cool, but let's take it up a notch by actually changing the dimensions of the object instead of just the size.  The Houses and Colors level introduces houses <!-- house image goes here --> you have to visit.  Seven Bridges provides a visual indication that the house is visited by turning it gray, but we want to all a little animation to draw your eye to it and make the game a little more interactive.
+Rotating and fading is cool, but let's take it up a notch by actually changing the dimensions of the object instead of just the size.  The Houses and Colors level introduces houses <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house.png" alt="House icon" width="20" height="20" class="alignnone size-full wp-image-134530" style="margin: 0;" /> you have to visit.  Seven Bridges provides a visual indication that the house is visited by turning it gray, but we want to all a little animation to draw your eye to it and make the game a little more interactive.
 
 Houses work with <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode</a></code> which is an object similar to <code>PlayerNode</code>.  They're both helper objects which contain a sprite that draws the object and handle the interactions.  <code>PlayerNode</code> exposes the player sprite in a property called <code>player</code> and <code>HouseNode</code> expose the house sprite in a property called <code>house</code>.
 
@@ -103,7 +103,7 @@ The <code>CCSequence</code> takes a series of actions and runs them one after th
 
 <h3>Combining actions with custom code</h3>
 
-This sequence will flip the house, but we also want to turn it gray <!-- gray house picture goes here -->.  Cocos2d provides special actions for tinting, but we want a high quality image for the gray house so we'll use a PNG file.  There isn't any action to replace a sprite's image so we need a little custom code.  Cocos2d provides ultimate flexibility with the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_func.html">CCCallFunc</a></code> action which sits inside a sequence and calls any code you want.  
+This sequence will flip the house, but we also want to turn it gray <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house_gray.png" alt="Gray house icon" width="20" height="20" class="alignnone size-full wp-image-134531" style="margin: 0;" />.  Cocos2d provides special actions for tinting, but we want a high quality image for the gray house so we'll use a PNG file.  There isn't any action to replace a sprite's image so we need a little custom code.  Cocos2d provides ultimate flexibility with the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_func.html">CCCallFunc</a></code> action which sits inside a sequence and calls any code you want.  
 
 The first step to using <code>CCCallFunc</code> is writing the function you want to call.  The house turns gray when the visit ends so we'll call our function <code>visitEnded</code> and define it on <code>HouseNode</code> like this:
 
@@ -231,7 +231,7 @@ So... um... There's no way to ease into this one.  Here's a really big chunk of 
 
 This code comes from the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer</a></code> which controls the players interactions with the play screen.  When the player wins the level we call the <code>showConfetti</code> method and pass in the current player location.
 
-The particle system starts with a single image <!-- star image goes here -->, creates hundreds of instances of that image, and moves those instances across the screen while changing their size, color, rotation, and speed.  
+The particle system starts with a single image <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/confetti.png" alt="Star confetti icon" width="25" height="25" class="alignnone size-full wp-image-134529" style="margin: 0;" />, creates hundreds of instances of that image, and moves those instances across the screen while changing their size, color, rotation, and speed.  
 
 Most of this code just sets up the <code>CCParticleRain</code> and tells it how to behave.  Particle system are very flexible and support a dizzying array of configuration properties.  These properties aren't well documented and I found most of them by looking in the Cocos2d source code.  
 
