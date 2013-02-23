@@ -45,7 +45,7 @@ Most actions define a static <code>actionWithDuration</code> method which create
 
 When the player runs into a teleporter <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/teleport.png" alt="Teleporter icon" width="20" height="26" class="alignnone size-full wp-image-134528" style="margin: 0;" /> they should look like they're jumping into it.  To create that effect we'll combine three actions: <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_rotate_by.html">rotating</a>, <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_fade_to.html">fading</a>, and <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_scale_to.html">scaling</a>.  Each of these actions takes a little time to run and we can make them all run simultaneously.  Put them together and it looks like the player is spinning and disappearing while he shrinks.
 
-<!-- video of the teleport jump in goes here -->
+<iframe src="http://player.vimeo.com/video/60320015?byline=0&amp;portrait=0" width="450" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 
 <pre class="brush: javascript">
 [player.player runAction:[CCRotateBy actionWithDuration:0.5 angle:360]];
@@ -137,7 +137,7 @@ We already have a gray house icon so the <code>visitEnded</code> function gets t
 
 This new sequence will squish the house down, call the <code>visitEnded</code> function to turn the house gray, and stretch the house back out.  
 
-<!-- video of house animation goes here -->
+<iframe src="http://player.vimeo.com/video/60319771?byline=0&amp;portrait=0" width="450" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 
 Cocos2d provides a series of actions for calling custom code which can pass arguments and call methods on other objects.  Combining out of the box animations with custom code creates and ideal environment for complex animations.
 
@@ -149,7 +149,7 @@ Particle systems aren't actions.  They use actions to create flexible precanned 
 
 When you beat a level of Seven Bridges we give you a little reward with a group of star shaped confetti that spin and float across the screen.  We add whimsy to those stars with some randomness and pull it all together with a particle system called <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_particle_rain.html">CCParticleRain</a></code>.  
 
-<!-- stars animation goes here -->
+<iframe src="http://player.vimeo.com/video/60320148?byline=0&amp;portrait=0" width="450" height="316" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 
 So... um... There's no way to ease into this one.  Here's a really big chunk of code:
 
