@@ -17,11 +17,11 @@ The basic Cocos2d actions can:
 
 We'll start by looking at the simple action <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_blink.html">CCBlink</a></code>.
 
-<code>CCBlink</code> makes a single node blink between visible and invisible.  Before we can start using any action we'll need a node.  We'll start with the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> from Seven Bridges.
+Before we can start using any action we'll need a node.  We'll start with the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> from Seven Bridges.
 
-The player node is a simple one.  It shows the player <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/player.png" alt="The player icon" width="20" height="20" class="alignnone size-full wp-image-134527" style="margin:0;" /> and handles moving and animating the player around the screen.  <code>PlayerNode</code> isn't actually a <code>CCNode</code>, but it contains a <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sprite.html">CCSprite</a></code> which represents a single image and extends <code>CCNode</code>.  
+The player node is a simple one.  It shows the player sprite <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/player.png" alt="The player icon" width="20" height="20" class="alignnone size-full wp-image-134527" style="margin:0;" /> and handles moving and animating the player around the screen.  <code>PlayerNode</code> isn't actually a <code>CCNode</code>, but it contains a <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sprite.html">CCSprite</a></code> which represents a single image and extends <code>CCNode</code>.  
 
-Creating our player node is easy.  It just needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  The <code>LayerManager</code> is a helper object in Seven Bridges which lets the player interact with the world around it.  You don't need a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
+Creating our player node needs needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  The <code>LayerManager</code> is a helper object in Seven Bridges which lets game nodes interact with the world around them.  You don't need a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
 
 Let's create a new player and place him on the screen.
 
@@ -30,7 +30,7 @@ PlayerNode* player = [[PlayerNode alloc] initWithColor:cBlack layerMgr:_layerMgr
 player.player.position = ccp(100, 100);
 </pre>
 
-The <code>PlayerNode</code> is a helper object which contains the sprite and uses the layer manager to add the sprite to the scene.  It makes the sprite available as a property named <code>player</code> which has a property named <code>position</code>.  
+The <code>PlayerNode</code> contains the sprite pointer and uses the layer manager to add the sprite to the scene.  It makes the sprite available as a property named <code>player</code> which has a property named <code>position</code>.  
 
 The blink action can run directly on the player sprite since sprites are also <code>CCNode</code> objects which implement the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html#a5d6d868cc1a0ba72820a055b05661aa5">runAction</a></code> method.  It works like this:
 
@@ -45,13 +45,15 @@ Most actions define a static <code>actionWithDuration</code> method which create
 
 When the player runs into a teleporter <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/teleport.png" alt="Teleporter icon" width="20" height="26" class="alignnone size-full wp-image-134528" style="margin: 0;" /> they should look like they're jumping into it.  To create that effect we'll combine three actions: <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_rotate_by.html">rotating</a>, <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_fade_to.html">fading</a>, and <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_scale_to.html">scaling</a>.  Each of these actions takes a little time to run and we can make them all run simultaneously.  Put them together and it looks like the player is spinning and disappearing while he shrinks.
 
+<!-- video of the teleport jump in goes here -->
+
 <pre class="brush: javascript">
 [player.player runAction:[CCRotateBy actionWithDuration:0.5 angle:360]];
 [player.player runAction:[CCFadeTo actionWithDuration:0.5 opacity:0.0]];
 [player.player runAction:[CCScaleTo actionWithDuration:0.5 scale:0.25]];
 </pre>
 
-<code>CCRotateBy</code> rotates the player from their current position by a specified number of degrees.  In this case we want a full circle so we rotate by 360 degrees.
+<code>CCRotateBy</code> rotates the player from the current position by a specified number of degrees.  In this case we want a full circle so we rotate by 360 degrees.
 
 <code>CCFadeTo</code> changes the player's opacity to the specified value.  We want the player to disappear completely so we fade to 0.0.
 
@@ -59,19 +61,17 @@ When the player runs into a teleporter <img src="http://mmobile.smashingmagazine
 
 These actions take a duration just like <code>CCBlink</code>.  By specifying the duration as the same for each action we cause all three of them to run at the same time.  Playing them all together looks like this:
 
-<!-- video of the teleport jump in goes here -->
-
 <h3>Combining actions in sequences</h3>
 
-Rotating and fading is cool, but let's take it up a notch by actually changing the dimensions of the object instead of just the size.  The Houses and Colors level introduces houses <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house.png" alt="House icon" width="20" height="20" class="alignnone size-full wp-image-134530" style="margin: 0;" /> you have to visit.  Seven Bridges provides a visual indication that the house is visited by turning it gray, but we want to all a little animation to draw your eye to it and make the game a little more interactive.
+Rotating and fading is cool, but let's take it up a notch by actually changing the dimensions of the sprite instead of just the size.  The Houses and Colors level introduces houses <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house.png" alt="House icon" width="20" height="20" class="alignnone size-full wp-image-134530" style="margin: 0;" /> you have to visit.  When you visit a house we turn it gray with a little flourish.
 
-Houses work with <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode</a></code> which is an object similar to <code>PlayerNode</code>.  They're both helper objects which contain a sprite that draws the object and handle the interactions.  <code>PlayerNode</code> exposes the player sprite in a property called <code>player</code> and <code>HouseNode</code> expose the house sprite in a property called <code>house</code>.
+Houses are renderred with <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode</a></code> which is an object similar to <code>PlayerNode</code>.  They're both helper objects which contain a sprite that draws the object and handle the interactions.  <code>PlayerNode</code> exposes the player sprite in a property called <code>player</code> and <code>HouseNode</code> expose the house sprite in a property called <code>house</code>.
 
-The house visiting animation flips the house horizontally while turning it gray.  To flip the house back and forth we need two separate actions which run sequentially.  The first action flips the house to the right and the second action flips it back again.
+The house visiting animation flips the house horizontally while turning it gray.  To flip the house back and forth we need two separate actions which run sequentially.  The first action flips the house to the right and the second action flips it back to the left.
 
 The spinning, shrinking, fading player used three animations which ran at the same time.  The house needs more control.  To space them out we'll use a new object called <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sequence.html">CCSequence</a></code>.  Sequences string together actions which run one after the other.
 
-The first step is to create out two actions:
+The first step is to create our two actions:
 
 <pre class="brush: javascript">
 float scale = 1.0;
@@ -116,7 +116,7 @@ The first step to using <code>CCCallFunc</code> is writing the function you want
 }
 </pre>
 
-We already have a gray house icon so the <code>visitEnded</code> function gets that icon from the sprite cache and sets into into our <code>house</code> sprite.  Now we just need to tweak our sequence to call <code>visitEnded</code> in the middle of the animation.  We want to combine all of this together so we'll create a new method on <code>HouseNode</code> called <code>visit</code>.
+We already have a gray house icon so the <code>visitEnded</code> function gets that icon from the sprite cache and sets into into our <code>house</code> sprite.  Now we just need to tweak our sequence to call <code>visitEnded</code> in the middle of the animation.  This code is getting a little complicated to we'll add it to a new method on <code>HouseNode</code> and call it <code>visit</code>.
 
 <pre class="brush: javascript">
 -(void) visit {
@@ -165,36 +165,36 @@ So... um... There's no way to ease into this one.  Here's a really big chunk of 
     
     self.emitter.duration = 1.5;
     
-    // gravity
+    // Set the gravity effect for the stars
     self.emitter.gravity = ccp(self.player.player.position.x, 90);
     
-    // angle
+    // Specify the angle of the stars
     self.emitter.angle = 90;
     self.emitter.angleVar = 360;
     
-    // speed of particles
+    // The speed the particles will use when floating
     self.emitter.speed = 160;
     self.emitter.speedVar = 20;
     
-    // radial
+    // The radial variable
     self.emitter.radialAccel = -120;
     self.emitter.radialAccelVar = 120;
     
-    // tagential
+    // The tangential variable
     self.emitter.tangentialAccel = 30;
     self.emitter.tangentialAccelVar = 60;
     
-    // life of particles
+    // How long each star should last before fading out
     self.emitter.life = 1;
     self.emitter.lifeVar = 4;
     
-    // spin of particles
+    // How much each star should spin
     self.emitter.startSpin = 15;
     self.emitter.startSpinVar = 5;
     self.emitter.endSpin = 360;
     self.emitter.endSpinVar = 180;
     
-    // color of particles
+    // The color of the stars as RGB values
     ccColor4F startColor = {171.0f, 26.0f, 37.0f, 1.0f};
     self.emitter.startColor = startColor;
     ccColor4F startColorVar = {245.0f, 255.f, 72.0f, 1.0f};
@@ -205,12 +205,12 @@ So... um... There's no way to ease into this one.  Here's a really big chunk of 
     self.emitter.endColorVar = endColorVar;
     
     
-    // size, in pixels
+    // The size of each of the stars
     self.emitter.startSize = 50.0f;
     self.emitter.startSizeVar = 20.0f;
     self.emitter.endSize = kParticleStartSizeEqualToEndSize;
     
-    // emits per second
+    // The rate new stars will be created
     self.emitter.totalParticles = 250;
     self.emitter.emissionRate = self.emitter.totalParticles/self.emitter.life;
     
@@ -231,7 +231,7 @@ So... um... There's no way to ease into this one.  Here's a really big chunk of 
 
 This code comes from the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer</a></code> which controls the players interactions with the play screen.  When the player wins the level we call the <code>showConfetti</code> method and pass in the current player location.
 
-The particle system starts with a single image <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/confetti.png" alt="Star confetti icon" width="25" height="25" class="alignnone size-full wp-image-134529" style="margin: 0;" />, creates hundreds of instances of that image, and moves those instances across the screen while changing their size, color, rotation, and speed.  
+The particle system starts with a single image <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/confetti.png" alt="Star confetti icon" width="25" height="25" class="alignnone size-full wp-image-134529" style="margin: 0;" />, creates hundreds of instances of that image, and moves those instances across the screen while changing their size, color, rotation and speed.  
 
 Most of this code just sets up the <code>CCParticleRain</code> and tells it how to behave.  Particle system are very flexible and support a dizzying array of configuration properties.  These properties aren't well documented and I found most of them by looking in the Cocos2d source code.  
 
