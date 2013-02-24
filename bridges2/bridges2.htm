@@ -65,7 +65,7 @@ These actions take a duration just like <code>CCBlink</code>.  By specifying the
 
 Rotating and fading is cool, but let's take it up a notch by actually changing the dimensions of the sprite instead of just the size.  The Houses and Colors level introduces houses <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house.png" alt="House icon" width="20" height="20" class="alignnone size-full wp-image-134530" style="margin: 0;" /> you have to visit.  When you visit a house we turn it gray with a little flourish.
 
-Houses are renderred with <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode</a></code> which is an object similar to <code>PlayerNode</code>.  They're both helper objects which contain a sprite that draws the object and handle the interactions.  <code>PlayerNode</code> exposes the player sprite in a property called <code>player</code> and <code>HouseNode</code> expose the house sprite in a property called <code>house</code>.
+Houses are renderred by an object similar to <code>PlayerNode</code> named <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode</a></code>.  They're both helper objects which contain a sprite and handle the interactions.  <code>PlayerNode</code> exposes the player sprite in a property called <code>player</code> and <code>HouseNode</code> expose the house sprite in a property called <code>house</code>.
 
 The house visiting animation flips the house horizontally while turning it gray.  To flip the house back and forth we need two separate actions which run sequentially.  The first action flips the house to the right and the second action flips it back to the left.
 
@@ -154,8 +154,7 @@ When you beat a level of Seven Bridges we give you a little reward with a group 
 So... um... There's no way to ease into this one.  Here's a really big chunk of code:
 
 <pre class="brush: javascript">
--(void) showConfetti: (float) x y:(float) y
-{
+-(void) showConfetti: (float) x y:(float) y {
     self.emitter = [[CCParticleRain alloc] init];
     [self.emitter setScaleX:0.5];
     [self.emitter setScaleY:0.5];
@@ -244,6 +243,8 @@ Now that you've seen some of the basic concepts in Cocos2d animations you can cr
 Add a blink animation to make the player character blink while he moves.  Take a look at the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> to see the sequence for moving the player across the screen.  Play with the particle emitter to change the way the stars work.
 
 This article reviewed programmatic animations in games, but Cocos2d also supports sprite based animations.  These animations play a series of images to create the illusion of movement.  Kind of like a <a href="http://en.wikipedia.org/wiki/Flip_book">flip book</a>.  Seven Bridges uses that style of animation when moving the player around the screen.  
+
+<img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/player_movement.png" alt="Player movement animation" width="200" height="68" class="aligncenter size-full wp-image-134542" />
 
 Ray Wenderlich has an awesome tutorial sprite based animation called <a href="http://www.raywenderlich.com/1271/how-to-use-animations-and-sprite-sheets-in-cocos2d">How To Use Animations and Sprite Sheets in Cocos2D</a>.  The article is excellent, but it mentions a product called Zwoptex and I strongly recommend <a href="http://www.codeandweb.com/texturepacker">TexturePacker</a> instead.
 
