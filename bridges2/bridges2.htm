@@ -1,6 +1,8 @@
 Animation makes games real.  Movement adds excitement to the game and lends verisimilitude to the characters.  In this article we'll take a look at the <a href="http://www.cocos2d-iphone.org/">Cocos2d</a> library and how it supports programmatic animations in iPhone games.
 
-This article is part of a series teaching you how to create iPhone games based on the open source game <a href="http://zgrossbart.github.com/bridges/">Seven Bridges</a>.  Make sure to check out the first article in the series <a href="http://mobile.smashingmagazine.com/2013/02/13/designing-open-source-iphone-game">Designing An Open-Source iPhone Game</a>.  You'll be lost without it.
+This article is part of a series teaching you how to create iPhone games based on the open source game <a href="http://zgrossbart.github.com/bridges/">Seven Bridges</a>.  Make sure to check out the first article in the series <a href="http://mobile.smashingmagazine.com/2013/02/13/designing-open-source-iphone-game">Designing An Open-Source iPhone Game</a>.  
+
+This article will walk through the animation basics.  We'll take a look at actions in Cocos2d and see how to combine them together to create complex and custom effects.  
 
 <h3>Simple actions</h3>
 
@@ -15,7 +17,7 @@ The basic Cocos2d actions can:
     <li>...and a lot more</a>
 </ul>
 
-We'll start by looking at the simple action <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_blink.html">CCBlink</a></code>.
+We'll start by looking at the simple action <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_blink.html">CCBlink</a></code>.  Seven Bridges doesn't use blink, but it's on of the easiest actions to understand.
 
 Before we can start using any action we'll need a node.  We'll start with the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> from Seven Bridges.
 
