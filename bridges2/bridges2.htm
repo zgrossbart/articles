@@ -1,4 +1,4 @@
-Games feel real because the characters move.  Movement adds excitement to the game and lends verisimilitude to the characters.  In this article we'll take a look at the <a href="http://www.cocos2d-iphone.org/">Cocos2d</a> library and how it supports programmatic animations in iPhone games.
+Animation makes games real.  Movement adds excitement to the game and lends verisimilitude to the characters.  In this article we'll take a look at the <a href="http://www.cocos2d-iphone.org/">Cocos2d</a> library and how it supports programmatic animations in iPhone games.
 
 This article is part of a series teaching you how to create iPhone games based on the open source game <a href="http://zgrossbart.github.com/bridges/">Seven Bridges</a>.  Make sure to check out the first article in the series <a href="http://mobile.smashingmagazine.com/2013/02/13/designing-open-source-iphone-game">Designing An Open-Source iPhone Game</a>.  You'll be lost without it.
 
@@ -21,7 +21,7 @@ Before we can start using any action we'll need a node.  We'll start with the <c
 
 The player node is a simple one.  It shows the player sprite <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/player.png" alt="The player icon" width="20" height="20" class="alignnone size-full wp-image-134527" style="margin:0;" /> and handles moving and animating the player around the screen.  <code>PlayerNode</code> isn't actually a <code>CCNode</code>, but it contains a <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sprite.html">CCSprite</a></code> which represents a single image and extends <code>CCNode</code>.  
 
-Creating our player node needs needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  The <code>LayerManager</code> is a helper object in Seven Bridges which lets game nodes interact with the world around them.  You don't need a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
+Our player node needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  The <code>LayerManager</code> is a helper object in Seven Bridges which lets game nodes interact with the world around them.  You don't need a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
 
 Let's create a new player and place him on the screen.
 
@@ -30,7 +30,7 @@ PlayerNode* player = [[PlayerNode alloc] initWithColor:cBlack layerMgr:_layerMgr
 player.player.position = ccp(100, 100);
 </pre>
 
-The <code>PlayerNode</code> contains the sprite pointer and uses the layer manager to add the sprite to the scene.  It makes the sprite available as a property named <code>player</code> which has a property named <code>position</code>.  
+The <code>PlayerNode</code> contains the sprite pointer and uses the layer manager to add the sprite to the scene.  It makes the sprite available as a property named <code>player</code> which has a property named <code>position</code>.  The full code for creating the <code>LayerManager</code> is in <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer</a></code>.
 
 The blink action can run directly on the player sprite since sprites are also <code>CCNode</code> objects which implement the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html#a5d6d868cc1a0ba72820a055b05661aa5">runAction</a></code> method.  It works like this:
 
@@ -39,13 +39,11 @@ CCBlink* blink = [CCBlink actionWithDuration:10 blinks:5];
 [player.player runAction:blink];
 </pre>
 
-Most actions define a static <code>actionWithDuration</code> method which creates a new action object.  <code>CCBlink</code> takes a duration and the number of times it should blink.  We can apply whatever actions we want to the node just by passing them to the <code>runAction</code> method.
+Most actions define a static <code>actionWithDuration</code> method which creates a new action object.  <code>CCBlink</code> takes a duration and the number of times it should blink.  We can apply whatever actions we like to the node just by passing them to the <code>runAction</code> method.
 
 <h3>Running multiple actions</h3>
 
-When the player runs into a teleporter <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/teleport.png" alt="Teleporter icon" width="20" height="26" class="alignnone size-full wp-image-134528" style="margin: 0;" /> they should look like they're jumping into it.  To create that effect we'll combine three actions: <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_rotate_by.html">rotating</a>, <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_fade_to.html">fading</a>, and <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_scale_to.html">scaling</a>.  Each of these actions takes a little time to run and we can make them all run simultaneously.  Put them together and it looks like the player is spinning and disappearing while he shrinks.
-
-<iframe src="http://player.vimeo.com/video/60320015?byline=0&amp;portrait=0" width="450" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+The latest version of Seven Bridges introduces teleporters <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/teleport.png" alt="Teleporter icon" width="20" height="26" class="alignnone size-full wp-image-134528" style="margin: 0;" />.  When the player runs into a teleporter they should look like they're jumping into it.  To create that effect we'll combine three actions: <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_rotate_by.html">rotating</a>, <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_fade_to.html">fading</a>, and <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_scale_to.html">scaling</a>.  Each of these actions takes a little time to run and we can make them all run simultaneously.  Put them together and it looks like the player is spinning and disappearing while he shrinks.
 
 <pre class="brush: javascript">
 [player.player runAction:[CCRotateBy actionWithDuration:0.5 angle:360]];
@@ -55,23 +53,25 @@ When the player runs into a teleporter <img src="http://mmobile.smashingmagazine
 
 <code>CCRotateBy</code> rotates the player from the current position by a specified number of degrees.  In this case we want a full circle so we rotate by 360 degrees.
 
-<code>CCFadeTo</code> changes the player's opacity to the specified value.  We want the player to disappear completely so we fade to 0.0.
+<code>CCFadeTo</code> changes the player's opacity to the specified value.  We want the player to disappear completely so we fade to <code>0.0</code>.
 
-<code>CCScaleTo</code> causes the player to grow or shrink to the specified scaling factor.  We want to player to shrink as they enter the teleporter so we scale them down to one quarter of the default size.
+<code>CCScaleTo</code> causes the player to grow or shrink to the specified scaling factor.  We want the player to shrink as they enter the teleporter so we scale them down to one quarter of the default size.
 
 These actions take a duration just like <code>CCBlink</code>.  By specifying the duration as the same for each action we cause all three of them to run at the same time.  Playing them all together looks like this:
 
+<iframe src="http://player.vimeo.com/video/60320015?byline=0&amp;portrait=0" width="450" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+
 <h3>Combining actions in sequences</h3>
 
-Rotating and fading is cool, but let's take it up a notch by actually changing the dimensions of the sprite instead of just the size.  The Houses and Colors level introduces houses <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house.png" alt="House icon" width="20" height="20" class="alignnone size-full wp-image-134530" style="margin: 0;" /> you have to visit.  When you visit a house we turn it gray with a little flourish.
+Rotating and fading is cool, but let's take it up a notch by actually changing the dimensions of the sprite instead of just the size.  The Houses and Colors map introduces houses <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house.png" alt="House icon" width="20" height="20" class="alignnone size-full wp-image-134530" style="margin: 0;" /> you have to visit.  When you visit a house we turn it gray with a little flourish.
 
 Houses are renderred by an object similar to <code>PlayerNode</code> named <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode</a></code>.  They're both helper objects which contain a sprite and handle the interactions.  <code>PlayerNode</code> exposes the player sprite in a property called <code>player</code> and <code>HouseNode</code> expose the house sprite in a property called <code>house</code>.
 
-The house visiting animation flips the house horizontally while turning it gray.  To flip the house back and forth we need two separate actions which run sequentially.  The first action flips the house to the right and the second action flips it back to the left.
+The house visiting animation flips the house horizontally while turning it gray.  To flip the house back and forth we run two actions sequentially.  The first action flips the house to the right and the second action flips it back to the left.
 
 The spinning, shrinking, fading player used three animations which ran at the same time.  The house needs more control.  To space them out we'll use a new object called <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sequence.html">CCSequence</a></code>.  Sequences string together actions which run one after the other.
 
-The first step is to create our two actions:
+We'll start by creating our two actions:
 
 <pre class="brush: javascript">
 float scale = 1.0;
@@ -88,7 +88,7 @@ Cocos2d provides a series of special actions which provide easing.  They all der
 
 Confused yet?
 
-There's a lot of math here, but the basic concepts are pretty simple.  The first animation causes the house to get smaller horizontally along the X axis.  This squishes the house together until it disappears.  The second animation causes the house to get larger along the X axis which pulls the house apart from zero to the full width.  When you put them together the house looks like it's rotating.  
+There's a lot of math here, but the basic concepts are pretty simple.  The first animation causes the house to get smaller horizontally along the X axis.  This squishes the house together until it disappears.  The second animation pull the house apart from zero to the full width.  When you put them together the house looks like it's rotating.  
 
 Let's create our house and run the animations together with a sequence like this:
 
@@ -103,9 +103,9 @@ The <code>CCSequence</code> takes a series of actions and runs them one after th
 
 <h3>Combining actions with custom code</h3>
 
-This sequence will flip the house, but we also want to turn it gray <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house_gray.png" alt="Gray house icon" width="20" height="20" class="alignnone size-full wp-image-134531" style="margin: 0;" />.  Cocos2d provides special actions for tinting, but we want a high quality image for the gray house so we'll use a PNG file.  There isn't any action to replace a sprite's image so we need a little custom code.  Cocos2d provides ultimate flexibility with the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_func.html">CCCallFunc</a></code> action which sits inside a sequence and calls any code you want.  
+This sequence will flip the house, but we also want to turn it gray <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house_gray.png" alt="Gray house icon" width="20" height="20" class="alignnone size-full wp-image-134531" style="margin: 0;" />.  Cocos2d provides special actions for tinting, but we want a high quality image for the gray house so we'll use a PNG file.  None of the default actions replace a sprite's image so we need a little custom code.  Cocos2d provides ultimate flexibility with the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_func.html">CCCallFunc</a></code> action which sits inside a sequence and calls any code you want.  
 
-The first step to using <code>CCCallFunc</code> is writing the function you want to call.  The house turns gray when the visit ends so we'll call our function <code>visitEnded</code> and define it on <code>HouseNode</code> like this:
+The house turns gray when the visit ends so we'll create a new function called <code>visitEnded</code> and define it on <code>HouseNode</code> like this:
 
 <pre class="brush: javascript">
 -(void)visitEnded {
@@ -116,7 +116,7 @@ The first step to using <code>CCCallFunc</code> is writing the function you want
 }
 </pre>
 
-We already have a gray house icon so the <code>visitEnded</code> function gets that icon from the sprite cache and sets into into our <code>house</code> sprite.  Now we just need to tweak our sequence to call <code>visitEnded</code> in the middle of the animation.  This code is getting a little complicated to we'll add it to a new method on <code>HouseNode</code> and call it <code>visit</code>.
+We already have a gray house icon so the <code>visitEnded</code> function gets that icon from the sprite cache and sets it into our <code>house</code> sprite.  Now we just need to tweak our sequence to call <code>visitEnded</code> in the middle of the animation.  This code is getting a little complicated to we'll add it to a new method on <code>HouseNode</code> and call it <code>visit</code>.
 
 <pre class="brush: javascript">
 -(void) visit {
@@ -135,15 +135,15 @@ We already have a gray house icon so the <code>visitEnded</code> function gets t
 }
 </pre>
 
-This new sequence will squish the house down, call the <code>visitEnded</code> function to turn the house gray, and stretch the house back out.  
+This new sequence will squish the house down, call the <code>visitEnded</code> method with <code>CCCallFunc</code> to turn the house gray, and stretch the house back out.  
 
 <iframe src="http://player.vimeo.com/video/60319771?byline=0&amp;portrait=0" width="450" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 
-Cocos2d provides a series of actions for calling custom code which can pass arguments and call methods on other objects.  Combining out of the box animations with custom code creates and ideal environment for complex animations.
+Cocos2d provides a series of actions for calling custom code like <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_func_n.html">CCCallFuncN</a></code> and <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_block.html">CCCallBlock</a></code>.  They're also variations of calling custom code during sequenecs.  Combining out of the box animations with custom code creates and ideal environment for complex animations.
 
 <h3>Combining multiple animations into particle systems</h3>
 
-We've looked at simple animations and some more complex interactions, now let's get really fancy with particles.  Cocos2d provides a set of more complex animations which all start with <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_particle_system.html">CCParticleSystem</a></code>.
+We've looked at simple animations and some more complex interactions, now let's get fancy with particles.  Cocos2d provides a set of more complex animations which all start with <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_particle_system.html">CCParticleSystem</a></code>.
 
 Particle systems aren't actions.  They use actions to create flexible precanned animations.  They're awesome, complex, and poorly documented.  Particle systems work well for mimicking natural phenomina like rain or smoke.
 
