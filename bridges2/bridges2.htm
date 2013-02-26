@@ -17,7 +17,7 @@ The basic Cocos2d actions can:
     <li>...and a lot more</a>
 </ul>
 
-We'll start by looking at the simple action <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_blink.html">CCBlink</a></code>.  Seven Bridges doesn't use blink, but it's on of the easiest actions to understand.
+We'll start by looking at the simple action <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_blink.html">CCBlink</a></code>.  Seven Bridges doesn't use blink, but it's one of the easiest actions to understand.
 
 Before we can start using any action we'll need a node.  We'll start with the <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> from Seven Bridges.
 
@@ -90,7 +90,7 @@ Cocos2d provides a series of special actions which provide easing.  They all der
 
 Confused yet?
 
-There's a lot of math here, but the basic concepts are pretty simple.  The first animation causes the house to get smaller horizontally along the X axis.  This squishes the house together until it disappears.  The second animation pull the house apart from zero to the full width.  When you put them together the house looks like it's rotating.  
+There's a lot of math here, but the basic concepts are pretty simple.  The first animation causes the house to get smaller horizontally along the X axis.  This squishes the house together until it disappears.  The second animation pulls the house apart from zero to the full width.  When you put them together the house looks like it's rotating.  
 
 Let's create our house and run the animations together with a sequence like this:
 
@@ -118,7 +118,7 @@ The house turns gray when the visit ends so we'll create a new function called <
 }
 </pre>
 
-We already have a gray house icon so the <code>visitEnded</code> function gets that icon from the sprite cache and sets it into our <code>house</code> sprite.  Now we just need to tweak our sequence to call <code>visitEnded</code> in the middle of the animation.  This code is getting a little complicated to we'll add it to a new method on <code>HouseNode</code> and call it <code>visit</code>.
+We already have a gray house icon so the <code>visitEnded</code> function gets that icon from the sprite cache and sets it into our <code>house</code> sprite.  Now we just need to tweak our sequence to call <code>visitEnded</code> in the middle of the animation.  This code is getting a little complicated so we'll add it to a new method on <code>HouseNode</code> and call it <code>visit</code>.
 
 <pre class="brush: javascript">
 -(void) visit {
@@ -141,7 +141,7 @@ This new sequence will squish the house down, call the <code>visitEnded</code> m
 
 <a href="https://vimeo.com/60319771"><img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house_vid.jpg" alt="House animation video" width="449" height="225" class="aligncenter size-full wp-image-134660" /></a>
 
-Cocos2d provides a series of actions for calling custom code like <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_func_n.html">CCCallFuncN</a></code> and <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_block.html">CCCallBlock</a></code>.  They're also variations of calling custom code during sequenecs.  Combining out of the box animations with custom code creates and ideal environment for complex animations.
+Cocos2d provides a series of actions for calling custom code like <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_func_n.html">CCCallFuncN</a></code> and <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_block.html">CCCallBlock</a></code>.  They're all variations of calling custom code during sequenecs.  Combining out of the box animations with custom code creates an ideal environment for complex animations.
 
 <h3>Combining multiple animations into particle systems</h3>
 
@@ -234,7 +234,7 @@ This code comes from the <code><a href="https://github.com/zgrossbart/bridges/bl
 
 The particle system starts with a single image <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/confetti.png" alt="Star confetti icon" width="25" height="25" class="alignnone size-full wp-image-134529" style="margin: 0;" />, creates hundreds of instances of that image, and moves those instances across the screen while changing their size, color, rotation and speed.  
 
-Most of this code just sets up the <code>CCParticleRain</code> and tells it how to behave.  Particle system are very flexible and support a dizzying array of configuration properties.  These properties aren't well documented and I found most of them by looking in the Cocos2d source code.  
+Most of this code just sets up the <code>CCParticleRain</code> and tells it how to behave.  Particle systems are very flexible and support a dizzying array of configuration properties.  These properties aren't well documented and I found most of them by looking in the Cocos2d source code.  
 
 Particle systems achieve a natural look by adding random variability.  You control the range of the randomness with <code>var</code> properties.  For example, we want the stars to start out between 20 and 50 times their regular size so we specify a <code>startSize</code> property of <code>50.0f</code> and a <code>startSizeVar</code> property of <code>20.0f</code>.  This means each of the stars will start somewhere between these two values.
 
