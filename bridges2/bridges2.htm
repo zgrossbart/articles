@@ -6,7 +6,7 @@ This article will walk you through the basics of animation.  We'll take a look a
 
 <h3>Simple Actions</h3>
 
-Cocos2d works with nodes; just about everything in a Cocos2d game derives from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html">CCNode</a></code>.  Nodes interact with actions which extend <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action.html">CCAction</a></code> to create movement on the screen.  
+All of the basic building blocks in a Cocos2d game, like images and layers, derive from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html">CCNode</a></code>.  Nodes interact with actions which extend <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action.html">CCAction</a></code> to create movement on the screen.  
 
 The basic Cocos2d actions can:
 
@@ -23,7 +23,7 @@ Before we can start using any action we'll need a node.  We'll start with <code>
 
 The player node is a simple one.  It shows the player sprite <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/player.png" alt="The player icon" width="20" height="20" class="alignnone size-full wp-image-134527" style="margin:0;" /> and handles moving and animating the player around the screen.  <code>PlayerNode</code> isn't actually a <code>CCNode</code>, but it contains a <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sprite.html">CCSprite</a></code> which represents a single image and extends <code>CCNode</code>.  
 
-Our player node needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  <code>LayerManager</code> is a helper object in Seven Bridges which lets game nodes interact with the world around them.  You don't need a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
+Our player node needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  <code>LayerManager</code> is a helper object in Seven Bridges which lets game nodes interact with the world around them.  You don't need to code your objects with a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
 
 Let's create a new player and place the player on the screen.
 
@@ -32,7 +32,7 @@ PlayerNode* player = [[PlayerNode alloc] initWithColor:cBlack layerMgr:_layerMgr
 player.player.position = ccp(100, 100);
 </pre>
 
-<code>PlayerNode</code> contains the sprite pointer and uses the layer manager to add the sprite to the scene.  It makes the sprite available as a property named <code>player</code> which has a property named <code>position</code>.  The full code for creating <code>LayerManager</code> is in <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer</a></code>.
+<code>PlayerNode</code> contains the sprite pointer and uses the <code>LayerManager</code> to add the sprite to the scene.  It makes the sprite available as a property named <code>player</code> which has a property named <code>position</code>.  The full code for creating <code>LayerManager</code> is in <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer</a></code>.
 
 The blink action can run directly on the player sprite, since sprites are also <code>CCNode</code> objects which implement the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_node.html#a5d6d868cc1a0ba72820a055b05661aa5">runAction</a></code> method.  It works like this:
 
@@ -69,7 +69,7 @@ Rotating and fading is cool, but let's take it up a notch by actually changing t
 
 Houses are rendered by an object similar to <code>PlayerNode</code> named <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode</a></code>.  Each is a helper object which contains a sprite and handles the interactions.  <code>PlayerNode</code> exposes the player sprite in a property called <code>player</code> and <code>HouseNode</code> exposes the house sprite in a property called <code>house</code>.
 
-The house-visiting animation flips the house horizontally while turning it gray.  To flip the house back and forth we run two actions sequentially.  The first action flips the house to the right and the second action flips it back to the left.
+The house-visiting animation flips the house horizontally while turning it gray.  To flip the house back and forth we run two actions sequentially.  The first action flips the house to the right and leave it backwards.  The second action flips it back to the left.
 
 The spinning, shrinking, fading player used three animations which ran at the same time.  The house needs more control.  To space them out we'll use a new object called <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sequence.html">CCSequence</a></code>.  Sequences string together actions which run one after another.
 
@@ -84,7 +84,7 @@ CCEaseExponentialOut* flipRemainingHalf = [CCEaseExponentialOut
     actionWithAction:[CCActionTween actionWithDuration:0.25 key:@"scaleX" from:0.0 to:scale]];
 </pre>
 
-Cocos2d provides a series of special actions which provide easing.  They all derive from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_ease.html">CCEase</a></code>.  These actions provide simple access to some of the basic movement animations which make objects bounce and slide into each other with a more natural movement.  These same techniques are used on the Web for <a href="http://coding.smashingmagazine.com/2011/10/04/quick-look-math-animations-javascript/">JavaScript animations</a>.
+Cocos2d provides a series of special actions which provide <a hreaf="http://en.wikipedia.org/wiki/Inbetweening">easing and tweening</a>.  They all derive from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_ease.html">CCEase</a></code>.  These actions provide simple access to some of the basic movement animations which make objects bounce and slide into each other with a more natural movement.  These same techniques are used on the Web for <a href="http://coding.smashingmagazine.com/2011/10/04/quick-look-math-animations-javascript/">JavaScript animations</a>.
 
 <code>CCEaseExponentialIn</code> and <code>CCEaseExponentialOut</code> provide natural movement in and out of various positions using an exponential curve.  This animation combines that with <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_tween.html">CCTween</a></code> which can apply changes to any property of a node.  We change the <code>scaleX</code> property to start the rotation.
 
@@ -101,7 +101,7 @@ CCSequence* seq = [CCSequence actions:flipHalf, flipRemainingHalf, nil];
 [house runAction:seq];
 </pre>
 
-<code>CCSequence</code> takes a series of actions and runs them one after another.  The last argument is the optional selector to a method to call when all the actions are complete.  We don't need any notification so we just pass it <code>nil</code>.
+<code>CCSequence</code> takes a series of actions and runs them one after another.  The last argument is and Objective-C construct called a selector.  It defines a method to call when the actions are complete.  It's optional and we don't need any notification so we just pass it <code>nil</code>.
 
 <h3>Combining Actions With Custom Code</h3>
 
