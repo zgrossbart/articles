@@ -25,7 +25,7 @@ The player node is a simple one.  It shows the player sprite <img src="http://mm
 
 Our player node needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  <code>LayerManager</code> is a helper object in Seven Bridges which lets game nodes interact with the world around them.  You don't need a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
 
-Let's create a new player and place the player on the screen.
+Let's create a new player and place him on the screen.
 
 <pre class="brush: javascript">
 PlayerNode* player = [[PlayerNode alloc] initWithColor:cBlack layerMgr:_layerMgr];
@@ -242,7 +242,7 @@ Particle systems achieve a natural look by adding random variability.  You contr
 
 Now that you've seen some of the basic concepts in Cocos2d animations, you can create your own.  An easy place to start is by changing Seven Bridges.  Just <a href="https://github.com/zgrossbart/bridges">download the source code</a> and start tweaking it.
 
-Add a blink animation to make the player character blink while moving.  Take a look at <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> to see the sequence for moving the player across the screen.  Play with the particle emitter to change the way the stars work.
+Add a blink animation to make the player character blink while he moves.  Take a look at <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> to see the sequence for moving the player across the screen.  Play with the particle emitter to change the way the stars work.
 
 This article reviewed programmatic animations in games, but Cocos2d also supports sprite-based animations.  These animations play a series of images to create the illusion of movement, somewhat like a <a href="http://en.wikipedia.org/wiki/Flip_book">flip book</a>.  Seven Bridges uses that style of animation when moving the player around the screen.  
 
