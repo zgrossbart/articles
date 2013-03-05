@@ -84,7 +84,7 @@ CCEaseExponentialOut* flipRemainingHalf = [CCEaseExponentialOut
     actionWithAction:[CCActionTween actionWithDuration:0.25 key:@"scaleX" from:0.0 to:scale]];
 </pre>
 
-Cocos2d provides a series of special actions which provide easing.  They all derive from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_ease.html">CCEase</a></code>.  These actions provide simple access to some of the basic movement animations which make objects bounce and slide into each other with a more natural movement.  These same techniques are used on the Web for <a href="http://coding.smashingmagazine.com/2011/10/04/quick-look-math-animations-javascript/">JavaScript animations</a>.
+Cocos2d provides a series of special actions which provide easing.  They all derive from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_ease.html">CCEase</a></code>.  These actions provide simple access to some of the basic movement animations which make objects bounce and slide into each other with a more natural movement.  These same techniques are used on the web for <a href="http://coding.smashingmagazine.com/2011/10/04/quick-look-math-animations-javascript/">JavaScript animations</a>.
 
 <code>CCEaseExponentialIn</code> and <code>CCEaseExponentialOut</code> provide natural movement in and out of various positions using an exponential curve.  This animation combines that with <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_tween.html">CCTween</a></code> which can apply changes to any property of a node.  We change the <code>scaleX</code> property to start the rotation.
 
