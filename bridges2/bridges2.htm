@@ -69,7 +69,7 @@ Rotating and fading is cool, but let's take it up a notch by actually changing t
 
 Houses are rendered by an object similar to <code>PlayerNode</code> named <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode</a></code>.  Each is a helper object which contains a sprite and handles the interactions.  <code>PlayerNode</code> exposes the player sprite in a property called <code>player</code> and <code>HouseNode</code> exposes the house sprite in a property called <code>house</code>.
 
-The house-visiting animation flips the house horizontally while turning it gray.  To flip the house back and forth we run two actions sequentially.  The first action flips the house to the right and leave it backwards.  The second action flips it back to the left.
+The house-visiting animation flips the house horizontally while turning it gray.  To flip the house back and forth we run two actions sequentially.  The first action flips the house to the right and leaves it backwards.  The second action flips it back to the left.
 
 The spinning, shrinking, fading player used three animations which ran at the same time.  The house needs more control.  To space them out we'll use a new object called <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sequence.html">CCSequence</a></code>.  Sequences string together actions which run one after another.
 
@@ -84,7 +84,7 @@ CCEaseExponentialOut* flipRemainingHalf = [CCEaseExponentialOut
     actionWithAction:[CCActionTween actionWithDuration:0.25 key:@"scaleX" from:0.0 to:scale]];
 </pre>
 
-Cocos2d provides a series of special actions which provide <a hreaf="http://en.wikipedia.org/wiki/Inbetweening">easing and tweening</a>.  They all derive from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_ease.html">CCEase</a></code>.  These actions provide simple access to some of the basic movement animations which make objects bounce and slide into each other with a more natural movement.  These same techniques are used on the Web for <a href="http://coding.smashingmagazine.com/2011/10/04/quick-look-math-animations-javascript/">JavaScript animations</a>.
+Cocos2d provides a series of special actions which provide <a href="http://en.wikipedia.org/wiki/Inbetweening">easing and tweening</a>.  They all derive from <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_ease.html">CCEase</a></code>.  These actions provide simple access to some of the basic movement animations which make objects bounce and slide into each other with a more natural movement.  These same techniques are used on the Web for <a href="http://coding.smashingmagazine.com/2011/10/04/quick-look-math-animations-javascript/">JavaScript animations</a>.
 
 <code>CCEaseExponentialIn</code> and <code>CCEaseExponentialOut</code> provide natural movement in and out of various positions using an exponential curve.  This animation combines that with <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_action_tween.html">CCTween</a></code> which can apply changes to any property of a node.  We change the <code>scaleX</code> property to start the rotation.
 
@@ -101,7 +101,7 @@ CCSequence* seq = [CCSequence actions:flipHalf, flipRemainingHalf, nil];
 [house runAction:seq];
 </pre>
 
-<code>CCSequence</code> takes a series of actions and runs them one after another.  The last argument is and Objective-C construct called a selector.  It defines a method to call when the actions are complete.  It's optional and we don't need any notification so we just pass it <code>nil</code>.
+<code>CCSequence</code> takes a series of actions and runs them one after another.  The last argument is an Objective-C construct called a selector; it defines a method to call when the actions are complete.  It's optional and we don't need any notification so we just pass it <code>nil</code>.
 
 <h3>Combining Actions With Custom Code</h3>
 
