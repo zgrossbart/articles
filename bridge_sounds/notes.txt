@@ -1,0 +1,23 @@
+Introduction - Sounds make the game real
+
+This section introduces the article and discusses the importance of sounds in making the game feel real.  This section should also discuss some of the free and "do it yourself" options for game sounds.
+
+Anatomy of a sound file
+
+We'll start the article by looking into one specific sound.  We should choose a complex one and discuss all of the parts that go into making that sound sound like it does.
+
+Creating an audio plan
+
+The audio plans walks through all of the sounds in your game.  This section presents a sound plan document and discusses how to communicate with a sound engineer.
+
+Integrating sounds - The code
+
+This section presents the basic framework with code examples for how to play a sound in your game with Cocos2d.  It discusses foreground and background sounds, repeating sounds, and preloading sounds for better game performance.
+
+Game play sounds and Transitional sounds
+
+The next section discusses the different types of sounds in a game.  It talks about some of the central sounds in a game like alert and reward sounds and some of the sounds people don't think about like button sounds and game transitions.
+
+File formats and sound compression
+
+The last section discusses the different options for sound file formats, how to make your sounds as small as possible, and how to choose the right format for your game.
