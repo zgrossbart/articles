@@ -1,6 +1,6 @@
-Animation makes games real.  Movement adds excitement to the game and lends verisimilitude to the characters.  In this article we'll take a look at the <a href="http://www.cocos2d-iphone.org/">Cocos2d</a> library and how it supports programmatic animations in iPhone games.
+Animation makes games real.  Movement adds excitement to the game and makes the characters more realistic.  In this article we'll take a look at the <a href="http://www.cocos2d-iphone.org/">Cocos2d</a> library and how it supports programmatic animations in iPhone games.
 
-This article is part of a series teaching you how to create iPhone games based on the open source game <a href="http://zgrossbart.github.com/bridges/">Seven Bridges</a>.  Make sure to check out the first article in the series, "<a href="http://mobile.smashingmagazine.com/2013/02/13/designing-open-source-iphone-game">Designing An Open-Source iPhone Game</a>."
+This article is part of a series teaching you how to create iPhone games based on the open source game <a href="http://zgrossbart.github.com/bridges/">Seven Bridges</a>.  Make sure to check out the first article in the series, "<a href="http://mobile.smashingmagazine.com/2013/02/13/designing-open-source-iphone-game">Designing An Open-Source iPhone Game</a>" and take a look at the source code in the <a href="https://github.com/zgrossbart/bridges">Seven Bridges GitHub repository</a>.
 
 This article will walk you through the basics of animation.  We'll take a look at actions in Cocos2d and see how to combine them to create complex and custom effects.  
 
@@ -21,7 +21,7 @@ We'll start by looking at the simple action <code><a href="http://www.cocos2d-ip
 
 Before we can start using any action we'll need a node.  We'll start with <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/PlayerNode.mm">PlayerNode</a></code> from Seven Bridges.
 
-The player node is a simple one.  It shows the player sprite <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/player.png" alt="The player icon" width="20" height="20" class="alignnone size-full wp-image-134527" style="margin:0;" /> and handles moving and animating the player around the screen.  <code>PlayerNode</code> isn't actually a <code>CCNode</code>, but it contains a <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sprite.html">CCSprite</a></code> which represents a single image and extends <code>CCNode</code>.  
+The player node is a simple one.  It shows the player sprite <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/player.png" alt="The player icon" width="20" height="20" class="alignnone size-full wp-image-134527" style="margin:0;" /> and handles moving and animating the player around the screen.  <code>PlayerNode</code> isn't actually a <code>CCNode</code>, but it contains a <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sprite.html">CCSprite</a></code> which represents a single image and extends <code>CCNode</code>.  Separating the player object from the actual player image makes the player object a little more flexible.
 
 Our player node needs a color and a <code><a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LayerMgr.mm">LayerManager</a></code>.  <code>LayerManager</code> is a helper object in Seven Bridges which lets game nodes interact with the world around them.  You don't need to code your objects with a <code>LayerManager</code>, but it gives you a simple place to add some standard code.
 
@@ -45,7 +45,7 @@ Most actions define a static <code>actionWithDuration</code> method which create
 
 <h3>Running Multiple Actions</h3>
 
-The latest version of Seven Bridges introduces teleporters <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/teleport.png" alt="Teleporter icon" width="20" height="26" class="alignnone size-full wp-image-134528" style="margin: 0;" />.  When players run into teleporters they should look like they're jumping in.  To create that effect we'll combine three actions: <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_rotate_by.html">rotating</a>, <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_fade_to.html">fading</a> and <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_scale_to.html">scaling</a>.  Each of these actions takes a little time to run, but we can make them all run simultaneously.  Put them together and we'll see players spinning and disappearing as they shrink.
+The latest version of Seven Bridges introduces teleporters <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/teleport.png" alt="Teleporter icon" width="20" height="26" class="alignnone size-full wp-image-134528" style="margin: 0;" />.  When players run into teleporters they should look like they're jumping in.  To create that effect we'll combine three actions: <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_rotate_by.html">rotating</a>, <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_fade_to.html">fading</a> and <a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_scale_to.html">scaling</a>.  Each of these actions takes a little time to run, but we can make them all run simultaneously.  Put them together and we'll see players spinning and disappearing as they shrink. (<a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer.mm</a>)
 
 <pre class="brush: javascript">
 [player.player runAction:[CCRotateBy actionWithDuration:0.5 angle:360]];
@@ -73,7 +73,7 @@ The house-visiting animation flips the house horizontally while turning it gray.
 
 The spinning, shrinking, fading player used three animations which ran at the same time.  The house needs more control.  To space them out we'll use a new object called <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_sequence.html">CCSequence</a></code>.  Sequences string together actions which run one after another.
 
-We'll start by creating our two actions:
+We'll start by creating our two actions (<a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode.mm)</a>:
 
 <pre class="brush: javascript">
 float scale = 1.0;
@@ -92,7 +92,7 @@ Confused yet?
 
 There's a lot of math here, but the basic concepts are pretty simple.  The first animation causes the house to get smaller horizontally along the X axis.  This squishes the house together until it disappears.  The second animation pulls the house apart from zero to the full width.  When you put them together the house looks like it's rotating.  
 
-Let's create our house and run the animations together with a sequence like this:
+Let's create our house and run the animations together with a sequence like this (<a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode.mm</a>):
 
 <pre class="brush: javascript">
 HouseNode *houseNode = [[HouseNode alloc] initWithColorAndCoins:cBlack layerMgr:layerMgr coins:0];
@@ -107,7 +107,7 @@ CCSequence* seq = [CCSequence actions:flipHalf, flipRemainingHalf, nil];
 
 This sequence will flip the house, but we also want to turn it gray <img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/house_gray.png" alt="Gray house icon" width="20" height="20" class="alignnone size-full wp-image-134531" style="margin: 0;" />.  Cocos2d provides special actions for tinting, but we want a high-quality image for the gray house so we'll use a PNG file.  None of the default actions replace a sprite's image, so we need a little custom code.  Cocos2d provides ultimate flexibility with the <code><a href="http://www.cocos2d-iphone.org/api-ref/2.1.0/interface_c_c_call_func.html">CCCallFunc</a></code> action, which sits inside a sequence and calls any code you want.
 
-The house turns gray when the visit ends, so we'll create a new function called <code>visitEnded</code> and define it on <code>HouseNode</code> like this:
+The house turns gray when the visit ends, so we'll create a new function called <code>visitEnded</code> and define it on <code>HouseNode</code> like this (<a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/HouseNode.mm">HouseNode.mm</a>):
 
 <pre class="brush: javascript">
 -(void)visitEnded {
@@ -153,7 +153,7 @@ When you beat a level of Seven Bridges we give you a little reward &mdash; star-
 
 <a href="https://vimeo.com/60320148"><img src="http://mmobile.smashingmagazine.com/wp-content/uploads/2013/02/stars_vid.jpg" alt="Stars animation video" width="448" height="319" class="aligncenter size-full wp-image-134661" /></a>
 
-So... um... There's no way to ease into this one.  Here's a really big chunk of code:
+So... um... There's no way to ease into this one.  Here's a really big chunk of code (<a href="https://github.com/zgrossbart/bridges/blob/master/bridges2/LevelLayer.mm">LevelLayer.mm</a>):
 
 <pre class="brush: javascript">
 -(void) showConfetti: (float) x y:(float) y {
@@ -166,10 +166,12 @@ So... um... There's no way to ease into this one.  Here's a really big chunk of 
     
     self.emitter.duration = 1.5;
     
-    // Set the gravity effect for the stars
+    // Set the gravity effect for the stars to control how
+    // fast they fall down.
     self.emitter.gravity = ccp(self.player.player.position.x, 90);
     
-    // Specify the angle of the stars
+    // Specify the angle of the stars as they extend from the
+    // starting point.
     self.emitter.angle = 90;
     self.emitter.angleVar = 360;
     
@@ -195,7 +197,9 @@ So... um... There's no way to ease into this one.  Here's a really big chunk of 
     self.emitter.endSpin = 360;
     self.emitter.endSpinVar = 180;
     
-    // The color of the stars as RGB values
+    // The color of the stars as RGB values.  Each color uses
+    // as variable value for where the stars should start and
+    // what color they should use when they're done.
     ccColor4F startColor = {171.0f, 26.0f, 37.0f, 1.0f};
     self.emitter.startColor = startColor;
     ccColor4F startColorVar = {245.0f, 255.f, 72.0f, 1.0f};
@@ -204,7 +208,6 @@ So... um... There's no way to ease into this one.  Here's a really big chunk of 
     self.emitter.endColor = endColor;
     ccColor4F endColorVar = {255.0f, 131.0f, 62.0f, 1.0f};
     self.emitter.endColorVar = endColorVar;
-    
     
     // The size of each of the stars
     self.emitter.startSize = 50.0f;
@@ -215,17 +218,20 @@ So... um... There's no way to ease into this one.  Here's a really big chunk of 
     self.emitter.totalParticles = 250;
     self.emitter.emissionRate = self.emitter.totalParticles/self.emitter.life;
     
+    // The position to start the stars
     self.emitter.posVar = ccp(x + 20, y - 20);
-    
-    self.emitter.blendAdditive = NO;
-    
     self.emitter.position = ccp(x,y);
     
-    // run the particle emitter
+    // We have a simple while background so we don't want to
+    // do additive blending.
+    self.emitter.blendAdditive = NO;
+    
+    // Now we're ready to run the particle emitter
     [self addChild: self.emitter z:10];
     self.emitter.autoRemoveOnFinish = YES;
     
-    // call the doWon function when the particle system completes
+    // We call the doWon function when the particle system completes
+    // so we can take the player to the You Won screen.
     [self scheduleOnce:@selector(doWon) delay:3];
 }
 </pre>
@@ -251,3 +257,4 @@ This article reviewed programmatic animations in games, but Cocos2d also support
 Ray Wenderlich has an awesome tutorial on sprite-based animation called "<a href="http://www.raywenderlich.com/1271/how-to-use-animations-and-sprite-sheets-in-cocos2d">How To Use Animations and Sprite Sheets in Cocos2D</a>."  The article is excellent, but it mentions a product called Zwoptex and I strongly recommend <a href="http://www.codeandweb.com/texturepacker">TexturePacker</a> instead.
 
 And make sure to check out <a href="http://zgrossbart.github.com/bridges/">Seven Bridges</a> and buy a copy for iPhone or iPad.
+
