@@ -22,12 +22,11 @@ C treats everything like a number. A character like <code>a</code> or <code>7</c
 
 C defines variables with types like <code>int</code> for integer or <code>char</code> for character, but that just defines how much memory to use.  When I want to access the variable and print it out I need to know the type.
 
-<pre class="brush: javascript"> int a = 1;
+<pre><code class="language-javascript">int a = 1;
 printf("The number is %i\n", a);
 
 char z = 'z';
-printf("The character is %c\n", z);
-</pre>
+printf("The character is %c\n", z);</code></pre>
 
 When I run this program it shows:
 
@@ -37,9 +36,8 @@ The character is z
 
 The <code>printf</code> function needs a hint from us to know how to format the variable.  If I give the wrong hint:
 
-<pre class="brush: javascript">char z = 'z';
-printf("The character is %i\n", z);
-</pre>
+<pre><code class="language-javascript">char z = 'z';
+printf("The character is %i\n", z);</code></pre>
 
 I get:
 
@@ -96,19 +94,17 @@ In C++ and Objective-C our number (1229799107) has a meaning.  I can define it a
 
 Static typing supports objects with sets of functionality that always work in a well-defined way.  Now I can create a <code>Person</code> object and make sure the <code>getName</code> function always returns the string of someone's name.
 
-<pre class="brush: javascript">class Person {
+<pre><code class="language-javascript">class Person {
     public:
         string getName() {
             return "zack";
         }
-};
-</pre>
+};</code></pre>
 
 Now I can call my object like this:
 
-<pre class="brush: javascript">Person p;
-printf("The name is %s\n", p.getName().c_str());
-</pre>
+<pre><code class="language-javascript">Person p;
+printf("The name is %s\n", p.getName().c_str());</code></pre>
 
 Static typing goes a long way to avoid the bugs from weakly typed languages by adding more constraints in the compiler, but it can't check anything when the program is running since a C++ or Objective-C program is just like C code when it runs.  Both languages also left the option of mixing weakly typed C code with static typed C++ or Objective-C to bypass all the type checking.
 
@@ -122,22 +118,20 @@ Java also stopped supporting C code and other ways of getting out of static typi
 
 The <code>Person</code> object looks almost the same in Java.
 
-<pre class="brush: javascript">public class Person {
+<pre><code class="language-javascript">public class Person {
     public String getName() {
         return "zack";
     }
-}
-</pre>
+}</code></pre>
 
 I get the name by creating a new object and calling the <code>getName</code> function like this:
 
-<pre class="brush: javascript">public class Main {
+<pre><code class="language-javascript">public class Main {
     public static void main (String args[]) {
         Person person = new Person();
         System.out.println("The name is " + person.getName());
     }
-}
-</pre>
+}</code></pre>
 
 This code creates a new <code>Person</code> object, assigns it to a variable named <code>person</code>, calls the <code>getName</code> function and prints out the value.  
 
@@ -153,20 +147,19 @@ In JavaScript I define a variable with the keyword <code>var</code> instead of a
 
 I can define an object in JavaScript with the <code>getName</code> function.
 
-<pre class="brush: javascript">var person = {
+<pre><code class="language-javascript">var person = {
     getName: function() {
         return 'zack';
     }
 };
 
-alert('The name is ' + person.getName());
-</pre>
+alert('The name is ' + person.getName());</code></pre>
 
 Now I have an object named <code>person</code>, and it has a function named <code>getName</code>.  If I call <code>person.getName()</code> it will result in <code>zack</code>.  
 
 I declared <code>person</code> as a <code>var</code> and I can reassign it to anything.
 
-<pre class="brush: javascript">var person = {
+<pre><code class="language-javascript">var person = {
     getName: function() {
         return 'zack';
     }
@@ -174,14 +167,13 @@ I declared <code>person</code> as a <code>var</code> and I can reassign it to an
 
 person = 5;
 
-alert('The name is ' + person.getName());
-</pre>
+alert('The name is ' + person.getName());</code></pre>
 
 This code creates a variable named <code>person</code> and assigns it to an object with a <code>getPerson</code> function, but then it reassigns that variable to the number 5.  When this code runs the result is <code>TypeError: Object 5 has no method 'getName'</code>.  JavaScript says that the object <code>5</code> doesn't have a function named <code>getName</code>.  In Java this error would come up during compilation, but JavaScript makes you wait for run time.  
 
 I can also change the type of the object based on the conditions of the program.  
 
-<pre class="brush: javascript">var person = {
+<pre><code class="language-javascript">var person = {
     getName: function() {
         return 'zack';
     }
@@ -191,8 +183,7 @@ if (new Date().getMinutes() &gt; 29) {
     person = 5;
 }
 
-alert('The name is ' + person.getName());
-</pre>
+alert('The name is ' + person.getName());</code></pre>
 
 Now this code will work at 9:15, but will fail at 9:30.  Java would call this a type error, but it's fine in JavaScript.
 
@@ -200,7 +191,7 @@ The most popular form of dynamic typing is called "duck typing" because the code
 
 Duck typing means you can redefine any object in the middle of the program.  It can start as a duck and turn into a swan or goose.
 
-<pre class="brush: javascript">var person = {
+<pre><code class="language-javascript">var person = {
     getName: function() {
         return 'zack';
     }
@@ -211,8 +202,7 @@ person['getBirthday'] = function() {
 };
 
 alert('The name is ' + person.getName() + ' ' + 
-      'and the birthday is ' + person.getBirthday());
-</pre>
+      'and the birthday is ' + person.getBirthday());</code></pre>
 
 At any point I can change the nature of my <code>person</code> object to add the new <code>getBirthday</code> function or remove existing functionality.  Java won't allow that because you can't check object types when they're always changing.  Dynamically redefining objects gives you a lot of power for good and bad.
 
@@ -222,7 +212,7 @@ C shows errors when the program runs.  C++, Objective-C and Java use the compile
 
 I'm looking for a program to parse XML, find a specific element, make a change and save the file.  On a team of Java programmers I wrote the code in the dynamic language <a href="http://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>.
 
-<pre class="brush: python">import sys
+<pre><code class="language-markup tmp-python">import sys
 import string
 from xml.dom.minidom import parse
 
@@ -235,12 +225,11 @@ for node in dom.getElementsByTagName('property'):
 
 file = open(sys.argv[1], 'w');
 file.write(dom.toxml('UTF-8'));
-file.close();
-</pre>
+file.close();</code></pre>
 
 This program finds every property node with the name <code>my value</code> and sets the contents to <code>my new value</code>.  I define the variables <code>dom</code> for my XML document, <code>node</code> for the each node of XML I find and <code>attr</code> for the attribute.  Python doesn't even require the keyword <code>var</code>, and it doesn't know that <code>node</code> has <code>childNodes</code> or <code>attr</code> has <code>value</code> until I call it.
 
-To change an XML file in Java I would write a new class, open an input stream, call the DOM parser, traverse the tree, call the right methods on the right elements, and write the file out to an output stream.  All of the extra definition of objects and variables could easily take a hundred lines.  Python took 14.
+To change an XML file in Java I would write a new class, open an input stream, call the DOM parser, traverse the tree, call the right methods on the right elements, and write the file out to an output stream.  I could simplify some of those calls with a library, but I'd still have the overhead of defining my static types.  All of the extra definition of objects and variables could easily take a hundred lines.  Python took 14.
 
 Dynamic code is generally shorter than static code because it needs less description of what the code is going to do.  This program would be shorter in Python than C++ or in Ruby than Objective-C.  
 
@@ -294,3 +283,4 @@ I've seen static code get overly complex and impossible to follow.  Try debuggin
 I've seen dynamic code turn into giant mounds of unmaintainable spaghetti.  Look at the myriad of terrible JavaScript programs before jQuery.  <a href="http://en.wikipedia.org/wiki/Node.js">Node.js</a> does some amazing things, but I can't look at it without traumatic flashbacks of horrible JavaScript I've debugged.
 
 There's no clear conclusion.  Dynamically typed languages are popular now.  The pendulum will swing back and forth many times in the coming years.  The only solution is flexibility.  Learn to work in each environment and you'll work well with any team.
+
