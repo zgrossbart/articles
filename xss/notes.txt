@@ -1,0 +1,5 @@
+Never trust the server
+Render on the client
+Use text as much as possible
+Eval is evil
+Blacklists won't save you
