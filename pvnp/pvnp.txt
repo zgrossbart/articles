@@ -1,20 +1,20 @@
-You may have never heard of P vs. NP, but it protects government secrets, secures the Internet, and makes it possible to shop on Amazon.com.
+P vs. NP protects government secrets, secures the Internet, and makes it possible to shop on Amazon.com.
 
-P vs. NP is a math problem in computer science, but it doesn't look like algebra.  It focused on how tough it is to solve a problem.  To understand the types of problems P vs. NP addresses we'll look at the travelling salesman.
+P vs. NP is a math problem in computer science, but it doesn't look like algebra.  Instead it focused on how tough it is to solve a problem.  The most famous example of a P vs. NP problem is the traveling salesman.
 
 <salesman picture here>
 
-Our salesmans is coming into a town with houses on different streets.  He has to visit every house once and only once.  He wants to find a route to hit every house while walking the smallest amount.  
+Our salesman is coming into a town with houses on different streets.  He has to visit every house once and only once.  He wants to find a route to hit every house while walking the smallest amount.  
 
 <house map here>
 
-The salesman doesn't know if it's better to go up main street first and then turn, start by turning left, or walk around the town and start from the other side.  The only way to no for sure is to try it out and measure how long each route takes.  There's no formula he can follow to figure out the fastest route.  That's the NP part.
+The salesman doesn't know if it's better to go up main street first and then turn, start by turning left, or walk around the town and start from the other side.  The only way to know for sure is to try it out and measure how long each route takes.  There's no formula he can follow to figure out the fastest route.  That's the NP part.
 
-When he's done it's easy to see if he was successful.  We just look at each house and figure out if he visited there or not.  That's the P part of our problem.  All P vs. NP problems are tough to solve, but easy to get right.
+When he's done it's easy to see if he was successful.  If he visited each house he's successful, if he skipped one then he has to start over.  That's the P part of our problem.  All P vs. NP problems are tough to solve, but easy to verify.
 
 <h2>Yeah there's some fancy words</h2>
 
-The P in P vs. NP stands for polynomial time.  The just means that we can predict the maximum amount of time it will take to solve the problem.  The classic example of polynomial time is a quick sort.  Here's a set of blocks:
+The P in P vs. NP stands for polynomial time.  That just means we can predict the maximum amount of time it will take to solve the problem.  The classic example of polynomial time is a quick sort.  Here's a set of blocks:
 
 <messy block picture goes here>
 
@@ -22,33 +22,35 @@ I want to sort them in order from the shortest to the tallest.  The easiest way 
 
 <sorted block picture goes here>
 
-NP is for non-polynomial time.  It's basically the opposite of P.  It means there's no equation to predict how long it will take to solve the problem.  Our travelling salesman is NP or NP complete.  
+NP stands for non-polynomial time.  It's basically the opposite of P.  It means there's no equation to predict how long it will take to solve the problem.  Figuring out the best route for our salesman is an NP problem or NP-complete.
 
 Let's look at a few routes our salesman could take.  We'll add a little grid to make it easy to count how far he's going.  The more squares he crosses the further he goes.
 
 <house map route picture>
 
-We can measure each route and see what's fastest, but there's no way to predict how to find the fastest route.  In other words, there's no good way to find the smallest number of squares the sales has to walk over to visit every house.  The travelling sames is famous because visiting every house is NP (very hard), but making sure you've visted every house is P (very easy).
+We can measure each route and see what's shortest, but there's no way to predict which route is shortest or how long that will be.  In other words, there's no good way to find the smallest number of squares the salesman has to walk over to visit every house.  The traveling salesman is famous because visiting every house is NP (very hard), but making sure you've visited every house is P (very easy).
 
 <h2>Why this all matters</h2>
 
-Visiting houses is a cute problem, but the implications are giant.  Another term for the travelling salesman problem is Internet routing.  When my computer in Boston wants to send information to a computer in California we need to figure out the most efficient way to get the data there.  If you could figure out a better way to route data on the Internet you could get stock prices faster than everyone else and <a href="http://en.wikipedia.org/wiki/Flash_Boys">make billions of dollars</a>.  Another version of this problem is all about secrets.
+Visiting houses is a cute problem, but the implications are giant.  Another term for the traveling salesman problem is Internet routing.  When my computer in Boston wants to send information to a computer in California we need to figure out the most efficient way to get the data there.  There are thousands of different routes my data could take through thousands of different computers.
 
-Most of the Internet runs on secrets.  I want to give my credit care to Amazon without the guy next to me at Starbucks getting my number.  I don't want to share my bank password with my neighbors and I don't want to let my frenemies read my email.  You can shop, share, and work on the Internet because of secrets and all of the those secrets are based on math.
+If you could figure out a better way to route data on the Internet you could make stock trades faster than everyone else and <a href="http://en.wikipedia.org/wiki/Flash_Boys">make billions of dollars</a>.  Another version of this problem is all about secrets.
 
-Most of the secrets on the Internet are protected by <a href="http://www.smashingmagazine.com/2012/05/17/backpack-algorithms-and-public-key-cryptography-made-easy/">public key cryptography</a> which depends on find two numbers which multiplied together equal a very large number.  The two numbers which multiple to equals our big number are it's factors.
+Most of the Internet runs on secrets.  I want to give my credit care to Amazon, but not the guy sitting next to me at Starbucks.  I don't want to share my bank password with my neighbors and I don't want to let my frenemies read my email.  You can shop, share, and work on the Internet because of secrets and all of the those secrets are based on math.
+
+Most of the secrets on the Internet are protected by <a href="http://www.smashingmagazine.com/2012/05/17/backpack-algorithms-and-public-key-cryptography-made-easy/">public key cryptography</a> which depends on finding two large numbers which multiplied together equal a very large number.  The two large numbers are the factors of the very big number.
 
 Here's a tiny example.  Take the number 26.  26 has four factors:  1, 2, 13, and 26.  Every number has one and the number itself so we'll ignore those two.  The important ones are 2 and 13.
 
 <two times 13 = 26>
 
-If I tell you the number 26 you can work out the factors on a piece of paper.  Let's look at a larger number:
+If I tell you the number 26 you can work out the factors on a piece of paper by trying every number between one and 26.  It's a lot tougher with a mind-bendingly large number:
 
 33478071698956898786044169848212690817704794983713768568912431388982883793878002287614711652531743087737814467999489
 
-That very large number has two factors:  36746043666799590428244633799627952632279158164343087642676032283815739666 and 511279233373417143396810270092798736308917.  Those numbers are dizzyingly large.  You could never work them out on a piece of paper, and neither could a computer.  There's no good way to write a computer program to find the factors of two large numbers.  Finding factors is NP complete.  
+That very large number has two factors:  36746043666799590428244633799627952632279158164343087642676032283815739666 and 511279233373417143396810270092798736308917.  Those numbers are dizzyingly large.  You could never work them out on a piece of paper, and neither could a computer.  There's no good way to write a computer program to find the factors of large numbers.  Finding factors is NP complete.  
 
-I had to work hard to find the factors, but making sure I'm right is easy.  Just copy and past the second and third numbers into a calculator and pretty the multiply button.  If they add up to the first number then I'm right and they are factors.  You're job is simple and it's just a P level problem.
+I had to work hard to find the factors, but making sure I'm right is easy.  Just copy and paste the second and third numbers into a calculator and press the multiply button.  If they add up to the first number then I'm right and they are factors.  You're job is simple; it's just a P level problem.
 
 If finding those factors were easy then the Internet would fall over.
 
@@ -56,21 +58,21 @@ If finding those factors were easy then the Internet would fall over.
 
 It's not very useful to have a secret if I can't prove I have it.  However, I can't just tell you the secret because then it wouldn't be a secret.  I need to prove it without telling you and that's where the factors come in.  The larger first number proves I know the factors without ever telling you what those numbers were.  If you could come up with a way to quickly find the factors then you could steal my secrets.  Robert Redford made <a href="http://www.imdb.com/title/tt0105435/?ref_=fn_al_tt_1">a movie about it</a>.
 
-A lot of smart people have been working on a way to find those factors and they haven't found one yet.  We've based the entire security of the Internet on the fact that there's no easy way to find factors, but people are looking and maybe they'll find on tomorrow.
+A lot of smart people have been working on a way to find those factors and they haven't found one yet.  We've based the entire security of the Internet on the fact that there's no easy way to find the factors of large numbers, but it isn't really a fact.
 
-We don't know if a way to find the factors or get directions for our salesman exists.  Maybe it's out there and we just haven't found it yet.  That's what P vs. NP is all about.  
+We don't know if a way to find the factors or get directions for our salesman exists.  Maybe it's out there and we just haven't found it yet.  Maybe someone will find it tomorrow.  That's what P vs. NP is all about.  
 
-<h3>P &ne; NP</h2>
+<h3>P &ne; NP</h3>
 
 Right now we assume P doesn't equal NP.  That means some problems are easy and others are hard.  We think our secrets are safe, but we can't prove it.
 
-Mathematics is based on a lot of assumptions.  Some of them last decades before they are proved true or false.  As long as the assumption P doesn't equals NP remains true then we can keep sharing secrets, email, and credit card numbers on the Internet without any problems.  If you proved that P does equals NP then you could cause some big trouble.  
+Mathematics is based on a lot of assumptions.  Some of them last decades before they're proved true or false.  As long as the assumption P doesn't equals NP remains true then we can keep sharing secrets, email, and credit card numbers on the Internet without any problems.  If you proved that P does equals NP then you could cause some big trouble.  
 
-<h3>P = NP</h2>
+<h3>P = NP</h3>
 
-A lot of people make the philosophical argument that P just can't equal NP.  If it did then it would mean that anyone who could listen to a symphony could write one and who could drive a car could build one.  It's a strange thought, but it's not the real problem.
+A lot of people make the philosophical argument that P just can't equal NP.  If it did then it would mean finding the solution to a problem was the same as verifying the solution was correct.  That anyone who could drive a car could build one and anyone who could listen to a symphony could write one.  It make my head hurt, but that's not the real problem.
 
-If you could create a practical example of P equalling NP then you could solve the travelling salesman problem and guess everyone's password.  And that's just the beginning.
+If you could create a practical example of P equalling NP then you could solve the traveling salesman problem and guess everyone's password.  And that's just the beginning.
 
 A practical solution proving that P equals NP would give you enormous control over information everywhere.
 
