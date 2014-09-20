@@ -78,6 +78,7 @@ A practical solution proving that P equals NP would give you enormous control ov
 
 <h2>What comes next</h2>
 
+P vs. NP is one of the great unsolved problems in math and computer science and it affects us every day.  It also asks a larger question about how we figure out the things we know.  Do we know them first and figure them out second, or do we need to work at the solution before we can find it.  If you can prove P vs. NP one way or the other you'll <a href="http://en.wikipedia.org/wiki/Millennium_Prize_Problems#P_versus_NP">win a million dollars</a>.
+
 For now we all sleep at night believing that P doesn't equal NP.  Our secrets are safe and the world works they way we all think it does.  If it turned out that P does equal NP it would be proof that we've all been trying to solve problems the wrong way.  
 
-If you can prove P vs. NP one way or the other you'll <a href="http://en.wikipedia.org/wiki/Millennium_Prize_Problems#P_versus_NP">win a million dollars</a>.
