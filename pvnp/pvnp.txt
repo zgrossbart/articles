@@ -12,7 +12,7 @@ The salesman doesn't know if it's better to go up main street first and then tur
 
 When he's done it's easy to see if he was successful.  If he visited each house he's done the job, if he skipped one then he has to start over.  That's the P part of our problem.  All P vs. NP problems are tough to solve, but easy to verify.
 
-<h2>Yeah there's some big words</h2>
+<h2>Yeah, there's some big words</h2>
 
 The P in P vs. NP stands for polynomial time.  That just means we can predict the maximum amount of time it will take to solve the problem.  The classic example of polynomial time is a quick sort.  Here's a set of blocks:
 
@@ -70,7 +70,7 @@ Mathematics is based on a lot of assumptions.  Some of them last decades before 
 
 <h3>P = NP</h3>
 
-A lot of people make the philosophical argument that P just can't equal NP.  If it did then it would mean finding the solution to a problem was the same as verifying the solution was correct.  That anyone who could drive a car could build one and anyone who could listen to a symphony could write one.  It make my head hurt, but that's not the real problem.
+A lot of people make the philosophical argument that P just can't equal NP.  If it did then it would mean finding the solution to a problem was the same as verifying the solution was correct.  That anyone who could drive a car could build one and anyone who could listen to a symphony could write one.  It makes my head hurt, but that's not the real problem.
 
 If you could create a practical example of P equalling NP then you could solve the traveling salesman problem and guess everyone's password.  And that's just the beginning.
 
