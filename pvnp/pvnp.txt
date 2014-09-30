@@ -16,7 +16,7 @@ When he's done it's easy to see if he was successful.  If he visited each house 
 
 The P in P vs. NP stands for polynomial time.  That just means we can predict the maximum amount of time it will take to solve the problem.  The classic example of polynomial time is a quick sort.  Here's a set of blocks:
 
-<messy block picture goes here>
+<messy block picture goes here - messy_blocks.gif>
 
 I want to sort them in order from the shortest to the tallest.  The easiest way to do that is to cut the group in half, push the tall blocks to one side and the short blocks to the other side, and sort the groups separately.  There's a simple equation that will tell me how long this will take.  It doesn't matter how many blocks I have or how disorganized they are, I can always predict the maximum amount of time it will take to sort them.
 
