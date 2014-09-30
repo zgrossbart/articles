@@ -2,7 +2,7 @@ P vs. NP is a math problem you've probably never heard of, but it protects gover
 
 For a math problem it looks more like a philosophical one.  P vs. NP talkes about how difficult it is to solve a problem vs. how difficult it is know you solved it.  The most famous example of a P vs. NP problem is the traveling salesman.
 
-<salesman picture here>
+<salesman picture here - salesman.png>
 
 Our salesman is coming into a town with houses on different streets.  He has to visit every house once and only once.  He wants to find a route to hit every house while walking the smallest amount.  
 
