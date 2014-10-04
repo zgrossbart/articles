@@ -1,6 +1,6 @@
 You've probably never heard of P vs. NP, but it's a math problem that protects governments, runs the Internet, and makes online shopping possible.
 
-P vs. NP is a math problem masquerading as a philosophy one.  The problem describes the difference between solving a problem and knowing if you solved it.  Let's start with a simple example called the travelling salesman.
+P vs. NP is a math problem masquerading as a philosophy one.  The problem describes the difference between solving a problem and knowing if you solved it.  Let's start with a simple example called the traveling salesman.
 
 Our salesman is coming into a town with houses on different streets.  He needs to visit every house once and only once.  He wants to find the fastest route to hit every house and save on his walking.  
 
@@ -22,7 +22,7 @@ I want to sort them in order from the shortest to the tallest.  The easiest way 
 
 All of the common math we use, addition, algebra, and balancing your checkbook, can be done on polynomial time.
 
-NP stands for non-polynomial time.  It's basically the opposite of P.  It means there's no equation or formula to predict how long it will take to solve the problem.  That normaly means the only way to solve the problem is to keep trying answers until we find one that works.  Figuring out the best route for our salesman is an NP problem or NP-complete.
+NP stands for non-polynomial time.  It's basically the opposite of P.  It means there's no equation or formula to predict how long it will take to solve the problem.  That normally means the only way to solve the problem is to keep trying answers until we find one that works.  Figuring out the best route for our salesman is an NP problem or NP-complete.
 
 Let's look at a few routes our salesman could take.  He could start from the bottom and go up first:
 
@@ -40,7 +40,7 @@ We could solve this map in a few minutes, but every house you add makes the solu
 
 <h2>Why this all matters</h2>
 
-The travelling salesman is a cute problem, but the implications are giant.  Another term for the traveling salesman problem is Internet packet routing.  When my computer in Boston wants to send packets of information to a computer in Londo it must figure out a path to get there.  The data could take thousands of different routes through thousands of different computers.
+The traveling salesman is a cute problem, but the implications are giant.  Another term for the traveling salesman problem is Internet packet routing.  When my computer in Boston wants to send packets of information to a computer in London it must figure out a path to get there.  The data could take thousands of different routes through thousands of different computers.
 
 If you could figure out a better way to route data on the Internet you could make stock trades faster than everyone else and <a href="http://en.wikipedia.org/wiki/Flash_Boys">make billions of dollars</a>.  Another version of this problem is all about secrets.
 
@@ -99,4 +99,3 @@ A practical solution proving that P equals NP would give you enormous control ov
 P vs. NP is one of the great unsolved problems in math and computer science and it affects us every day.  It also asks a larger question about how we figure out the things we know.  Do we know them first and figure them out second, or do we need to work at the solution before we can find it.  If you can prove P vs. NP one way or the other you'll <a href="http://en.wikipedia.org/wiki/Millennium_Prize_Problems#P_versus_NP">win a million dollars</a>.
 
 For now we all sleep at night believing that P doesn't equal NP.  Our secrets are safe and the world works they way we all think it does.  If it turned out that P does equal NP it would be proof that we've all been trying to solve problems the wrong way.  
-
