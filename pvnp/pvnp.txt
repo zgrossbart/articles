@@ -42,7 +42,7 @@ We could solve this map in a few minutes, but every house you add makes the solu
 
 <h2>Why this all matters</h2>
 
-The traveling salesman is a cute problem, but the implications are giant.  Another term for the traveling salesman problem is Internet packet routing.  When my computer in Boston wants to send packets of information to a computer in London it must figure out a path to get there.  The data could take thousands of different routes through thousands of different computers.
+The traveling salesman is a cute problem, but the implications are giant.  Change the salesman to a page request and the houses to servers and you've got Internet packet routing.  When my computer in Boston wants to send requests to a computer in London it must figure out a path to get there.  The data could take thousands of different routes through thousands of different computers.  That's why Google, Facebook, and Apple build data centers near major cities.  They're trying to make the map smaller when people make requests.
 
 If you could figure out a better way to route data on the Internet you could make stock trades faster than everyone else and <a href="http://en.wikipedia.org/wiki/Flash_Boys">make billions of dollars</a>.  Another version of this problem is all about secrets.
 
