@@ -4,13 +4,13 @@ You're looking at <em>Smashing Magazine</em> right now because you're standing o
 
 P vs. NP is a math question masquerading as a philosophy one.  It describes the difference between solving a problem and knowing whether you solved it.  Let's start with a simple example called "the traveling salesman problem."
 
-Our salesman is entering a town with houses spread across a number of different streets.  He needs to visit every house once and only once.  He wants to find the fastest route that takes him to every house, but requires as little walking as possible.  
+Our salesman is walking through a town with houses spread across a number of different streets.  He needs to visit every house once and only once.  The salesman wants to find the fastest route that takes him to every house, but requires as little walking as possible.  
 
-<house map here>
+<house map here - Map-Base.png>
 
-The salesman doesn't know if it's better to go up Main Street first and then turn; to start by turning left; or to walk around the town and start from the other side.  The only way he can know for sure is to try each route and measure how long it takes.  There's no formula he can follow to figure out the fastest route, he just has to find the answer with brute force.  Finding the answer is the "NP" part, which we'll define soon.
+The salesman doesn't know if it's better to start from the upper right, walk to the middle first, or walk around the town and start from the other side.  The only way he can know for sure is to try each route and measure how long it takes.  There's no formula he can follow to figure out the fastest route, he has to find the answer with brute force.  Finding the answer is the "NP" part, which we'll define soon.
 
-Knowing whether he found an answer is easy.  If he visited each house he's done the job; if he skipped one, then he has to start over.  That's the "P" part, which you'll learn about shortly.  All P vs. NP problems are tough to solve, but easy to verify.
+Knowing whether he found an answer is easy.  If he visited each house he's done the job; if he skipped one, then he has to start over.  That's the "P" part.  All P vs. NP problems are tough to solve, but easy to verify.
 
 <h2>Yeah ... There Are Some Big Words</h2>
 
@@ -18,40 +18,44 @@ The P in P vs. NP stands for "<strong>polynomial</strong> time."  That just mean
 
 <messy block picture goes here - messy_blocks.gif>
 
-I want to sort them in order from the shortest to the tallest.  The easiest way to do that is to divide the group in half, pushing the tall blocks to one side and the short blocks to the other side.  Then I cut each half in half, and repeat.  
+I want to sort them in order from the shortest to the tallest.  The easiest way to do that is to divide the group in half, pushing the tall blocks to the right and the short blocks to the left.  Then I cut each half in half, and repeat.  
 <http://commons.wikimedia.org/wiki/File:Sorting_quicksort_anim.gif>
 
-There's a simple equation (not important here) which can tell me how long this will take.  It doesn't matter how many blocks I have or how disorganized they are, I can always predict the worst-case scenario for how long it will take to sort any number of blocks.  The predictable part is what makes it polynomial.  All of the common math we use &mdash; addition, algebra, and balancing your checkbook &mdash; can be done in polynomial time.
+There's a logorithm which can tell me how long this will take.  It doesn't matter how many blocks I have or how disorganized they are, I can always predict the worst-case scenario for how long it will take to sort any number of blocks.  The predictable part is what makes it take only polynomial time.  All of the common math we use &mdash; addition, algebra, and balancing your checkbook &mdash; can be done in polynomial time.
 
-NP stands for "<strong>nondeterministic polynomial</strong> time."  It's basically the opposite of P:  it means there's no equation or formula to predict how long it will take to solve a problem.  Normally the only way to solve this kind of problem is to keep trying answers until we find one that works.  Figuring out the best route for our salesman is an NP problem, sometimes called "NP-complete."
+NP stands for "<strong>nondeterministic polynomial</strong> time."  It's basically the opposite of P:  there's no equation or formula to predict how long it will take to solve a problem.  Normally the only way to solve this kind of problem is to keep trying answers until we find one that works.  Figuring out the best route for our salesman is an NP-complete problem.
 
-Let's look at a few routes our salesman could take.  He could start from the bottom and go up first:
+Let's look at a few routes our salesman could take.  He could start from the top and go down the left first:
 
-<house map route picture 1>
+<house map route picture 1 - Map-1.png>
 
-That's about XXX steps.  He could also start by turning right and visiting the houses in the lower left first:
+That's about 75 steps.  He could also start by walking to the middle and looping around counter-clockwise:
 
-<house map route picture 2>
+<house map route picture 2 - Map-2.png>
 
-That one's about XXX steps.  The salesman could also turn the map around and start from the top.  Now he can visit that cul-de-sac easily, but he has to loop back around to get the houses in the bottom left.  That route's about XXX steps.
+That one's about 95 steps.  The salesman could also turn the map around and start from the top right.  Now he can avoid looping all the way around:  
 
-Though we can measure each route to see which is shortest, there's no way to predict the lengths without trying.  We can make guesses, but pretty soon we just have to start walking.  The traveling salesman problem is famous because visiting every house along the shortest route is NP (very hard), but making sure you've visited every house is P (very easy).
+<house map route picture 3 - Map-3.png>
 
-We could solve this map in a few minutes, but every house we add would make the solution take minutes, hours, or even years longer.  
+That route's about 80 steps.
+
+Though we can measure each route to see which is shortest, there's no way to predict the lengths without trying them out.  We can make guesses, but pretty soon we just have to start walking.  The traveling salesman problem is famous because visiting every house along the shortest route is NP (very difficult), but making sure you've visited every house is P (very easy).
+
+We could solve this map in a few minutes, but adding a few more houses would make the solution take hours.  Add enough houses and the solution takes years.  
 
 <h2>Why This All Matters</h2>
 
 The traveling salesman is a cute problem, but the implications are giant.  
 
-Change the salesman to a page request, and the houses to servers, and you've got Internet packet routing.  When my computer in Boston wants to send requests to a computer in London, it has to figure out a path to get there.  The data could take thousands of different routes through thousands of different computers.  (That's why Google, Facebook, and Apple build data centers near major cities; they're trying to make the map smaller when people make requests.)
+Change the salesman to a page request, and the houses to servers; now you've got Internet packet routing.  When my computer in Boston wants to send requests to a computer in London, it has to figure out a path to get there.  The data could take thousands of different routes through thousands of different computers.  (That's why Google, Facebook, and Apple build data centers near major cities; they're trying to make the map smaller when people make requests.)
 
 If you could figure out a better way to route data on the Internet, you could make stock trades faster than everyone else and <a href="http://en.wikipedia.org/wiki/Flash_Boys">make billions of dollars</a>.  
 
 Another version of this problem is all about secrets.
 
-Most of the Internet runs on secrets.  I want to give my credit card information to Amazon, but not to the guy sitting next to me at Starbucks.  I don't want to share my bank password with my neighbors, and I don't want to let my frenemies read my email.  You can shop, share, and work on the Internet because of secrets, and all of those secrets are based on math.
+Most of the Internet runs on secrets.  I want to give my credit card number to Amazon, but not to the guy sitting next to me at Starbucks.  I don't want to share my bank password with my neighbors, and I don't want to let my frenemies read my email.  You can shop, share, and work on the Internet because of secrets, and all of those secrets are based on math.
 
-Most of the secrets on the Internet are protected by <a href="http://www.smashingmagazine.com/2012/05/17/backpack-algorithms-and-public-key-cryptography-made-easy/">public key cryptography</a>, which depends on finding two large numbers which, multiplied together, equal a very large number.  The two large numbers are <strong>factors</strong> of the very big number.  (Think of a backpack full of weights.  You may know the pack weighs 20 pounds, but you don't know if it has one 20-pound weight, 20 one-pound weights, or anything in between.)
+Most of the secrets on the Internet are protected by <a href="http://www.smashingmagazine.com/2012/05/17/backpack-algorithms-and-public-key-cryptography-made-easy/">public key cryptography</a>.  That cryptography depends on finding two large numbers which, multiplied together, equal a very large number.  The two large numbers are <strong>factors</strong> of the very big number.  (Think of a backpack full of weights.  You may know the pack weighs 20 pounds, but you don't know if it has one 20-pound weight, 20 one-pound weights, or anything in between.)
 
 For example, take the number 26.  It has four factors:  1, 2, 13, and 26.  Every number contains 1 and the number itself, so we'll ignore those factors; the important ones are 2 and 13.
 
@@ -73,13 +77,15 @@ and
 
 Those numbers are dizzyingly large.  You could never work them out on a piece of paper, and neither could a computer.  There's no good way to write a computer program to find the factors of large numbers quickly.  The best you can do is discard the numbers that clearly don't work, and search for factors one by one among the trillions and trillions of numbers remaining.  Finding factors is NP-complete.  
 
-I had to work hard to find factors, but making sure I'm right is easy.  You just copy and paste the second and third numbers into a computer and multiply them.  If they produce the first number, then I'm right and they are factors.  Your job is simple; this is a P-complete problem.
+I had to work hard to find factors (well&hellip; I looked them up on Wikipedia, but someone worked hard to find them).  Making sure I'm right is easy.  You can write a small computer program to multiply the second and third numbers.  If they produce the first number, then I'm right and they are factors.  Your job is simple; this is a P level problem.
 
 If finding those factors were easy, then the Internet would fall over.
 
 <h2>P vs. NP</h2>
 
-It's not very useful to have a secret if I can't prove I have it, but I can't just tell you the secret because then it wouldn't be a secret.  I need to prove I know the value without telling you what it is.  That's where the factors come in.  The larger first number proves I know the factors without ever telling you what those numbers were.  If you could come up with a way to quickly find large factors then you could steal my secrets.  Robert Redford starred in <a href="http://www.imdb.com/title/tt0105435/?ref_=fn_al_tt_1">a movie about this</a>.
+It's not very useful to have a secret if I can't prove I have it, but I can't just tell you the secret because then it wouldn't be a secret.  I need to prove I know the value without telling you what it is.  That's where the factors come in.  The larger first number proves I know the factors without ever telling you what those numbers were.  Take a look at <a href="http://www.smashingmagazine.com/2012/05/17/backpack-algorithms-and-public-key-cryptography-made-easy/">Backpack Algorithms And Public-Key Cryptography Made Easy</a> if you're interested in how the factoring turns into cryptography.
+
+If you could come up with a way to quickly find large factors then you could steal my secrets.  Robert Redford starred in <a href="http://www.imdb.com/title/tt0105435/?ref_=fn_al_tt_1">a movie about this</a>.
 
 Many smart people have been working on a way to find those factors, and they haven't found one yet.  We've based the entire security of the Internet on the "fact" that there's no easy way to find the factors of large numbers, but it isn't really a fact.  We don't know if a fast way to find factors or get directions for our salesman exists.  Maybe it's out there, and we just haven't found it yet.  Maybe someone will find it tomorrow.  That's what P vs. NP is all about.  
 
@@ -99,6 +105,8 @@ A practical solution proving that P equals NP would give you enormous control ov
 
 <h2>What Comes Next</h2>
 
-P vs. NP is one of the great unsolved problems in math and computer science, and it affects us every day.  It also asks a larger question about how we figure out the things we know.  Do we know them first and figure them out second, or do we need to work at a solution before we can find it?  If you can prove P vs. NP one way or the other, you'll <a href="http://en.wikipedia.org/wiki/Millennium_Prize_Problems#P_versus_NP">win a million dollars</a>.
+Basing the whole Internet on an assumption is scary.  We want to know if P equals NP or not.  The answer has practical applications, but it also asks a larger wuestion about how we figure things out.  Do we know them first and figure them out second, or do we need to work at a solution before we can find it?  
 
-For now we all sleep at night believing that P doesn't equal NP.  Our secrets are safe, and the world works the way we all think it does.  If it turned out that P does equal NP, it would be proof that we've all been trying to solve problems the wrong way.  
+Some problems are hard and some just look hard.  P vs. NP gives us a framework to figure out which is which.
+
+If you can prove P vs. NP one way or the other, you'll <a href="http://en.wikipedia.org/wiki/Millennium_Prize_Problems#P_versus_NP">win a million dollars</a>.
