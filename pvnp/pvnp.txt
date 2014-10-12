@@ -21,7 +21,7 @@ The P in P vs. NP stands for "<strong>polynomial</strong> time."  That just mean
 I want to sort them in order from the shortest to the tallest.  The easiest way to do that is to divide the group in half, pushing the tall blocks to the right and the short blocks to the left.  Then I cut each half in half, and repeat.  
 <http://commons.wikimedia.org/wiki/File:Sorting_quicksort_anim.gif>
 
-There's a logorithm which can tell me how long this will take.  It doesn't matter how many blocks I have or how disorganized they are, I can always predict the worst-case scenario for how long it will take to sort any number of blocks.  The predictable part is what makes it take only polynomial time.  All of the common math we use &mdash; addition, algebra, and balancing your checkbook &mdash; can be done in polynomial time.
+There's a logarithm which can tell me how long this will take.  It doesn't matter how many blocks I have or how disorganized they are, I can always predict the worst-case scenario for how long it will take to sort any number of blocks.  The predictable part is what makes it take only polynomial time.  All of the common math we use &mdash; addition, algebra, and balancing your checkbook &mdash; can be done in polynomial time.
 
 NP stands for "<strong>nondeterministic polynomial</strong> time."  It's basically the opposite of P:  there's no equation or formula to predict how long it will take to solve a problem.  Normally the only way to solve this kind of problem is to keep trying answers until we find one that works.  Figuring out the best route for our salesman is an NP-complete problem.
 
@@ -105,7 +105,7 @@ A practical solution proving that P equals NP would give you enormous control ov
 
 <h2>What Comes Next</h2>
 
-Basing the whole Internet on an assumption is scary.  We want to know if P equals NP or not.  The answer has practical applications, but it also asks a larger wuestion about how we figure things out.  Do we know them first and figure them out second, or do we need to work at a solution before we can find it?  
+Basing the whole Internet on an assumption is scary.  We want to know if P equals NP or not.  The answer has practical applications, but it also asks a larger question about how we figure things out.  Do we know them first and figure them out second, or do we need to work at a solution before we can find it?  
 
 Some problems are hard and some just look hard.  P vs. NP gives us a framework to figure out which is which.
 
