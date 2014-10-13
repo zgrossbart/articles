@@ -1,0 +1,9 @@
+<h1>P vs. NP: The assumption that runs the Internet<\h1>
+
+<p>
+You're looking at <em>Smashing Magazine</em> right now because you're standing on the shoulders of a giant assumption called <strong>P vs. NP</strong>. It's a math problem that protects governments, runs the Internet, and makes online shopping possible, but we have no idea if it's true or not.  
+</p>
+
+<p>
+P vs. NP is a math question masquerading as a philosophy one.  Find out how we route Internet packets, support strong cryptography, and tell the difference between difficult and very difficult problems.
+</p>
