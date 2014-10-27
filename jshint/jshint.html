@@ -8,7 +8,7 @@ When the projects get larger and team gets bigger you'll be happy to have a litt
 
 <h3>JSLint, JSHint, and the Closure Compiler</h3>
 
-There are three main choices for static analyzers in the JavaScript world:  <a href="http://www.jslint.com/">JSLint</a>, <a hreaf="http://www.jshint.com/">JSHint</a>, and the <a hreaf="https://developers.google.com/closure/compiler/">Closure Compiler</a>.  
+There are three main choices for static analyzers in the JavaScript world:  <a href="http://www.jslint.com/">JSLint</a>, <a href="http://www.jshint.com/">JSHint</a>, and the <a href="https://developers.google.com/closure/compiler/">Closure Compiler</a>.  
 
 <h4>JSLint</h4>
 JSLint was the first one and it's a simple static code analyzer.  You can run it on their website and it will find a lot of useful errors.  My big issue with JSLint is that it's rather rigid.  Here's a good example:
@@ -38,13 +38,13 @@ I appreciate where JSLint is coming from, but it's just too rigid for me.  It wa
 
 <h4>JSHint</h4>
 
-JSHint works a lot like JSLint, but it's written using <a href="http://nodejs.org/">Node.js</a> and it's much more flexibile.  JSHint has a <a href="http://www.jshint.com/docs/options/">long list of options</a> and makes it possible to extend the checking by <a href="http://www.jshint.com/docs/reporters/">writing your own reporter</a>.  It's also easy to run JSHint on the command line of any machine with Node.js installed so it's easy to integrate it with your build.
+JSHint works a lot like JSLint, but it's written using <a href="http://nodejs.org/">Node.js</a> and it's much more flexible.  JSHint has a <a href="http://www.jshint.com/docs/options/">long list of options</a> and makes it possible to extend the checking by <a href="http://www.jshint.com/docs/reporters/">writing your own reporter</a>.  It's also easy to run JSHint on the command line of any machine with Node.js installed so it's easy to integrate it with your build.
 
 <h4>Closure Compiler</h4>
 
 The Closure Compiler from Google is a different breed.  It's written in Java and based on the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Rhino">Rhino</a> parser from Mozilla.  The Closure Compiler has a simple mode where it can do basic code checking, but it also has more advanced modes where it does extra checking and enforces special type declarations.
 
-The Closure Compiler is also a compiler and not just a checker.  It will report errors about your JavaScript code, but it will also create a new minimzed version of your JavaScript which removes whitespace and comments as well as removing unused variable and simplyfing longer statements to make the resulting script as small as possible.
+The Closure Compiler is also a compiler and not just a checker.  It will report errors about your JavaScript code, but it will also create a new minimized version of your JavaScript which removes whitespace and comments as well as removing unused variable and simplifying longer statements to make the resulting script as small as possible.
 
 <h4>Choosing the right checker</h4>
 
@@ -54,7 +54,7 @@ This article with use JSHint for most of the examples, but the Closure Compiler 
 
 <h3>== vs ===</h3>
 
-JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction-to-programming-type-systems/">dynamically typed</a> langauge.  That means you don't have to declare types when you're coding, but they exist at runtime.  To deal with the dynamic nature of the runtime JavaScript offers two different compare operators:  <code>==</code> and <code>===</code>.  Let's look at an example.
+JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction-to-programming-type-systems/">dynamically typed</a> language.  That means you don't have to declare types when you're coding, but they exist at runtime.  To deal with the dynamic nature of the runtime JavaScript offers two different compare operators:  <code>==</code> and <code>===</code>.  Let's look at an example.
 
 <pre><code class="language-javascript">
     var nOne = 1;
@@ -123,7 +123,7 @@ and in the second case it will tell you:
 
 The first case is saving you from a runtime bug.  You don't have to test your app, JSHint will just find the error.  The second case is worse.  Testing won't find this bug.
 
-The problem with the second case is much worse.  The variable <code>myVar</code> has now escaped from the function and been <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">hoisted</a> into the global namespace.  This means that it will exist and have a value of <code>Hello, World</code> after the <code>test</code> function is run.  This is called namespace polution.
+The problem with the second case is much worse.  The variable <code>myVar</code> has now escaped from the function and been <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">hoisted</a> into the global namespace.  This means that it will exist and have a value of <code>Hello, World</code> after the <code>test</code> function is run.  This is called namespace pollution.
 
 The <code>myVar</code> variable will exist for every other function which is run after.  It hangs around like mold on your code causing insidious bugs you won't find until 3:00 AM the night before your release.  All because you forgot to type <code>var</code>.
 
@@ -162,9 +162,9 @@ JSHint will tell you:
         doSomething();
 </code></pre>
 
-Will this code <code>doSomething</code> or <code>doSomethingElse</code>?  At first glance I always think it will <code>doSomething</code> and <code>doSomethingElse</code>, but it won't.  This issue is just about code readbility.  If you can't understand what the code will do then you'll introduce bugs.  
+Will this code <code>doSomething</code> or <code>doSomethingElse</code>?  At first glance I always think it will <code>doSomething</code> and <code>doSomethingElse</code>, but it won't.  This issue is just about code readability.  If you can't understand what the code will do then you'll introduce bugs.  
 
-Python and CoffeeScript like to skip the curly-braces.  It can work well in languages where you're gaurenteed that the whitespace will be well formatt, but JavaScript is looser than that.  JavaScript allows a lot of strange syntax, and using the curly-braces keeps you out of trouble.
+Python and CoffeeScript like to skip the curly-braces.  It can work well in languages where you're guaranteed that the whitespace will be well formatted, but JavaScript is looser than that.  JavaScript allows a lot of strange syntax, and using the curly-braces keeps you out of trouble.
 
 <pre><code class="language-javascript">
     if (false) {
@@ -239,6 +239,6 @@ I supported a lot of countries and the cyclomatic complexity quickly grew to ove
 
 <h3>When I don't do static checking</h3>
 
-I started this article by stating that I always use code analysis tools, but there's one gi case where I don't:  prototypes.  I'll often put together quick prototypes to show interactive ideas and help my entire team come together on the way something should work.  Those prototypes are write once code.  I never need to fix bugs in them I throw them away a few weeks later.  Everything else gets code analysis.
+I started this article by stating that I always use code analysis tools, but there's one case where I don't:  prototypes.  I'll often put together quick prototypes to show interactive ideas and help my entire team come together on the way something should work.  Those prototypes are write once code.  I never need to fix bugs in them I throw them away a few weeks later.  Everything else gets code analysis.
 
 Fixing these types of bugs at the beginning is easy, but finding them late the night before you release will drive you nuts.  Code analysis tools have saved my butt many times and they'll save yours as well.
