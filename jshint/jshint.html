@@ -19,6 +19,10 @@ The <code>==</code> operator compares the two values of the objects.  This will 
 
 The key is that you almost never want to use the <code>==</code>.  Comparing values separate from type is almost never the right thing.  In reality <code>1</code> is different from <code>'1'</code>.  These operators are easy to mistype and even easier to misread.  
 
+Try to write this code with JSHint and you'll get:
+
+<pre>test.js: line 9, col 12, Expected '===' and instead saw '=='.</pre>
+
 <h3>Undefined and late definitions</h3>
 
 Let's start with some simple code:
@@ -48,4 +52,50 @@ Run this code and you'll get:
 
 <pre>Hello, World</pre>
 
-This code looks like it works and that's even worse.  The rules for declaring JavaScript variables and what scope they end up in are confusing at best.  The results are 
+This code looks like it works and that's even worse.  The rules for declaring JavaScript variables and what scope they end up in are confusing at best.  
+
+In the first case JSHint will tell you:
+
+<pre>
+    test.js: line 3, col 17, 'myvar' is not defined.
+</pre>
+
+and in the second case it will tell you:
+
+<pre>
+    test.js: line 2, col 5, 'myVar' is not defined.
+    test.js: line 3, col 17, 'myVar' is not defined.
+</pre>
+
+The first case is saving you from a runtime bug.  You don't have to test your app, JSHint will just find the error.  The second case is worse.  Testing won't find this bug.
+
+The problem with the second case is much worse.  The variable <code>myVar</code> has now escaped from the function and been <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">hoisted</a> into the global namespace.  This means that it will exist and have a value of <code>Hello, World</code> after the <code>test</code> function is run.  This is called namespace polution.
+
+The <code>myVar</code> variable will exist for every other function which is run after.  It hangs around like mold on your code causing insidious bugs you won't find until 3:00 AM the night before your release.
+
+<h3>Variable reuse</h3>
+
+Redefining variables is allowed in JavaScript, but it's almost always an accident.  Take a look:
+
+<pre><code class="language-javascript">
+function incrementCount(counter) {
+    if (counter.count) {
+        counter.count++;
+    } else {
+        var counter = 1;
+        counter.count = counter;
+    }    
+}
+</code></pre>
+
+In this function we increment a counter property in the object which was passed in, but we need to add the property if it doesn't already exist.  See the bug?
+
+This function will never add or increment a counter on anything.  The <code>else</code> statement will always be called and it will redefine the function argument variable <code>counter</code>.  Basically this function creates a new object, assigns a property to it, and never changes the object which was passed in.
+
+This simple typo will make the code run without any errors and product a very strange result.  
+
+JSHint will tell you:
+
+<pre>
+    test.js: line 21, col 21, 'counter' is already defined.
+</pre>
