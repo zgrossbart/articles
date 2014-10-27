@@ -1,0 +1,27 @@
+Six Terrible JavaScript Mistakes You'll Never Make Again With JSHint
+
+The introduction talks about JSHint, how it works, how to set it up, and static code analysis in general.  It also discusses when you would want to use JSHint.
+
+== vs. ===
+
+This section shows the double equals vs. triple equals problem in JavaScript with a simple code example and why you want to avoid it.
+
+Scoping and Hoisting in JavaScript
+
+Late variable declaration is one if the easiest errors to make in JavaScript.  I make it all the time.  This code example shows a late variable definition and how easily that can go wrong.
+
+Variable reuse
+
+The second most common mistake I make is variable reuse.  This code example shows a common variable reuse issue and what you can do about it.
+
+Curly braces in blocks, loops, and conditionals
+
+This calls out the single line block problem.  That happens when the code declares a block with a single like and skips the curly-braces.  It's far too easy to add a second line without realizing you're outside of the block.
+
+Single and double quotes
+
+It's easy to miss a quote and end up with a broken string.  Especially when you mix and match single and double quotes.  This code example talks about quoting and how you can avoid common issues there.
+
+Cyclomatic complexity
+
+Cyclomatic complexity might be the most maligned code check of them all.  It tests how complex a specific function is.  This section will define exactly what cyclomatic complexity is and the best way to handle it.  It will also talk about the laundry list problem and where cyclomatic complexity checkers break down.
