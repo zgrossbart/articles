@@ -1,0 +1,51 @@
+<h3>== vs ===</h3>
+
+JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction-to-programming-type-systems/">dynamically typed</a> langauge.  That means you don't have to declare types when you're coding, but they exist at runtime.  To deal with the dynamic nature of the runtime JavaScript offers two different compare operators:  <code>==</code> and <code>===</code>.  Let's look at an example.
+
+<pre><code class="language-javascript">
+    var nOne = 1;
+    var sOne = '1';
+    
+    if (nOne == sOne) {
+        alert('The two values were equal');
+    }
+    
+    if (nOne === sOne) {
+        alert('The two values were equal');
+    }
+</code></pre>
+
+The <code>==</code> operator compares the two values of the objects.  This will convert the objects and compare them separately from their type.  The <code>===</code> operator compares the object types and the values.  In this case the first <code>if</code> block will pop up an alert and the second <code>if</code> block won't.  
+
+The key is that you almost never want to use the <code>==</code>.  Comparing values separate from type is almost never the right thing.  In reality <code>1</code> is different from <code>'1'</code>.  These operators are easy to mistype and even easier to misread.  
+
+<h3>Undefined and late definitions</h3>
+
+Let's start with some simple code:
+
+<pre><code class="language-javascript">
+function test() {
+    var myVar = 'Hello, World';
+    console.log(myvar);
+}
+</code></pre>
+
+See the bug?  I make this mistake all the time.  Run this code and you'll get an error:
+
+<pre>ReferenceError: myvar is not defined
+</pre>
+
+Nows let's make the code a little more complicated:
+
+<pre><code class="language-javascript">
+function test() {
+    myVar = 'Hello, World';
+    console.log(myVar);
+}
+</code></pre>
+
+Run this code and you'll get:
+
+<pre>Hello, World</pre>
+
+This code looks like it works and that's even worse.  The rules for declaring JavaScript variables and what scope they end up in are confusing at best.  The results are 
