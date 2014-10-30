@@ -1,17 +1,17 @@
-Every line of my code comes out perfect the first time I write it.  Well... most of the time.  ...some of the time.  Hardly ever.
+Every line of my code comes out perfect the first time I write it.  Well... most of the time.  ...some of the time.  um... hardly ever.
 
 The truth is that I spend more of my time chasing down my own stupid programming errors than I'd like to admit.  That's why I use static analyzers on every JavaScript project I write.
 
-Static analyzers look at your code and find issues before you run it.  They can do simple checks like enforce syntax (tabs instead of spaces), or more complex checks like making sure your code doesn't get too complex.  
+Static analyzers look at your code and find issues before you run it.  They can do simple checks like enforce syntax (tabs instead of spaces), or more holistic checks like making sure your functions don't get too complex.  Static analyzers also discover errors you can't find with testing like using <code>==</code> when you meant <code>===</code>.
 
-When the projects get larger and team gets bigger you'll be happy to have a little help finding those <em>simple</em> bugs that turn out to be a lot less simple than they looked.
+When projects get larger and teams get bigger you'll be happy to have a little help finding those <em>simple</em> bugs that turn out to be a lot less simple than they looked.
 
 <h3>JSLint, JSHint, and the Closure Compiler</h3>
 
 There are three main choices for static analyzers in the JavaScript world:  <a href="http://www.jslint.com/">JSLint</a>, <a href="http://www.jshint.com/">JSHint</a>, and the <a href="https://developers.google.com/closure/compiler/">Closure Compiler</a>.  
 
 <h4>JSLint</h4>
-JSLint was the first one and it's a simple static code analyzer.  You can run it on their website and it will find a lot of useful errors.  My big issue with JSLint is that it's rather rigid.  Here's a good example:
+JSLint was the first one.  You can run it on their website os use <a href="https://code.google.com/p/jslint4java/">one of the wrappers</a> to run it on your local files.  JSLint finds a lot of useful errors, but it's very rigid.  Here's a good example:
 
 <pre><code class="language-javascript">
 var s = 'mystring';
@@ -34,27 +34,27 @@ for (i = 0; i < s.length; i = i + 1) {
 }
 </code></pre>
 
-I appreciate where JSLint is coming from, but it's just too rigid for me.  It was too rigid for <a href="http://anton.kovalyov.net/">Anton Kovalyov</a> as well, so he created JSHint.
+I appreciate where JSLint is coming from, but it's just too strict for me.  It was too rigid for <a href="http://anton.kovalyov.net/">Anton Kovalyov</a> as well, so he created JSHint.
 
 <h4>JSHint</h4>
 
-JSHint works a lot like JSLint, but it's written using <a href="http://nodejs.org/">Node.js</a> and it's much more flexible.  JSHint has a <a href="http://www.jshint.com/docs/options/">long list of options</a> and makes it possible to extend the checking by <a href="http://www.jshint.com/docs/reporters/">writing your own reporter</a>.  It's also easy to run JSHint on the command line of any machine with Node.js installed so it's easy to integrate it with your build.
+JSHint works a lot like JSLint, but it's written using <a href="http://nodejs.org/">Node.js</a> and it's much more flexible.  JSHint has a <a href="http://www.jshint.com/docs/options/">long list of options</a> and makes it possible to extend the checker by <a href="http://www.jshint.com/docs/reporters/">writing your own reporter</a>.  It's also easy to run JSHint on the command line of any machine with Node.js installed so it's easy to integrate it with your build.
 
 <h4>Closure Compiler</h4>
 
 The Closure Compiler from Google is a different breed.  It's written in Java and based on the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Rhino">Rhino</a> parser from Mozilla.  The Closure Compiler has a simple mode where it can do basic code checking, but it also has more advanced modes where it does extra checking and enforces special type declarations.
 
-The Closure Compiler is also a compiler and not just a checker.  It will report errors about your JavaScript code, but it will also create a new minimized version of your JavaScript which removes whitespace and comments as well as removing unused variable and simplifying longer statements to make the resulting script as small as possible.
+The Closure Compiler is also a compiler and not just a checker.  It will report errors about your JavaScript code, but it also creates minimized versions of your JavaScript.  The compiler removes whitespace and comments as well as removing unused variables and simplifying longer statements to make the resulting script as small as possible.
 
 <h4>Choosing the right checker</h4>
 
-My favorite is to combing the Closure Compiler with JSHint.  The two work well together and each covers some areas the other doesn't.  In addition I can use the extension capabilities of JSHint to write custom checkers.  A common checker I write is to check for specific functions I want to make sure people don't call.
+For my projects I combine the Closure Compiler with JSHint.  The two work well together and each covers some areas the other doesn't.  In addition I can use the extension capabilities of JSHint to write custom checkers.  A common checker I write is to look for specific functions, like making REST calls without adding authentication information.
 
-This article with use JSHint for most of the examples, but the Closure Compiler would produce similar warnings.
+This article uses JSHint for most of the examples, but the Closure Compiler would produce similar warnings.
 
 <h3>== vs ===</h3>
 
-JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction-to-programming-type-systems/">dynamically typed</a> language.  That means you don't have to declare types when you're coding, but they exist at runtime.  To deal with the dynamic nature of the runtime JavaScript offers two different compare operators:  <code>==</code> and <code>===</code>.  Let's look at an example.
+JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction-to-programming-type-systems/">dynamically typed</a> language.  You don't have to declare types when you're coding, but they exist at runtime.  To deal with the dynamic nature of the runtime JavaScript offers two different compare operators:  <code>==</code> and <code>===</code>.  Let's look at an example.
 
 <pre><code class="language-javascript">
     var nOne = 1;
@@ -69,15 +69,15 @@ JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction
     }
 </code></pre>
 
-The <code>==</code> operator compares the two values of the objects.  This will convert the objects and compare them separately from their type.  The <code>===</code> operator compares the object types and the values.  In this case the first <code>if</code> block will pop up an alert and the second <code>if</code> block won't.  
+The <code>==</code> operator compares the values of the two objects.  It converts the objects and compare them separately from their type.  The <code>===</code> operator compares the object types and the values.  In this case the first <code>if</code> block will pop up an alert and the second <code>if</code> block won't since <code>nOne</code> and <code>sOne</code> have the same value, but they are different types.  
 
-The key is that you almost never want to use the <code>==</code>.  Comparing values separate from type is almost never the right thing.  In reality <code>1</code> is different from <code>'1'</code>.  These operators are easy to mistype and even easier to misread.  
+You almost never want to use the <code>==</code>.  Comparing values separate from type is rarely the right thing to do.  In reality <code>1</code> is different from <code>'1'</code>.  These operators are easy to mistype and even easier to misread.  
 
 Try to write this code with JSHint and you'll get:
 
 <pre>test.js: line 9, col 12, Expected '===' and instead saw '=='.</pre>
 
-<h3>Undefined and late definitions</h3>
+<h3>Undefined variables and late definitions</h3>
 
 Let's start with some simple code:
 
@@ -90,8 +90,7 @@ function test() {
 
 See the bug?  I make this mistake all the time.  Run this code and you'll get an error:
 
-<pre>ReferenceError: myvar is not defined
-</pre>
+<pre>ReferenceError: myvar is not defined</pre>
 
 Nows let's make the code a little more complicated:
 
@@ -106,7 +105,7 @@ Run this code and you'll get:
 
 <pre>Hello, World</pre>
 
-This code looks like it works and that's even worse.  The rules for declaring JavaScript variables and what scope they end up in are confusing at best.  
+This second example looks like it works and that's even worse.  The rules for declaring JavaScript variables and what scope they end up in are confusing at best.  
 
 In the first case JSHint will tell you:
 
@@ -121,11 +120,11 @@ and in the second case it will tell you:
     test.js: line 3, col 17, 'myVar' is not defined.
 </pre>
 
-The first case is saving you from a runtime bug.  You don't have to test your app, JSHint will just find the error.  The second case is worse.  Testing won't find this bug.
+The first case is saving you from a runtime bug.  You don't have to test your app, JSHint will find the error for you.  The second case is worse.  Testing won't find this bug.
 
-The problem with the second case is much worse.  The variable <code>myVar</code> has now escaped from the function and been <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">hoisted</a> into the global namespace.  This means that it will exist and have a value of <code>Hello, World</code> after the <code>test</code> function is run.  This is called namespace pollution.
+The problem with the second case is much worse.  The variable <code>myVar</code> has now escaped from the function and been <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">hoisted</a> into the global namespace.  This means that it will exist and have a value of <code>Hello, World</code> after the <code>test</code> function is run.  It's called namespace pollution.
 
-The <code>myVar</code> variable will exist for every other function which is run after.  It hangs around like mold on your code causing insidious bugs you won't find until 3:00 AM the night before your release.  All because you forgot to type <code>var</code>.
+The <code>myVar</code> variable will exist for every other function that runs after the <code>test</code> function.  It hangs around like mold on your code causing insidious bugs you won't find until 3:00 AM the night before you release.  All because you forgot to type <code>var</code>.
 
 <h3>Variable reuse</h3>
 
@@ -142,9 +141,9 @@ function incrementCount(counter) {
 }
 </code></pre>
 
-In this function we increment the <code>count</code> property in the object which was passed in, but we need to add the property if it doesn't already exist.  See the bug?
+In this function we increment the <code>count</code> property on the object which was passed in, but we need to add the property if it doesn't already exist.  See the bug?
 
-This function will never add or increment a counter on anything.  The <code>else</code> statement will always be called and it will redefine the function argument variable <code>counter</code>.  Basically this function creates a new object, assigns a property to it, and never changes the object which was passed in.
+This function will never add or increment a counter on anything.  The <code>else</code> statement will always be called and it will redefine the function argument variable <code>counter</code>.  Basically this function creates a new object, assigns a property to it, and loses the object when the function returns.  It never changes the object which was passed in.
 
 This simple typo will make the code run without any errors and product a very strange result.  
 
@@ -162,7 +161,9 @@ JSHint will tell you:
         doSomething();
 </code></pre>
 
-Will this code <code>doSomething</code> or <code>doSomethingElse</code>?  At first glance I always think it will <code>doSomething</code> and <code>doSomethingElse</code>, but it won't.  This issue is just about code readability.  If you can't understand what the code will do then you'll introduce bugs.  
+Will this code <code>doSomething</code> or <code>doSomethingElse</code>?  At first glance I always think it will <code>doSomething</code> and <code>doSomethingElse</code>.  That's the way it works in Python, but not JavaScript.  JavaScript will only treat the one line after the <code>if</code> statement as part of the block.  The indenting doesn't matter.
+
+This issue is just about code readability.  If you can't understand what the code will do then you'll write bugs.  
 
 Python and CoffeeScript like to skip the curly-braces.  It can work well in languages where you're guaranteed that the whitespace will be well formatted, but JavaScript is looser than that.  JavaScript allows a lot of strange syntax, and using the curly-braces keeps you out of trouble.
 
@@ -173,25 +174,31 @@ Python and CoffeeScript like to skip the curly-braces.  It can work well in lang
     }
 </code></pre>
 
-Add the braces and you'll always make your code more readable.
+Add the braces and you'll always make your code more readable.  Skip them and JSHint will tell you:
+
+<pre>test.js: line 27, col 5, Expected '{' and instead saw 'doSomething'.</pre>
 
 <h3>Single and double quotes</h3>
 
 <pre><code class="language-javascript">
     console.log("This is a string.  It's OK");
     console.log('This string is OK too.');
-    console.log("This string " + 'is really not OK');
+    console.log("This string " + 'is legal, but' + "really not OK");
 </code></pre>
 
-JavaScript allows you to define strings with single and double quotes.  It's nice to have the flexibility at times, like when you're defining HTML, but the added flexibility can lead to some very difficult code.  
+JavaScript allows you to define strings with single and double quotes.  It's nice to have the flexibility, like when you're defining HTML, but the added flexibility leads to some very difficult code.  
 
-Google has a code style which always uses single quotes for strings so they don't have to escape apostrophe's.  I can't argue that single quotes are better than double quotes, but I can argue for consistency.  Keeping everything consistent helps code readability. 
+Google has a code style guide which always uses single quotes for strings so they don't have to escape double-quotes in HTML.  I can't argue that single quotes are better than double quotes, but I can argue for consistency.  Keeping everything consistent helps code readability. 
+
+JSHint will warn you about mixed quotes like this:
+
+<pre>test.js: line 31, col 27, Mixed double and single quotes.</pre>
 
 It's easy to copy and paste or mistype a quote.  Once you have one bad quote others will follow.  Especially if you have a lot of people editing a file. Static analyzers will help you keep the quotes consistent and avoid a big clean up in the future.
 
 <h3>Cyclomatic complexity</h3>
 
-Cyclomatic complexity is the measure of how complex a give block of code is.  You look at the code and count the number of paths the code could possibly run.  That number is the cyclomatic complexity.
+Cyclomatic complexity is the measure of how complex a given block of code is.  You look at the code and count the number of paths that could possibly run.  That number is the cyclomatic complexity.
 
 For example, this code has a cylcomatic complexity of one.
 
@@ -219,11 +226,11 @@ function main() {
 
 Ideal code is easy to read and understand.  The higher the cyclomatic complexity the more complex the code.  Everyone agrees that a high cyclomatic complexity is bad, but nobody agrees on where the limit is.  Five is fine, 100 is too high, but there's a lot of gray area in the middle.
 
-I like to set my max cyclomatic complexity to 14, but I'll got a little higher for certain projects that do a lot of parsing.  
+I like to set my max cyclomatic complexity to 14, but I'll go a little higher for certain projects that do a lot of parsing.  
 
 The real reason the complexity number is important is that it tells you when you need to refactor your code.  The first time you write a long function it always makes sense, but wait six months and come back to fix bugs and you'll be glad that you took the time to make is easier to read.
 
-The big place cyclomatic breaks down is laundry lists.  I was working on a calendar once and I wanted to get the right first day of the week for each country.  I had a function that looked something like this:
+The big place cyclomatic breaks down is laundry lists.  I created a calendar and I wanted to get the right first day of the week for each country.  I had a function that looked something like this:
 
 <pre><code class="language-javascript">
 function getFirstDay(country) {
@@ -237,8 +244,8 @@ function getFirstDay(country) {
 
 I supported a lot of countries and the cyclomatic complexity quickly grew to over 50.  This code was really easy to read, but the number was high and my code analysis tool complained.  In the end I split the function up so the complexity was below the max I was working with.  It's a little hacky, but it's a small price to pay for cleaner code.
 
-<h3>When I don't do static checking</h3>
+<h3>Check everything you'll ever edit more than once</h3>
 
-I started this article by stating that I always use code analysis tools, but there's one case where I don't:  prototypes.  I'll often put together quick prototypes to show interactive ideas and help my entire team come together on the way something should work.  Those prototypes are write once code.  I never need to fix bugs in them I throw them away a few weeks later.  Everything else gets code analysis.
+I started this article by claiming I always use code analysis tools, but there's one case where I don't:  prototypes.  I'll often put together quick prototypes to show interactive ideas and help my entire team come together on the way something should work.  Those prototypes are write once code.  I never need to fix bugs in them, I throw them away a few weeks later.  Everything else gets code analysis.
 
 Fixing these types of bugs at the beginning is easy, but finding them late the night before you release will drive you nuts.  Code analysis tools have saved my butt many times and they'll save yours as well.

@@ -23,6 +23,9 @@ function incrementCount(counter) {
     }    
 }
 
+if (false)
+    doSomething();
+
 console.log("This is a string.  It's OK");
 console.log('This string is OK too.');
 console.log("This string " + 'is really not OK');
