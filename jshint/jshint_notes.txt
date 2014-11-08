@@ -25,3 +25,8 @@ It's easy to miss a quote and end up with a broken string.  Especially when you 
 Cyclomatic complexity
 
 Cyclomatic complexity might be the most maligned code check of them all.  It tests how complex a specific function is.  This section will define exactly what cyclomatic complexity is and the best way to handle it.  It will also talk about the laundry list problem and where cyclomatic complexity checkers break down.
+
+
+http://commons.wikimedia.org/wiki/File:Hemiptera_Heteroptera_Gelastocoridae_Toad_bug_nymph_camouflaged_with_sand.jpg
+http://commons.wikimedia.org/wiki/File:Insect_mimicry_1.jpg
+http://pixabay.com/en/grasshopper-camouflage-katydid-422078/
