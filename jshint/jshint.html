@@ -88,15 +88,15 @@ JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction
 </p>
 
 <pre><code class="language-javascript">
-    var nOne = 1;
-    var sOne = '1';
+    var nTwo = 2;
+    var sTwo = '2';
 
-    if (nOne == sOne) {
-        alert('The two values were equal');
+    if (nTwo == sTwo) {
+        alert('The variables were equal');
     }
 
-    if (nOne === sOne) {
-        alert('The two values were equal');
+    if (nTwo === sTwo) {
+        alert('The variables were equal');
     }
 </code></pre>
 
@@ -105,7 +105,7 @@ The <code>==</code> operator compares the values of the two objects.  It convert
 </p>
 
 <p>
-You almost never want to use the <code>==</code>.  Comparing values separate from type is rarely the right thing to do.  In reality <code>1</code> is different from <code>'1'</code>.  These operators are easy to mistype and even easier to misread.
+The <code>==</code> comparator is a relic from the C language roots of Java.  It's almost always a mistake to use it.  Comparing values separate from type is rarely the right thing to do.  In reality <code>2</code> is different from <code>'2'</code>.  These operators are easy to mistype and even easier to misread.
 </p>
 
 <p>
@@ -151,7 +151,7 @@ Run this code and you'll get:
 <pre>Hello, World</pre>
 
 <p>
-This second example looks like it works, and that's even worse.  The rules for declaring JavaScript variables and what scopes they end up in are confusing at best.
+This second examples works, but it has some very strange side effects.  The rules for declaring JavaScript variables and what scope they end up in are confusing at best.
 </p>
 
 <p>
@@ -290,7 +290,7 @@ It's easy to copy-and-paste or mistype a quote.  Once you have one bad quote, ot
 <h3>Cyclomatic Complexity</h3>
 
 <p>
-Cyclomatic complexity is the measure of how complex a given block of code is.  You look at the code and count the number of paths that could possibly run.  That number is the cyclomatic complexity.
+<a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">Cyclomatic complexity</a> is the measure of how complex a given block of code is.  You look at the code and count the number of paths that could possibly run.  That number is the cyclomatic complexity.
 </p>
 
 <p>
@@ -326,11 +326,11 @@ function main() {
 </p>
 
 <p>
-Ideal code is easy to read and understand.  The higher the cyclomatic complexity, the more complex the code.  Everyone agrees that a high cyclomatic complexity is bad, but nobody agrees on where the limit is.  Five is fine, 100 is too high &mdash; but there's a lot of gray area in the middle.
+Ideal code is easy to read and understand.  The higher the cyclomatic complexity, the more difficult the code is to understand.  Everyone agrees that a high cyclomatic complexity is bad, but nobody agrees on where the limit is.  Five is fine, 100 is too high &mdash; but there's a lot of gray area in the middle.
 </p>
 
 <p>
-I like to set my max cyclomatic complexity to 14, but I'll go a little higher for certain projects that do a lot of parsing.
+JSHint is the only one of the three checkers that looks at cyclomatic complexity.  It also allows you set the number.  Go above the <code>maxcomplexity</code> number that you've set and JSHint will give you a warning.  I like to set my max cyclomatic complexity to 14, but I'll go a little higher for certain projects that do a lot of parsing or have other reasons to need a lot of code paths.
 </p>
 
 <p>
