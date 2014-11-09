@@ -1,3 +1,35 @@
+<!DOCTYPE html>
+<!-- Please do not change this code -->
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='stylesheet' href='styles-please-dont-delete/style.css'>
+	<title>Smashing Magazine article template</title>
+</head>
+
+<body>
+<header class="site-header">
+	<div class="flag">
+		<div class="table-cell">
+			<a href="http://www.smashingmagazine.com/"><h1 class="logo">Smashing Magazine</h1></a>
+		</div>
+		<div class="table-cell text-right">
+			<h1>Author's Article Template</h1>
+		</div>
+	</div>
+</header>
+
+<div class="page">
+
+<!-- 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	START editing here 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
+<h2>Six Terrible JavaScript Mistakes You'll Never Make Again With Static Code Analysis</h2>
+
 <p>
 Every line of my code comes out perfect the first time I write it.  Well ... most of the time....  Some of the time.  Um ... hardly ever.
 </p>
@@ -25,8 +57,7 @@ There are three main choices for static analyzers in the JavaScript world:  <a h
 JSLint was the first static analyzer for JavaScript.  You can run it <a href="http://www.jslint.com/">on their website</a> or use <a href="https://code.google.com/p/jslint4java/">one of the wrappers</a> to run it on your local files.  JSLint finds a lot of useful errors, but it's very rigid.  Here's a good example:
 </p>
 
-<pre><code class="language-javascript">
-var s = 'mystring';
+<pre><code class="language-javascript">var s = 'mystring';
 for (var i = 0; i < s.length; i++) {
     console.log(s.charAt(i));
 }
@@ -43,8 +74,7 @@ Move 'var' declarations to the top of the function.</pre>
 The first problem is declaring the variable <code>i</code> at the top of my loop.  It also doesn't like the use of the <code>++</code> operator at the end of the loop declaration.  JSLint wants the code to look like this:
 </p>
 
-<pre><code class="language-javascript">
-var s = 'mystring';
+<pre><code class="language-javascript">var s = 'mystring';
 var i;
 for (i = 0; i < s.length; i = i + 1) {
     console.log(s.charAt(i));
@@ -87,8 +117,7 @@ This article uses JSHint for most examples, but the Closure Compiler would produ
 JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction-to-programming-type-systems/">dynamically typed</a> language.  You don't have to declare types when you're coding, but they exist at runtime.  JavaScript offers two different compare operators to handle this dynamic type assignment:  <code>==</code> and <code>===</code>.  Let's look at an example.
 </p>
 
-<pre><code class="language-javascript">
-    var n = 123;
+<pre><code class="language-javascript">    var n = 123;
     var s = '123';
 
     if (n == s) {
@@ -120,8 +149,7 @@ Check this code with JSHint and you'll get:
 Let's start with some simple code:
 </p>
 
-<pre><code class="language-javascript">
-function test() {
+<pre><code class="language-javascript">function test() {
     var myVar = 'Hello, World';
     console.log(myvar);
 }
@@ -137,8 +165,7 @@ See the bug? I make this mistake all the time.  Run this code and you'll get an 
 Now let's make the code a little more complicated:
 </p>
 
-<pre><code class="language-javascript">
-function test() {
+<pre><code class="language-javascript">function test() {
     myVar = 'Hello, World';
     console.log(myVar);
 }
@@ -183,9 +210,7 @@ The problem with the second case is insidiously subtle and complex.  The variabl
 The <code>myVar</code> variable will exist for every other function that runs after the <code>test</code> function.  Run this code after you run the <code>test</code> function:
 </p>
 
-<pre><code class="language-javascript">
-console.log('myVar: ' + myVar);
-</code></pre>
+<pre><code class="language-javascript">console.log('myVar: ' + myVar);</code></pre>
 
 <p>
 You'll still get <code>Hello, World</code>.  The <code>myVar</code> variable hangs around like mold on your code, causing tricky bugs you won't find until 3 a.m. the night before you release.  All because you forgot to type <code>var</code>.
@@ -197,8 +222,7 @@ You'll still get <code>Hello, World</code>.  The <code>myVar</code> variable han
 Redefining variables is allowed in JavaScript, but it's almost always an accident.  Take a look:
 </p>
 
-<pre><code class="language-javascript">
-function incrementCount(counter) {
+<pre><code class="language-javascript">function incrementCount(counter) {
     if (counter.count) {
         counter.count++;
     } else {
@@ -230,8 +254,7 @@ JSHint will tell you:
 
 <h3>Curly Braces in Blocks, Loops and Conditionals</h3>
 
-<pre><code class="language-javascript">
-    if (false)
+<pre><code class="language-javascript">    if (false)
         doSomethingElse();
         doSomething();
 </code></pre>
@@ -248,8 +271,7 @@ This issue is just about code readability.  If you can't understand what the cod
 Python and CoffeeScript like to skip the curly braces.  That can work well in languages where you're guaranteed that the whitespace will be well formatted, but JavaScript is looser than that.  JavaScript allows a lot of strange syntax, and using curly braces keeps you out of trouble.
 </p>
 
-<pre><code class="language-javascript">
-    if (false) {
+<pre><code class="language-javascript">    if (false) {
         doSomethingElse();
         doSomething();
     }
@@ -263,8 +285,7 @@ Add the braces and you'll always make your code more readable.  Skip them and JS
 
 <h3>Single and Double Quotes</h3>
 
-<pre><code class="language-javascript">
-    console.log("This is a string.  It's OK.");
+<pre><code class="language-javascript">    console.log("This is a string.  It's OK.");
     console.log('This string is OK too.');
     console.log("This string " + 'is legal, but' + "really not OK.");
 </code></pre>
@@ -297,8 +318,7 @@ It's easy to copy-and-paste or mistype a quote.  Once you have one bad quote, ot
 For example, this code has a cyclomatic complexity of one:
 </p>
 
-<pre><code class="language-javascript">
-function main() {
+<pre><code class="language-javascript">function main() {
     return 'Hello, World!';
 }
 </code></pre>
@@ -311,8 +331,7 @@ There's only one path you can follow through this code.
 If we add a little conditional logic...
 </p>
 
-<pre><code class="language-javascript">
-function main() {
+<pre><code class="language-javascript">function main() {
     if (true) {
         return 'Hello, World!';
     } else {
@@ -341,8 +360,7 @@ The real reason the complexity number is important is that it tells you when you
 The place cyclomatic complexity usually breaks down is in laundry lists.  For example, I created a calendar, and I wanted to get the right first day of the week for each country.  I had a function that looked something like this:
 </p>
 
-<pre><code class="language-javascript">
-function getFirstDay(country) {
+<pre><code class="language-javascript">function getFirstDay(country) {
     if (country === 'USA') {
         return 'Sunday';
     } else if (country === 'France') {
@@ -364,3 +382,24 @@ I started this article by claiming I always use code analysis tools, but there's
 <p>
 Fixing these types of bugs at the beginning of a project is easy, but finding them late the night before you release will drive you nuts.  Code analysis tools have saved my butt many times and they'll also save yours.
 </p>
+
+
+<h3>Author's Biography</h3>
+
+<p>Zack Grossbart is an <a href="http://www.zackgrossbart.com/hackito/">engineer</a>, designer, and <a href="http://www.zackgrossbart.com/blog/toc/">author</a>.  He's a Consulting Engineer with <a href="http://www.netiq.com/">NetIQ</a> and the architect of the <a href="https://wordpress.org/plugins/editorial-calendar/">WordPress Editorial Calendar</a>.  Zack began loading DOS from a floppy disk when he was five years old. He first worked professionally with computers when he was 15 and started his first software company when he was 16. Zack lives in Cambridge, Massachusetts with his wife and daughter.</p></p>
+
+<p><a href="http://www.zackgrossbart.com/">Website</a></p>
+
+<p>zack@grossbart.com</p>
+
+
+<!-- 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	STOP editing here 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+
+</div> <!--  .page -->
+<script src='styles-please-dont-delete/prism.js'></script>
+</body>
+</html>
