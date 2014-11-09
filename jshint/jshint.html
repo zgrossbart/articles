@@ -105,7 +105,7 @@ The <code>==</code> operator compares the values of the two objects.  It convert
 </p>
 
 <p>
-The <code>==</code> comparator is a relic from the C language roots of Java.  It's almost always a mistake to use it.  Comparing values separate from type is rarely the right thing to do.  In reality the number one hundred twenty-three is different from the string one-two-three.  These operators are easy to mistype and even easier to misread.
+The <code>==</code> comparator is a relic from the C language roots of Java.  It's almost always a mistake to use it:  comparing values separate from types is rarely the right thing to do.  In reality the number one hundred twenty-three is different from the string one-two-three.  These operators are easy to mistype and even easier to misread.
 </p>
 
 <p>
@@ -151,7 +151,7 @@ Run this code and you'll get:
 <pre>Hello, World</pre>
 
 <p>
-This second examples works, but it has some very strange side effects.  The rules for declaring JavaScript variables and what scope they end up in are confusing at best.
+This second example works, but it has some very strange side effects.  The rules for declaring JavaScript variables and what scopes they end up in are confusing at best.
 </p>
 
 <p>
@@ -330,7 +330,7 @@ Ideal code is easy to read and understand.  The higher the cyclomatic complexity
 </p>
 
 <p>
-JSHint is the only one of the three checkers that looks at cyclomatic complexity.  It also allows you set the number.  Go above the <code>maxcomplexity</code> number that you've set and JSHint will give you a warning.  I like to set my max cyclomatic complexity to 14, but I'll go a little higher for certain projects that do a lot of parsing or have other reasons to need a lot of code paths.
+JSHint is the only one of the three checkers that looks at cyclomatic complexity.  It also allows you to set the number.  Go above the <code>maxcomplexity</code> number that you've set and JSHint will give you a warning.  I like to set my max cyclomatic complexity to 14, but I'll go a little higher for certain projects that do a lot of parsing or have other reasons to need many code paths.
 </p>
 
 <p>
