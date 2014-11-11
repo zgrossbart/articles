@@ -115,7 +115,7 @@ The Closure Compiler will report errors about your JavaScript code, but it also 
     The Closure Compiler takes a list of files and outputs them into a single minimized file after it finishes the code checking.  You can run it like that after you've downloaded the compiler.jar file.
 </p>
 
-<pre><code class="language-javascript">java -jar compiler.jar --js_output_file myfinalfile.js --js test1.js --js test2.js</code></pre>
+<pre><code class="language-javascript">java -jar compiler.jar --js_output_file compress.js --js test1.js --js test2.js</code></pre>
 
 <h4>Choosing the Right Checker</h4>
 
@@ -137,16 +137,16 @@ This article uses JSHint for most examples, but the Closure Compiler would produ
 JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction-to-programming-type-systems/">dynamically typed</a> language.  You don't have to declare types when you're coding, but they exist at runtime.  JavaScript offers two different compare operators to handle this dynamic type assignment:  <code>==</code> and <code>===</code>.  Let's look at an example.
 </p>
 
-<pre><code class="language-javascript">    var n = 123;
-    var s = '123';
+<pre><code class="language-javascript">var n = 123;
+var s = '123';
 
-    if (n == s) {
-        alert('The variables were equal');
-    }
+if (n == s) {
+    alert('The variables were equal');
+}
 
-    if (n === s) {
-        alert('The variables were equal');
-    }
+if (n === s) {
+    alert('The variables were equal');
+}
 </code></pre>
 
 <p>
@@ -274,9 +274,9 @@ JSHint will tell you:
 
 <h3>Curly Braces in Blocks, Loops and Conditionals</h3>
 
-<pre><code class="language-javascript">    if (false)
-        doSomethingElse();
-        doSomething();
+<pre><code class="language-javascript">if (false)
+    doSomethingElse();
+    doSomething();
 </code></pre>
 
 <p>
@@ -291,10 +291,10 @@ This issue is just about code readability.  If you can't understand what the cod
 Python and CoffeeScript like to skip the curly braces.  That can work well in languages where you're guaranteed that the whitespace will be well formatted, but JavaScript is looser than that.  JavaScript allows a lot of strange syntax, and using curly braces keeps you out of trouble.
 </p>
 
-<pre><code class="language-javascript">    if (false) {
-        doSomethingElse();
-        doSomething();
-    }
+<pre><code class="language-javascript">if (false) {
+    doSomethingElse();
+    doSomething();
+}
 </code></pre>
 
 <p>
@@ -305,9 +305,9 @@ Add the braces and you'll always make your code more readable.  Skip them and JS
 
 <h3>Single and Double Quotes</h3>
 
-<pre><code class="language-javascript">    console.log("This is a string.  It's OK.");
-    console.log('This string is OK too.');
-    console.log("This string " + 'is legal, but' + "really not OK.");
+<pre><code class="language-javascript">console.log("This is a string.  It's OK.");
+console.log('This string is OK too.');
+console.log("This string " + 'is legal, but' + "really not OK.");
 </code></pre>
 
 <p>
