@@ -396,6 +396,10 @@ I supported a lot of countries, so the cyclomatic complexity quickly grew to ove
 <h3>Check Everything You'll Ever Edit More Than Once</h3>
 
 <p>
+Static checkers find the bugs you won't run across with simple testing.  The middle of the night bugs that only happen when a dozen people are all trying to do the same thing.  Finding all of those subtle bugs is a long a painful process without code checking.
+</p>
+
+<p>
 I started this article by claiming I always use code analysis tools, but there's one case where I don't:  throw away code.  I like quick prototypes to show interactive ideas and help my entire team come together on the way something should work.  Those prototypes are write-once code; I never need to fix bugs in them because I throw them away a few weeks later and I barely care if they work.  This throw away code exists for a quick demo and I don't care if it has subtle bugs.  Everything I care about gets code analysis.
 </p>
 
