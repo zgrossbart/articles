@@ -199,3 +199,7 @@ There might be a third part about responding to feedback and managing new versio
 Understanding open source licenses
 
 This article would compare different open source licenses.  You could contact Kerry to get help.
+
+
+Tech job interview article
+Writing tips for engineers
