@@ -31,7 +31,7 @@
 <h2>Six Terrible JavaScript Mistakes You'll Never Make Again With Static Code Analysis</h2>
 
 <p>
-Every line of my code comes out perfect the first time I write it.  Well ... most of the time....  Some of the time.  Um ... hardly ever.
+Every line of my code comes out perfect the first time I write it.  Well... most of the time...  Some of the time.  Um... hardly ever.
 </p>
 
 <p>
@@ -97,6 +97,10 @@ JSHint works similarly to JSLint, but it's written using <a href="http://nodejs.
 
 <pre><code class="language-javascript">jshint test.js</code></pre>
 
+<p>
+    JSHint also has plugins for popular text editors so you can run JSHint while you're coding.
+</p>
+
 <h4>Closure Compiler</h4>
 
 <p>
@@ -150,11 +154,11 @@ if (n === s) {
 </code></pre>
 
 <p>
-The <code>==</code> operator compares the values of the two objects.  It converts the objects and compares them separately from their types.  The <code>===</code> operator compares the object types and the values.  In this case, the first <code>if</code> block will pop up an alert and the second <code>if</code> block won't &mdash; since <code>nOne</code> and <code>sOne</code> have the same value, but not the same type.
+The <code>==</code> operator compares the values of the two objects.  It converts the objects and compares them separately from their types.  The <code>===</code> operator compares the object types and the values.  In this case, the first <code>if</code> block will pop up an alert and the second <code>if</code> block won't &mdash; since <code>n</code> and <code>s</code> have the same value, but not the same type.
 </p>
 
 <p>
-The <code>==</code> comparator is a relic from the C language roots of Java.  It's almost always a mistake to use it:  comparing values separate from types is rarely the right thing to do.  In reality the number one hundred twenty-three is different from the string one-two-three.  These operators are easy to mistype and even easier to misread.
+The <code>==</code> comparator is a relic from the C language roots of JavaScript.  It's almost always a mistake to use it:  comparing values separate from types is rarely the right thing to do.  In reality the number one hundred twenty-three is different from the string one-two-three.  These operators are easy to mistype and even easier to misread.
 </p>
 
 <p>
@@ -369,6 +373,13 @@ Ideal code is easy to read and understand.  The higher the cyclomatic complexity
 </p>
 
 <p>
+    If the cyclomatic complexity gets about the predefined limit then JSHint will let you know.
+</p>
+
+<pre><code class="language-javascript">test.js: line 35, col 24, This function's cyclomatic complexity is too high. (17)
+</code></pre>
+
+<p>
 JSHint is the only one of the three checkers that looks at cyclomatic complexity.  It also allows you to set the number.  Go above the <code>maxcomplexity</code> number that you've set and JSHint will give you a warning.  I like to set my max cyclomatic complexity to 14, but I'll go a little higher for certain projects that do a lot of parsing or have other reasons to need many code paths.
 </p>
 
@@ -390,7 +401,7 @@ The place cyclomatic complexity usually breaks down is in laundry lists.  For ex
 </code></pre>
 
 <p>
-I supported a lot of countries, so the cyclomatic complexity quickly grew to over 50.  Although the code was really easy to read, the number of paths was high so my code analysis tool complained.  In the end I split the function up to get the complexity below the max I was working with.  It was a little hacky, but a small price to pay for cleaner code.
+I supported a lot of countries, so the cyclomatic complexity quickly grew to over 50.  Although the code was really easy to read, the number of paths was high so my code analysis tool complained.  In the end I split the function up to get the complexity below the max I was working with.  It's a hacky work around for this one case, but it's a small price to pay for cleaner code overall.
 </p>
 
 <h3>Check Everything You'll Ever Edit More Than Once</h3>
