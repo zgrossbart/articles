@@ -88,11 +88,11 @@ I appreciate where JSLint is coming from, but it's just too strict for me.  It w
 <h4>JSHint</h4>
 
 <p>
-JSHint works similarly to JSLint, but it's written using <a href="http://nodejs.org/">Node.js</a> and it's much more flexible.  JSHint has a <a href="http://www.jshint.com/docs/options/">long list of options</a>, making it possible to create custom checks by <a href="http://www.jshint.com/docs/reporters/">writing your own reporter</a>.  
+JSHint works similarly to JSLint, but it's written on top of <a href="http://nodejs.org/">Node.js</a> and it's much more flexible.  JSHint has a <a href="http://www.jshint.com/docs/options/">long list of options</a>, making it possible to create custom checks by <a href="http://www.jshint.com/docs/reporters/">writing your own reporter</a>.  
 </p>
 
 <p>
-    You can run JSHint from <a href="http://jshint.com/">their website</a>, but most of the time you <a href="http://jshint.com/install/">install JSHint as a local command line</a> using NodeJS.  Once JSHint is installed you can run it against your files with a command like this:
+    You can run JSHint from <a href="http://jshint.com/">their website</a>, but most of the time you <a href="http://jshint.com/install/">install JSHint as a local command line tool</a> using NodeJS.  Once JSHint is installed you can run it against your files with a command like this:
 </p>
 
 <pre><code class="language-javascript">jshint test.js</code></pre>
@@ -124,7 +124,7 @@ The Closure Compiler will report errors about your JavaScript code, but it also 
 <h4>Choosing the Right Checker</h4>
 
 <p>
-For my projects I combine the Closure Compiler with JSHint.  The Closure Compiler does the minimzation and the basic checking while JSHint handles the more complex code analysis.  The two work well together, and each covers some areas the other doesn't.  In addition I can use the extension capabilities of JSHint to write custom checkers.  One common checker I write will check for specific functions I don't want, like making REST calls without adding authentication information.
+For my projects I combine the Closure Compiler with JSHint.  The Closure Compiler does the minimzation and the basic checking while JSHint handles the more complex code analysis.  The two work well together, and each covers some areas the other doesn't.  In addition I can use the extension capabilities of JSHint to write custom checkers.  One common checker I write will check for specific functions I don't want, like calling functions I don't want to allow in my project.
 </p>
 
 <p>
@@ -138,7 +138,7 @@ This article uses JSHint for most examples, but the Closure Compiler would produ
 <h3>== Versus ===</h3>
 
 <p>
-JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction-to-programming-type-systems/">dynamically typed</a> language.  You don't have to declare types when you're coding, but they exist at runtime.  JavaScript offers two different compare operators to handle this dynamic type assignment:  <code>==</code> and <code>===</code>.  Let's look at an example.
+JavaScript is a <a href="http://www.smashingmagazine.com/2013/04/18/introduction-to-programming-type-systems/">dynamically typed</a> language.  You don't have to declare types when you're coding, but they exist at runtime.  JavaScript offers two different compare operators to handle these dynamic types:  <code>==</code> and <code>===</code>.  Let's look at an example.
 </p>
 
 <pre><code class="language-javascript">var n = 123;
@@ -149,7 +149,7 @@ if (n == s) {
 }
 
 if (n === s) {
-    alert('The variables were equal');
+    alert('The variables were identical');
 }
 </code></pre>
 
@@ -158,7 +158,7 @@ The <code>==</code> operator compares the values of the two objects.  It convert
 </p>
 
 <p>
-The <code>==</code> comparator is a relic from the C language roots of JavaScript.  It's almost always a mistake to use it:  comparing values separate from types is rarely the right thing to do.  In reality the number one hundred twenty-three is different from the string one-two-three.  These operators are easy to mistype and even easier to misread.
+The <code>==</code> comparator is a relic from the C language roots of JavaScript.  It's almost always a mistake to use it:  comparing values separate from types is rarely what the developer meant to do.  In reality the number one hundred twenty-three is different from the string one-two-three.  These operators are easy to mistype and even easier to misread.
 </p>
 
 <p>
@@ -186,7 +186,7 @@ See the bug? I make this mistake all the time.  Run this code and you'll get an 
 <pre>ReferenceError: myvar is not defined</pre>
 
 <p>
-Now let's make the code a little more complicated:
+Now let's make the problem a little more difficult to spot:
 </p>
 
 <pre><code class="language-javascript">function test() {
@@ -202,7 +202,7 @@ Run this code and you'll get:
 <pre>Hello, World</pre>
 
 <p>
-This second example works, but it has some very strange side effects.  The rules for declaring JavaScript variables and what scopes they end up in are confusing at best.
+This second example works, but it has some very unexpected side effects.  The rules for declaring JavaScript variables and what scopes they end up in are confusing at best.
 </p>
 
 <p>
@@ -227,7 +227,7 @@ The first case is saving you from a runtime bug.  You don't have to test your ap
 </p>
 
 <p>
-The problem with the second case is insidiously subtle and complex.  The variable <code>myVar</code> has now escaped from its function and been <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">hoisted</a> into the global namespace.  This means that it will exist and have a value of <code>Hello, World</code> after the <code>test</code> function is run.  It's called "namespace pollution."
+The problem with the second case is insidiously subtle and complex.  The variable <code>myVar</code> has now escaped from its function scope and been <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">hoisted</a> into the global scope for the whole page.  This means that it will exist and have a value of <code>Hello, World</code> after the <code>test</code> function is run.  It's called "global scope pollution."
 </p>
 
 <p>
@@ -261,7 +261,7 @@ In this function we increment the <code>count</code> property on the object whic
 </p>
 
 <p>
-This function will never add or increment a counter on anything.  The <code>else</code> statement will always be called and it will redefine the function argument variable <code>counter</code>.  Basically this function creates a new object, assigns a property to it, and loses the object when the function returns.  It never changes the object which was passed in.
+This function will never add or increment a counter on anything.  The <code>else</code> statement will always be called and it will redefine the function argument <code>counter</code>.  Basically this function creates a new object, assigns a property to it, and loses the object when the function returns.  It never changes the object which was passed in.
 </p>
 
 <p>
@@ -284,7 +284,7 @@ JSHint will tell you:
 </code></pre>
 
 <p>
-Will this code <code>doSomething</code> or <code>doSomethingElse</code>?  At first glance I always think it will <code>doSomething</code> and <code>doSomethingElse</code>.  That's the way it works in Python, but not in JavaScript.  JavaScript will only treat the one line after the <code>if</code> statement as part of the block; the indenting doesn't matter.
+Will this code <code>doSomething</code> or <code>doSomethingElse</code>?  At first glance I always think it won't <code>doSomething</code> or <code>doSomethingElse</code>.  That's the way it works in Python, but not in JavaScript.  JavaScript will only treat the one line after the <code>if</code> statement as part of the block; the indenting doesn't matter.
 </p>
 
 <p>
@@ -315,7 +315,7 @@ console.log("This string " + 'is legal, but' + "really not OK.");
 </code></pre>
 
 <p>
-JavaScript allows you to define a string with single or double quotes.  It's nice to have the flexibility, like when you're defining HTML, but the added flexibility can lead to some very difficult code.
+JavaScript allows you to define a string with single or double quotes.  It's nice to have the flexibility, like when you're defining HTML, but the added flexibility can lead to some very inconsistent code.
 </p>
 
 <p>
@@ -388,7 +388,7 @@ The real reason the complexity number is important is that it tells you when you
 </p>
 
 <p>
-The place cyclomatic complexity usually breaks down is in laundry lists.  For example, I created a calendar, and I wanted to get the right first day of the week for each country.  I had a function that looked something like this:
+The place cyclomatic complexity usually breaks down is in laundry lists.  For example, I created a calendar, and I wanted to get the correct first day of the week for each country.  I had a function that looked something like this:
 </p>
 
 <pre><code class="language-javascript">function getFirstDay(country) {
@@ -407,7 +407,7 @@ I supported a lot of countries, so the cyclomatic complexity quickly grew to ove
 <h3>Check Everything You'll Ever Edit More Than Once</h3>
 
 <p>
-Static checkers find the bugs you won't run across with simple testing.  The middle of the night bugs that only happen when a dozen people are all trying to do the same thing.  Finding all of those subtle bugs is a long a painful process without code checking.
+Static checkers find the bugs you won't run across with simple testing.  They also find bugs at compile time instead of runtime.  The middle of the night bugs that only happen when a dozen people are all trying to do the same thing.  Finding all of those subtle bugs is a long and painful process without code checking.
 </p>
 
 <p>
